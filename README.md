@@ -1,54 +1,47 @@
-# React + TypeScript + Vite
+# Starplus-Frontend
+Setup untuk team front-end agar dapat membuat kode tanpa terbebani file back-end.
+- [File Project](https://drive.google.com/drive/folders/1DIFmoUGeUehtDxHtdMcmOLfCBp9s1Ko4?usp=drive_link)
+- Original Repo: [ikhsanhmr/starplus](https://github.com/ikhsanhmr/starplus)
+- Template: [starplus.co.id](https://starplus.co.id/index.html)
+- Contoh: [plnnusadaya.co.id](https://plnnusadaya.co.id/)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Running
+```
+pnpm install
+pnpm dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Aturan Bersama
+Kode css dari template diganti ke tailwind. Agar tiap proyek tim tidak saling menimpa, tim dapat menambah tailwind di setiap file masing" `import './tailwind.css'` (sesuaikan path nya).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Issue
+- Navigasi: warna text navigasi menghilang ketika tailwind aktif (override)
+- Home: testimonial slider gk aktif (mungkin di js-nya)
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## JOBS Set Data 🌟
+File data ada di `src/data/`.
+- Home: List service, list team, list testimoni, list blog
+- Service: list service
+- Team: list team
+- Pages-blog: list blog (image, judul, deskripsi) dikelompokkan dalam paginasi
+- Pages-single: 
+  - variabel post (judul, deskripsi, author {name, image, description})
+  - *recentPost* buat variabel list, [*feature*,*popular*,*latest*] buat variabel list group, categories list group, comment list group.  
+
+
+## Shortcut keyboard
+- `rafce`: react arrow function export, komponen standar untuk elemen tiap file `.tsx` (butuh ekstensi 1)
+
+## Recomended VSCode Extension
+1. `ES7+ React/Redux/React-Native snippets`: snippet react
+2. `Tailwind CSS IntelliSense`: Ngasih saran kode tailwind & nampilkan isi class
+
+## More Rule
+- Assets & svg.
+  - Jika Anda ingin file `.svg` memiliki interaktivitas atau perubahan di dalam komponen React, letakkan di `src/`.
+  - Jika file `.svg` hanya digunakan sebagai aset statis seperti gambar di halaman HTML, letakkan di `public/`.
+- CSS
+  - Gunakan `index.css` untuk mendefinisikan gaya global
+  - Gunakan `App.css` untuk komponen spesifik
+- Styling in `.tsx` file
+  - in React TypeScript, the style attribute expects a JavaScript object where CSS property names are written in camelCase (not kebab-case) and the values are appropriately formatted. ex `style={{clipPath: "polygon(74.1%)"}}`
