@@ -1,4 +1,4 @@
-// import './../../tailwind.css'; // akses pakai path relatif. jika aktif, beberapa kode akan ditimpa
+import './../../tailwind.css'; // akses pakai path relatif. jika aktif, beberapa kode akan ditimpammm
 
 const Home = () => {
   return (

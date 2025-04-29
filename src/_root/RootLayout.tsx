@@ -1,26 +1,30 @@
-import { Outlet, Link, useLocation } from "react-router-dom"
+import { useState } from "react";
+import { Outlet, Link, useLocation } from "react-router-dom";
 
 const RootLayout = () => {
   const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   return (
     <div>
-      <div className="wrapper">
+      <div className="wrapper z-50">
         {/* Top Bar Start */}
         <div className="top-bar">
-          <div className="container-fluid">
-            <div className="row align-items-center">
-              <div className="col-lg-4 col-md-12">
+          <div className="max-w-screen-xl mx-auto px-4">
+            <div className="flex flex-col lg:flex-row items-center">
+              <div className="w-full lg:w-1/3 mb-4 lg:mb-0">
                 <div className="logo">
                   <a href="index.html">
                     <h1>Builderz</h1>
-                    {/* <!-- <img src="img/logo.jpg" alt="Logo"> --> */}
                   </a>
                 </div>
               </div>
-              <div className="col-lg-8 col-md-7 d-none d-lg-block">
-                <div className="row">
-                  <div className="col-4">
-                    <div className="top-bar-item">
+
+              <div className="w-full lg:w-2/3 hidden lg:flex">
+                <div className="flex w-full">
+                  <div className="w-1/3">
+                    <div className="top-bar-item flex items-center space-x-2">
                       <div className="top-bar-icon">
                         <i className="flaticon-calendar"></i>
                       </div>
@@ -30,8 +34,9 @@ const RootLayout = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-4">
-                    <div className="top-bar-item">
+
+                  <div className="w-1/3">
+                    <div className="top-bar-item flex items-center space-x-2">
                       <div className="top-bar-icon">
                         <i className="flaticon-call"></i>
                       </div>
@@ -41,8 +46,9 @@ const RootLayout = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-4">
-                    <div className="top-bar-item">
+
+                  <div className="w-1/3">
+                    <div className="top-bar-item flex items-center space-x-2">
                       <div className="top-bar-icon">
                         <i className="flaticon-send-mail"></i>
                       </div>
@@ -57,55 +63,254 @@ const RootLayout = () => {
             </div>
           </div>
         </div>
+
         {/* <!-- Top Bar End --> */}
 
         {/* <!-- Nav Bar Start --> */}
         <div className="nav-bar">
-          <div className="container-fluid">
-            <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
-              <a href="#" className="navbar-brand">MENU</a>
-              <button type="button" className="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                <span className="navbar-toggler-icon"></span>
-              </button>
+          <div className="navbar flex justify-between items-center h-16">
+            {/* Mobile - Left: MENU */}
+            <div className="flex items-center">
+              <a href="#" className="text-xl block md:hidden text-white">
+                MENU
+              </a>
+            </div>
 
-              <div className="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                <div className="navbar-nav mr-auto">
-                  <Link to="/" className={`nav-item nav-link ${location.pathname === "/" ? "active" : ""}`}>Home</Link>
-                  <Link to="/about" className={`nav-item nav-link ${location.pathname === "/about" ? "active" : ""}`}>About</Link>
-                  <Link to="/service" className={`nav-item nav-link ${location.pathname === "/service" ? "active" : ""}`}>Service</Link>
-                  <Link to="/team" className={`nav-item nav-link ${location.pathname === "/team" ? "active" : ""}`}>Team</Link>
-                  <Link to="/portfolio" className={`nav-item nav-link ${location.pathname === "/portfolio" ? "active" : ""}`}>Portfolio</Link>
-                  {/* <a href="about.html" className="nav-item nav-link">About</a>
-                <a href="service.html" className="nav-item nav-link">Service</a>
-                <a href="team.html" className="nav-item nav-link">Team</a>
-                <a href="portfolio.html" className="nav-item nav-link">Project</a> */}
-                  <div className="nav-item dropdown">
-                    <a href="#" className={`nav-link dropdown-toggle ${location.pathname === "/blog" || location.pathname === "/single" ? "active" : ""}`} data-toggle="dropdown">Pages</a>
-                    <div className="dropdown-menu">
-                      <Link to="/blog" className="dropdown-item">Blog</Link>
-                      <Link to="/single" className="dropdown-item">single</Link>
-                      {/* <a href="blog.html" className="dropdown-item">Blog Page</a>
-                    <a href="single.html" className="dropdown-item">Single Page</a> */}
-                    </div>
+            {/* Desktop - Center: Nav links */}
+            <div className="hidden pl-3 md:flex flex-1 justify-start space-x-6 items-center text-white">
+              <Link
+                to="/"
+                className={`transition-colors duration-200 ${
+                  location.pathname === "/"
+                    ? "text-yellow-400 font-bold"
+                    : "text-white hover:text-yellow-400"
+                }`}
+              >
+                <div>Home</div>
+              </Link>
+
+              <Link
+                to="/about"
+                className={`${
+                  location.pathname === "/about"
+                    ? "text-yellow-400 font-bold"
+                    : "text-white hover:text-yellow-400"
+                }`}
+              >
+                About
+              </Link>
+              <Link
+                to="/service"
+                className={`hover:text-yellow-400 ${
+                  location.pathname === "/service"
+                    ? "text-yellow-400 font-bold"
+                    : "text-white hover:text-yellow-400"
+                }`}
+              >
+                Service
+              </Link>
+              <Link
+                to="/team"
+                className={`hover:text-yellow-400 ${
+                  location.pathname === "/team"
+                    ? "text-yellow-400 font-bold"
+                    : "text-white hover:text-yellow-400"
+                }`}
+              >
+                Team
+              </Link>
+              <Link
+                to="/portfolio"
+                className={`hover:text-yellow-400 ${
+                  location.pathname === "/portfolio"
+                    ? "text-yellow-400 font-bold"
+                    : "text-white hover:text-yellow-400"
+                }`}
+              >
+                Portfolio
+              </Link>
+
+              {/* Dropdown for Pages */}
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="flex items-center hover:text-yellow-400"
+                >
+                  Pages
+                  <svg
+                    className="w-4 h-4 ml-1"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.293l3.71-4.06a.75.75 0 111.1 1.02l-4.25 4.65a.75.75 0 01-1.1 0l-4.25-4.65a.75.75 0 01.02-1.06z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
+                {isDropdownOpen && (
+                  <div className="absolute mt-2 w-32 bg-white text-black rounded shadow-lg">
+                    <Link
+                      to="/blog"
+                      className="block px-4 py-2 hover:bg-gray-200"
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      Blog
+                    </Link>
+                    <Link
+                      to="/single"
+                      className="block px-4 py-2 hover:bg-gray-200"
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      Single
+                    </Link>
                   </div>
-                  <Link to="/contact" className={`nav-item nav-link ${location.pathname === "/contact" ? "active" : ""}`}>Contact</Link>
-                  {/* <a href="contact.html" className="nav-item nav-link">Contact</a> */}
-                </div>
-                <div className="ml-auto">
-                  <a className="btn" href="#">Get A Quote</a>
+                )}
+              </div>
+
+              <Link
+                to="/contact"
+                className={`hover:text-yellow-400 ${
+                  location.pathname === "/contact"
+                    ? "text-yellow-400 font-bold"
+                    : "text-white hover:text-yellow-400"
+                }`}
+              >
+                Contact
+              </Link>
+            </div>
+
+            {/* Right: Button */}
+            <div className="hidden md:flex">
+              <a
+                href="#"
+                className="bg-yellow-400 text-white text-black px-4 py-2 rounded hover:bg-yellow-500 btn"
+              >
+                Get A Quote
+              </a>
+            </div>
+
+            {/* Mobile - Burger */}
+            <div className="md:hidden flex items-center">
+              <button
+                type="button"
+                onClick={() => setIsOpen(!isOpen)}
+                className="text-gray-400 hover:text-white focus:outline-none"
+              >
+                <svg
+                  className="h-8 w-8"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  {isOpen ? (
+                    // X icon
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  ) : (
+                    // Hamburger
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  )}
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Menu */}
+          {isOpen && (
+            <div className="md:hidden bg-gray-800 px-4 pt-2 pb-4 space-y-2">
+              <Link
+                to="/"
+                className="block text-white hover:text-yellow-400"
+                onClick={() => setIsOpen(false)}
+              >
+                Home
+              </Link>
+              <Link
+                to="/about"
+                className="text-white block hover:text-yellow-400"
+                onClick={() => setIsOpen(false)}
+              >
+                About
+              </Link>
+              <Link
+                to="/service"
+                className="text-white block hover:text-yellow-400"
+                onClick={() => setIsOpen(false)}
+              >
+                Service
+              </Link>
+              <Link
+                to="/team"
+                className="text-white block hover:text-yellow-400"
+                onClick={() => setIsOpen(false)}
+              >
+                Team
+              </Link>
+              <Link
+                to="/portfolio"
+                className="text-white block hover:text-yellow-400"
+                onClick={() => setIsOpen(false)}
+              >
+                Portfolio
+              </Link>
+
+              {/* Dropdown inside mobile */}
+              <div>
+                <div className="text-gray-300">Pages</div>
+                <div className="pl-4 space-y-1">
+                  <Link
+                    to="/blog"
+                    className="text-white block hover:text-yellow-400"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Blog
+                  </Link>
+                  <Link
+                    to="/single"
+                    className="text-white block hover:text-yellow-400"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Single
+                  </Link>
                 </div>
               </div>
-            </nav>
-          </div>
+
+              <Link
+                to="/contact"
+                className="text-white block hover:text-yellow-400"
+                onClick={() => setIsOpen(false)}
+              >
+                Contact
+              </Link>
+
+              <a
+                href="#"
+                className="block mt-2 bg-yellow-400 text-black text-center py-2 rounded hover:bg-yellow-500"
+              >
+                Get A Quote
+              </a>
+            </div>
+          )}
         </div>
         {/* <!-- Nav Bar End --> */}
       </div>
 
-
       <div className="wrapper">
         <Outlet />
       </div>
-
 
       <div className="wrapper">
         {/* <!-- Footer Start --> */}
@@ -115,15 +320,32 @@ const RootLayout = () => {
               <div className="col-md-6 col-lg-3">
                 <div className="footer-contact">
                   <h2>Office Contact</h2>
-                  <p><i className="fa fa-map-marker-alt"></i>123 Street, New York, USA</p>
-                  <p><i className="fa fa-phone-alt"></i>+012 345 67890</p>
-                  <p><i className="fa fa-envelope"></i>info@example.com</p>
+                  <p>
+                    <i className="fa fa-map-marker-alt"></i>123 Street, New
+                    York, USA
+                  </p>
+                  <p>
+                    <i className="fa fa-phone-alt"></i>+012 345 67890
+                  </p>
+                  <p>
+                    <i className="fa fa-envelope"></i>info@example.com
+                  </p>
                   <div className="footer-social">
-                    <a href=""><i className="fab fa-twitter"></i></a>
-                    <a href=""><i className="fab fa-facebook-f"></i></a>
-                    <a href=""><i className="fab fa-youtube"></i></a>
-                    <a href=""><i className="fab fa-instagram"></i></a>
-                    <a href=""><i className="fab fa-linkedin-in"></i></a>
+                    <a href="">
+                      <i className="fab fa-twitter"></i>
+                    </a>
+                    <a href="">
+                      <i className="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="">
+                      <i className="fab fa-youtube"></i>
+                    </a>
+                    <a href="">
+                      <i className="fab fa-instagram"></i>
+                    </a>
+                    <a href="">
+                      <i className="fab fa-linkedin-in"></i>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -151,7 +373,8 @@ const RootLayout = () => {
                 <div className="newsletter">
                   <h2>Newsletter</h2>
                   <p>
-                    Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulpu
+                    Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi.
+                    Curabitur facilisis ornare velit non vulpu
                   </p>
                   <div className="form">
                     <input className="form-control" placeholder="Email here" />
@@ -173,18 +396,24 @@ const RootLayout = () => {
           <div className="container copyright">
             <div className="row">
               <div className="col-md-6">
-                <p>&copy; <a href="#">Your Site Name</a>, All Right Reserved.</p>
+                <p>
+                  &copy; <a href="#">Your Site Name</a>, All Right Reserved.
+                </p>
               </div>
               <div className="col-md-6">
-                <p>Designed By <a href="https://htmlcodex.com">HTML Codex</a></p>
+                <p>
+                  Designed By <a href="https://htmlcodex.com">HTML Codex</a>
+                </p>
               </div>
             </div>
           </div>
         </div>
-        <a href="#" className="back-to-top"><i className="fa fa-chevron-up"></i></a>
+        <a href="#" className="back-to-top">
+          <i className="fa fa-chevron-up"></i>
+        </a>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default RootLayout
+export default RootLayout;
