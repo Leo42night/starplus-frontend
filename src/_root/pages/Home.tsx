@@ -1,55 +1,139 @@
-import './../../tailwind.css'; // akses pakai path relatif. jika aktif, beberapa kode akan ditimpammm
+import "./../../tailwind.css"; // akses pakai path relatif. jika aktif, beberapa kode akan ditimpammm
+import { useEffect, useRef, useState } from "react";
+import {
+  MdOutlineKeyboardArrowLeft,
+  MdOutlineKeyboardArrowRight,
+} from "react-icons/md";
 
 const Home = () => {
+  const images = [
+    "img/carousel-1.jpg",
+    "img/carousel-2.jpg",
+    "img/carousel-3.jpg",
+  ];
+
+  const texts = [
+    {
+      title: "We Are Professional",
+      subtitle: "For Your Dream Project",
+    },
+    {
+      title: "Professional Builder",
+      subtitle: "We Build Your Home",
+    },
+    {
+      title: "We Are Trusted",
+      subtitle: "For Your Dream Home",
+    },
+  ];
+
+  const [current, setCurrent] = useState(1);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const extendedSlides = [
+    { ...texts[texts.length - 1], src: images[images.length - 1] },
+    ...images.map((src, i) => ({ ...texts[i], src })),
+    { ...texts[0], src: images[0] },
+  ];
+
+  const startAutoSlide = () => {
+    stopAutoSlide();
+    intervalRef.current = setInterval(() => {
+      handleNext();
+    }, 5000);
+  };
+
+  const stopAutoSlide = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+  };
+
+  useEffect(() => {
+    startAutoSlide();
+    return () => stopAutoSlide();
+  }, []);
+
+  const handlePrev = () => {
+    setIsTransitioning(true);
+    setCurrent((prev) => prev - 1);
+  };
+
+  const handleNext = () => {
+    setIsTransitioning(true);
+    setCurrent((prev) => prev + 1);
+  };
+
+  useEffect(() => {
+    if (current === 0) {
+      setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrent(images.length);
+      }, 700);
+    } else if (current === images.length + 1) {
+      setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrent(1);
+      }, 700);
+    } else {
+      setIsTransitioning(true);
+    }
+  }, [current]);
+
   return (
     <>
-      {/* <!-- Carousel Start --> */}
-      <div id="carousel" className="carousel slide" data-ride="carousel">
-        <ol className="carousel-indicators">
-          <li data-target="#carousel" data-slide-to="0" className="active"></li>
-          <li data-target="#carousel" data-slide-to="1"></li>
-          <li data-target="#carousel" data-slide-to="2"></li>
-        </ol>
-        <div className="carousel-inner">
-          <div className="carousel-item active">
-            <img src="img/carousel-1.jpg" alt="Carousel Image" />
-            <div className="carousel-caption">
-              <p className="animated fadeInRight">We Are Professional</p>
-              <h1 className="animated fadeInLeft">For Your Dream Project</h1>
-              <a className="btn animated fadeInUp" href="https://htmlcodex.com/construction-company-website-template">Get A Quote</a>
+      <div className="w-full h-screen sm:h-fit overflow-hidden relative">
+        <div
+          ref={carouselRef}
+          className={`flex ${
+            isTransitioning
+              ? "transition-transform duration-700 ease-in-out"
+              : ""
+          }`}
+          style={{ transform: `translateX(-${current * 100}%)` }}
+        >
+          {extendedSlides.map((slide, index) => (
+            <div
+              key={index}
+              className="w-full h-screen sm:h-auto flex-shrink-0 relative"
+            >
+              <img
+                src={slide.src}
+                alt={`Carousel ${index}`}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center text-white px-4">
+                <p className="text-xl sm:text-4xl mb-2">{slide.title}</p>
+                <p className="text-4xl sm:text-6xl mb-6">{slide.subtitle}</p>
+                <button className="border border-white text-white px-12 py-3 hover:bg-white hover:text-black">
+                  Get a Quote
+                </button>
+              </div>
             </div>
-          </div>
-
-          <div className="carousel-item">
-            <img src="img/carousel-2.jpg" alt="Carousel Image" />
-            <div className="carousel-caption">
-              <p className="animated fadeInRight">Professional Builder</p>
-              <h1 className="animated fadeInLeft">We Build Your Home</h1>
-              <a className="btn animated fadeInUp" href="https://htmlcodex.com/construction-company-website-template">Get A Quote</a>
-            </div>
-          </div>
-
-          <div className="carousel-item">
-            <img src="img/carousel-3.jpg" alt="Carousel Image" />
-            <div className="carousel-caption">
-              <p className="animated fadeInRight">We Are Trusted</p>
-              <h1 className="animated fadeInLeft">For Your Dream Home</h1>
-              <a className="btn animated fadeInUp" href="https://htmlcodex.com/construction-company-website-template">Get A Quote</a>
-            </div>
-          </div>
+          ))}
         </div>
 
-        <a className="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
-          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span className="sr-only">Previous</span>
-        </a>
-        <a className="carousel-control-next" href="#carousel" role="button" data-slide="next">
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
-          <span className="sr-only">Next</span>
-        </a>
-      </div>
-      {/* <!-- Carousel End --> */}
+        {/* Navigasi */}
+        <button
+          onClick={() => {
+            handlePrev();
+            startAutoSlide();
+          }}
+          className="absolute top-1/2 left-4 sm:left-23 -translate-y-1/2 bg-transparent bg-opacity-60 hover:bg-opacity-100 p-2 rounded-full text-3xl text-gray-500 hover:text-white"
+        >
+          <MdOutlineKeyboardArrowLeft className="h-10 w-10" />
+        </button>
 
+        <button
+          onClick={() => {
+            handleNext();
+            startAutoSlide();
+          }}
+          className="absolute top-1/2 right-4 sm:right-23 -translate-y-1/2 bg-transparent bg-opacity-60 hover:bg-opacity-100 p-2 rounded-full text-3xl text-gray-500 hover:text-white"
+        >
+          <MdOutlineKeyboardArrowRight className="h-10 w-10" />
+        </button>
+      </div>
 
       {/* <!-- Feature Start--> */}
       <div className="feature wow fadeInUp" data-wow-delay="0.1s">
@@ -62,7 +146,10 @@ const Home = () => {
                 </div>
                 <div className="feature-text">
                   <h3>Expert Worker</h3>
-                  <p>Lorem ipsum dolor sit amet elit. Phasus nec pretim ornare velit non</p>
+                  <p>
+                    Lorem ipsum dolor sit amet elit. Phasus nec pretim ornare
+                    velit non
+                  </p>
                 </div>
               </div>
             </div>
@@ -73,7 +160,10 @@ const Home = () => {
                 </div>
                 <div className="feature-text">
                   <h3>Quality Work</h3>
-                  <p>Lorem ipsum dolor sit amet elit. Phasus nec pretim ornare velit non</p>
+                  <p>
+                    Lorem ipsum dolor sit amet elit. Phasus nec pretim ornare
+                    velit non
+                  </p>
                 </div>
               </div>
             </div>
@@ -84,7 +174,10 @@ const Home = () => {
                 </div>
                 <div className="feature-text">
                   <h3>24/7 Support</h3>
-                  <p>Lorem ipsum dolor sit amet elit. Phasus nec pretim ornare velit non</p>
+                  <p>
+                    Lorem ipsum dolor sit amet elit. Phasus nec pretim ornare
+                    velit non
+                  </p>
                 </div>
               </div>
             </div>
@@ -92,7 +185,6 @@ const Home = () => {
         </div>
       </div>
       {/* <!-- Feature End--> */}
-
 
       {/* <!-- About Start --> */}
       <div className="about wow fadeInUp" data-wow-delay="0.1s">
@@ -110,19 +202,28 @@ const Home = () => {
               </div>
               <div className="about-text">
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Phasellus nec pretium mi. Curabitur facilisis ornare velit non
+                  vulputate. Aliquam metus tortor, auctor id gravida
+                  condimentum, viverra quis sem.
                 </p>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem. Curabitur non nisl nec nisi scelerisque maximus. Aenean consectetur convallis porttitor. Aliquam interdum at lacus non blandit.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Phasellus nec pretium mi. Curabitur facilisis ornare velit non
+                  vulputate. Aliquam metus tortor, auctor id gravida
+                  condimentum, viverra quis sem. Curabitur non nisl nec nisi
+                  scelerisque maximus. Aenean consectetur convallis porttitor.
+                  Aliquam interdum at lacus non blandit.
                 </p>
-                <a className="btn" href="">Learn More</a>
+                <a className="btn" href="">
+                  Learn More
+                </a>
               </div>
             </div>
           </div>
         </div>
       </div>
       {/* <!-- About End --> */}
-
 
       {/* <!-- Fact Start --> */}
       <div className="fact">
@@ -177,7 +278,6 @@ const Home = () => {
       </div>
       {/* <!-- Fact End --> */}
 
-
       {/* <!-- Service Start --> */}
       <div className="service">
         <div className="container">
@@ -186,99 +286,171 @@ const Home = () => {
             <h2>We Provide Services</h2>
           </div>
           <div className="row">
-            <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+            <div
+              className="col-lg-4 col-md-6 wow fadeInUp"
+              data-wow-delay="0.1s"
+            >
               <div className="service-item">
                 <div className="service-img">
                   <img src="img/service-1.jpg" alt="Image" />
                   <div className="service-overlay">
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                      non vulputate. Aliquam metus tortor, auctor id gravida
+                      condimentum, viverra quis sem.
                     </p>
                   </div>
                 </div>
                 <div className="service-text">
                   <h3>Building Construction</h3>
-                  <a className="btn" href="img/service-1.jpg" data-lightbox="service">+</a>
+                  <a
+                    className="btn"
+                    href="img/service-1.jpg"
+                    data-lightbox="service"
+                  >
+                    +
+                  </a>
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+            <div
+              className="col-lg-4 col-md-6 wow fadeInUp"
+              data-wow-delay="0.2s"
+            >
               <div className="service-item">
                 <div className="service-img">
                   <img src="img/service-2.jpg" alt="Image" />
                   <div className="service-overlay">
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                      non vulputate. Aliquam metus tortor, auctor id gravida
+                      condimentum, viverra quis sem.
                     </p>
                   </div>
                 </div>
                 <div className="service-text">
                   <h3>House Renovation</h3>
-                  <a className="btn" href="img/service-2.jpg" data-lightbox="service">+</a>
+                  <a
+                    className="btn"
+                    href="img/service-2.jpg"
+                    data-lightbox="service"
+                  >
+                    +
+                  </a>
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+            <div
+              className="col-lg-4 col-md-6 wow fadeInUp"
+              data-wow-delay="0.3s"
+            >
               <div className="service-item">
                 <div className="service-img">
                   <img src="img/service-3.jpg" alt="Image" />
                   <div className="service-overlay">
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                      non vulputate. Aliquam metus tortor, auctor id gravida
+                      condimentum, viverra quis sem.
                     </p>
                   </div>
                 </div>
                 <div className="service-text">
                   <h3>Architecture Design</h3>
-                  <a className="btn" href="img/service-3.jpg" data-lightbox="service">+</a>
+                  <a
+                    className="btn"
+                    href="img/service-3.jpg"
+                    data-lightbox="service"
+                  >
+                    +
+                  </a>
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
+            <div
+              className="col-lg-4 col-md-6 wow fadeInUp"
+              data-wow-delay="0.4s"
+            >
               <div className="service-item">
                 <div className="service-img">
                   <img src="img/service-4.jpg" alt="Image" />
                   <div className="service-overlay">
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                      non vulputate. Aliquam metus tortor, auctor id gravida
+                      condimentum, viverra quis sem.
                     </p>
                   </div>
                 </div>
                 <div className="service-text">
                   <h3>Interior Design</h3>
-                  <a className="btn" href="img/service-4.jpg" data-lightbox="service">+</a>
+                  <a
+                    className="btn"
+                    href="img/service-4.jpg"
+                    data-lightbox="service"
+                  >
+                    +
+                  </a>
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+            <div
+              className="col-lg-4 col-md-6 wow fadeInUp"
+              data-wow-delay="0.5s"
+            >
               <div className="service-item">
                 <div className="service-img">
                   <img src="img/service-5.jpg" alt="Image" />
                   <div className="service-overlay">
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                      non vulputate. Aliquam metus tortor, auctor id gravida
+                      condimentum, viverra quis sem.
                     </p>
                   </div>
                 </div>
                 <div className="service-text">
                   <h3>Fixing & Support</h3>
-                  <a className="btn" href="img/service-5.jpg" data-lightbox="service">+</a>
+                  <a
+                    className="btn"
+                    href="img/service-5.jpg"
+                    data-lightbox="service"
+                  >
+                    +
+                  </a>
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
+            <div
+              className="col-lg-4 col-md-6 wow fadeInUp"
+              data-wow-delay="0.6s"
+            >
               <div className="service-item">
                 <div className="service-img">
                   <img src="img/service-6.jpg" alt="Image" />
                   <div className="service-overlay">
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                      non vulputate. Aliquam metus tortor, auctor id gravida
+                      condimentum, viverra quis sem.
                     </p>
                   </div>
                 </div>
                 <div className="service-text">
                   <h3>Painting</h3>
-                  <a className="btn" href="img/service-6.jpg" data-lightbox="service">+</a>
+                  <a
+                    className="btn"
+                    href="img/service-6.jpg"
+                    data-lightbox="service"
+                  >
+                    +
+                  </a>
                 </div>
               </div>
             </div>
@@ -287,21 +459,38 @@ const Home = () => {
       </div>
       {/* <!-- Service End --> */}
 
-
       {/* <!-- Video Start --> */}
       <div className="video wow fadeIn" data-wow-delay="0.1s">
         <div className="container">
-          <button type="button" className="btn-play" data-toggle="modal" data-src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=OPwzuYHXP2MkEIrf" data-target="#videoModal">
+          <button
+            type="button"
+            className="btn-play"
+            data-toggle="modal"
+            data-src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=OPwzuYHXP2MkEIrf"
+            data-target="#videoModal"
+          >
             <span></span>
           </button>
         </div>
       </div>
 
-      <div className="modal fade" id="videoModal" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div
+        className="modal fade"
+        id="videoModal"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-body">
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+              <button
+                type="button"
+                className="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
                 <span aria-hidden="true">&times;</span>
               </button>
               {/* <!-- 16:9 aspect ratio --> */}
@@ -319,7 +508,6 @@ const Home = () => {
       </div>
       {/* <!-- Video End --> */}
 
-
       {/* <!-- Team Start --> */}
       <div className="team">
         <div className="container">
@@ -328,7 +516,10 @@ const Home = () => {
             <h2>Meet Our Engineer</h2>
           </div>
           <div className="row">
-            <div className="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+            <div
+              className="col-lg-3 col-md-6 wow fadeInUp"
+              data-wow-delay="0.1s"
+            >
               <div className="team-item">
                 <div className="team-img">
                   <img src="img/team-1.jpg" alt="Team Image" />
@@ -338,14 +529,25 @@ const Home = () => {
                   <p>CEO & Founder</p>
                 </div>
                 <div className="team-social">
-                  <a className="social-tw" href=""><i className="fab fa-twitter"></i></a>
-                  <a className="social-fb" href=""><i className="fab fa-facebook-f"></i></a>
-                  <a className="social-li" href=""><i className="fab fa-linkedin-in"></i></a>
-                  <a className="social-in" href=""><i className="fab fa-instagram"></i></a>
+                  <a className="social-tw" href="">
+                    <i className="fab fa-twitter"></i>
+                  </a>
+                  <a className="social-fb" href="">
+                    <i className="fab fa-facebook-f"></i>
+                  </a>
+                  <a className="social-li" href="">
+                    <i className="fab fa-linkedin-in"></i>
+                  </a>
+                  <a className="social-in" href="">
+                    <i className="fab fa-instagram"></i>
+                  </a>
                 </div>
               </div>
             </div>
-            <div className="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+            <div
+              className="col-lg-3 col-md-6 wow fadeInUp"
+              data-wow-delay="0.2s"
+            >
               <div className="team-item">
                 <div className="team-img">
                   <img src="img/team-2.jpg" alt="Team Image" />
@@ -355,14 +557,25 @@ const Home = () => {
                   <p>Civil Engineer</p>
                 </div>
                 <div className="team-social">
-                  <a className="social-tw" href=""><i className="fab fa-twitter"></i></a>
-                  <a className="social-fb" href=""><i className="fab fa-facebook-f"></i></a>
-                  <a className="social-li" href=""><i className="fab fa-linkedin-in"></i></a>
-                  <a className="social-in" href=""><i className="fab fa-instagram"></i></a>
+                  <a className="social-tw" href="">
+                    <i className="fab fa-twitter"></i>
+                  </a>
+                  <a className="social-fb" href="">
+                    <i className="fab fa-facebook-f"></i>
+                  </a>
+                  <a className="social-li" href="">
+                    <i className="fab fa-linkedin-in"></i>
+                  </a>
+                  <a className="social-in" href="">
+                    <i className="fab fa-instagram"></i>
+                  </a>
                 </div>
               </div>
             </div>
-            <div className="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+            <div
+              className="col-lg-3 col-md-6 wow fadeInUp"
+              data-wow-delay="0.3s"
+            >
               <div className="team-item">
                 <div className="team-img">
                   <img src="img/team-3.jpg" alt="Team Image" />
@@ -372,14 +585,25 @@ const Home = () => {
                   <p>Interior Designer</p>
                 </div>
                 <div className="team-social">
-                  <a className="social-tw" href=""><i className="fab fa-twitter"></i></a>
-                  <a className="social-fb" href=""><i className="fab fa-facebook-f"></i></a>
-                  <a className="social-li" href=""><i className="fab fa-linkedin-in"></i></a>
-                  <a className="social-in" href=""><i className="fab fa-instagram"></i></a>
+                  <a className="social-tw" href="">
+                    <i className="fab fa-twitter"></i>
+                  </a>
+                  <a className="social-fb" href="">
+                    <i className="fab fa-facebook-f"></i>
+                  </a>
+                  <a className="social-li" href="">
+                    <i className="fab fa-linkedin-in"></i>
+                  </a>
+                  <a className="social-in" href="">
+                    <i className="fab fa-instagram"></i>
+                  </a>
                 </div>
               </div>
             </div>
-            <div className="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
+            <div
+              className="col-lg-3 col-md-6 wow fadeInUp"
+              data-wow-delay="0.4s"
+            >
               <div className="team-item">
                 <div className="team-img">
                   <img src="img/team-4.jpg" alt="Team Image" />
@@ -389,10 +613,18 @@ const Home = () => {
                   <p>Painter</p>
                 </div>
                 <div className="team-social">
-                  <a className="social-tw" href=""><i className="fab fa-twitter"></i></a>
-                  <a className="social-fb" href=""><i className="fab fa-facebook-f"></i></a>
-                  <a className="social-li" href=""><i className="fab fa-linkedin-in"></i></a>
-                  <a className="social-in" href=""><i className="fab fa-instagram"></i></a>
+                  <a className="social-tw" href="">
+                    <i className="fab fa-twitter"></i>
+                  </a>
+                  <a className="social-fb" href="">
+                    <i className="fab fa-facebook-f"></i>
+                  </a>
+                  <a className="social-li" href="">
+                    <i className="fab fa-linkedin-in"></i>
+                  </a>
+                  <a className="social-in" href="">
+                    <i className="fab fa-instagram"></i>
+                  </a>
                 </div>
               </div>
             </div>
@@ -400,7 +632,6 @@ const Home = () => {
         </div>
       </div>
       {/* <!-- Team End --> */}
-
 
       {/* <!-- FAQs Start --> */}
       <div className="faqs">
@@ -414,61 +645,111 @@ const Home = () => {
               <div id="accordion-1">
                 <div className="card wow fadeInLeft" data-wow-delay="0.1s">
                   <div className="card-header">
-                    <a className="card-link collapsed" data-toggle="collapse" href="#collapseOne">
+                    <a
+                      className="card-link collapsed"
+                      data-toggle="collapse"
+                      href="#collapseOne"
+                    >
                       Lorem ipsum dolor sit amet?
                     </a>
                   </div>
-                  <div id="collapseOne" className="collapse" data-parent="#accordion-1">
+                  <div
+                    id="collapseOne"
+                    className="collapse"
+                    data-parent="#accordion-1"
+                  >
                     <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                      non.
                     </div>
                   </div>
                 </div>
                 <div className="card wow fadeInLeft" data-wow-delay="0.2s">
                   <div className="card-header">
-                    <a className="card-link collapsed" data-toggle="collapse" href="#collapseTwo">
+                    <a
+                      className="card-link collapsed"
+                      data-toggle="collapse"
+                      href="#collapseTwo"
+                    >
                       Lorem ipsum dolor sit amet?
                     </a>
                   </div>
-                  <div id="collapseTwo" className="collapse" data-parent="#accordion-1">
+                  <div
+                    id="collapseTwo"
+                    className="collapse"
+                    data-parent="#accordion-1"
+                  >
                     <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                      non.
                     </div>
                   </div>
                 </div>
                 <div className="card wow fadeInLeft" data-wow-delay="0.3s">
                   <div className="card-header">
-                    <a className="card-link collapsed" data-toggle="collapse" href="#collapseThree">
+                    <a
+                      className="card-link collapsed"
+                      data-toggle="collapse"
+                      href="#collapseThree"
+                    >
                       Lorem ipsum dolor sit amet?
                     </a>
                   </div>
-                  <div id="collapseThree" className="collapse" data-parent="#accordion-1">
+                  <div
+                    id="collapseThree"
+                    className="collapse"
+                    data-parent="#accordion-1"
+                  >
                     <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                      non.
                     </div>
                   </div>
                 </div>
                 <div className="card wow fadeInLeft" data-wow-delay="0.4s">
                   <div className="card-header">
-                    <a className="card-link collapsed" data-toggle="collapse" href="#collapseFour">
+                    <a
+                      className="card-link collapsed"
+                      data-toggle="collapse"
+                      href="#collapseFour"
+                    >
                       Lorem ipsum dolor sit amet?
                     </a>
                   </div>
-                  <div id="collapseFour" className="collapse" data-parent="#accordion-1">
+                  <div
+                    id="collapseFour"
+                    className="collapse"
+                    data-parent="#accordion-1"
+                  >
                     <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                      non.
                     </div>
                   </div>
                 </div>
                 <div className="card wow fadeInLeft" data-wow-delay="0.5s">
                   <div className="card-header">
-                    <a className="card-link collapsed" data-toggle="collapse" href="#collapseFive">
+                    <a
+                      className="card-link collapsed"
+                      data-toggle="collapse"
+                      href="#collapseFive"
+                    >
                       Lorem ipsum dolor sit amet?
                     </a>
                   </div>
-                  <div id="collapseFive" className="collapse" data-parent="#accordion-1">
+                  <div
+                    id="collapseFive"
+                    className="collapse"
+                    data-parent="#accordion-1"
+                  >
                     <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                      non.
                     </div>
                   </div>
                 </div>
@@ -478,61 +759,111 @@ const Home = () => {
               <div id="accordion-2">
                 <div className="card wow fadeInRight" data-wow-delay="0.1s">
                   <div className="card-header">
-                    <a className="card-link collapsed" data-toggle="collapse" href="#collapseSix">
+                    <a
+                      className="card-link collapsed"
+                      data-toggle="collapse"
+                      href="#collapseSix"
+                    >
                       Lorem ipsum dolor sit amet?
                     </a>
                   </div>
-                  <div id="collapseSix" className="collapse" data-parent="#accordion-2">
+                  <div
+                    id="collapseSix"
+                    className="collapse"
+                    data-parent="#accordion-2"
+                  >
                     <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                      non.
                     </div>
                   </div>
                 </div>
                 <div className="card wow fadeInRight" data-wow-delay="0.2s">
                   <div className="card-header">
-                    <a className="card-link collapsed" data-toggle="collapse" href="#collapseSeven">
+                    <a
+                      className="card-link collapsed"
+                      data-toggle="collapse"
+                      href="#collapseSeven"
+                    >
                       Lorem ipsum dolor sit amet?
                     </a>
                   </div>
-                  <div id="collapseSeven" className="collapse" data-parent="#accordion-2">
+                  <div
+                    id="collapseSeven"
+                    className="collapse"
+                    data-parent="#accordion-2"
+                  >
                     <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                      non.
                     </div>
                   </div>
                 </div>
                 <div className="card wow fadeInRight" data-wow-delay="0.3s">
                   <div className="card-header">
-                    <a className="card-link collapsed" data-toggle="collapse" href="#collapseEight">
+                    <a
+                      className="card-link collapsed"
+                      data-toggle="collapse"
+                      href="#collapseEight"
+                    >
                       Lorem ipsum dolor sit amet?
                     </a>
                   </div>
-                  <div id="collapseEight" className="collapse" data-parent="#accordion-2">
+                  <div
+                    id="collapseEight"
+                    className="collapse"
+                    data-parent="#accordion-2"
+                  >
                     <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                      non.
                     </div>
                   </div>
                 </div>
                 <div className="card wow fadeInRight" data-wow-delay="0.4s">
                   <div className="card-header">
-                    <a className="card-link collapsed" data-toggle="collapse" href="#collapseNine">
+                    <a
+                      className="card-link collapsed"
+                      data-toggle="collapse"
+                      href="#collapseNine"
+                    >
                       Lorem ipsum dolor sit amet?
                     </a>
                   </div>
-                  <div id="collapseNine" className="collapse" data-parent="#accordion-2">
+                  <div
+                    id="collapseNine"
+                    className="collapse"
+                    data-parent="#accordion-2"
+                  >
                     <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                      non.
                     </div>
                   </div>
                 </div>
                 <div className="card wow fadeInRight" data-wow-delay="0.5s">
                   <div className="card-header">
-                    <a className="card-link collapsed" data-toggle="collapse" href="#collapseTen">
+                    <a
+                      className="card-link collapsed"
+                      data-toggle="collapse"
+                      href="#collapseTen"
+                    >
                       Lorem ipsum dolor sit amet?
                     </a>
                   </div>
-                  <div id="collapseTen" className="collapse" data-parent="#accordion-2">
+                  <div
+                    id="collapseTen"
+                    className="collapse"
+                    data-parent="#accordion-2"
+                  >
                     <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                      non.
                     </div>
                   </div>
                 </div>
@@ -543,21 +874,36 @@ const Home = () => {
       </div>
       {/* <!-- FAQs End --> */}
 
-
       {/* <!-- Testimonial Start --> */}
       <div className="testimonial wow fadeIn" data-wow-delay="0.1s">
         <div className="container">
           <div className="row">
             <div className="col-12">
               <div className="testimonial-slider-nav">
-                <div className="slider-nav"><img src="img/testimonial-1.jpg" alt="Testimonial" /></div>
-                <div className="slider-nav"><img src="img/testimonial-2.jpg" alt="Testimonial" /></div>
-                <div className="slider-nav"><img src="img/testimonial-3.jpg" alt="Testimonial" /></div>
-                <div className="slider-nav"><img src="img/testimonial-4.jpg" alt="Testimonial" /></div>
-                <div className="slider-nav"><img src="img/testimonial-1.jpg" alt="Testimonial" /></div>
-                <div className="slider-nav"><img src="img/testimonial-2.jpg" alt="Testimonial" /></div>
-                <div className="slider-nav"><img src="img/testimonial-3.jpg" alt="Testimonial" /></div>
-                <div className="slider-nav"><img src="img/testimonial-4.jpg" alt="Testimonial" /></div>
+                <div className="slider-nav">
+                  <img src="img/testimonial-1.jpg" alt="Testimonial" />
+                </div>
+                <div className="slider-nav">
+                  <img src="img/testimonial-2.jpg" alt="Testimonial" />
+                </div>
+                <div className="slider-nav">
+                  <img src="img/testimonial-3.jpg" alt="Testimonial" />
+                </div>
+                <div className="slider-nav">
+                  <img src="img/testimonial-4.jpg" alt="Testimonial" />
+                </div>
+                <div className="slider-nav">
+                  <img src="img/testimonial-1.jpg" alt="Testimonial" />
+                </div>
+                <div className="slider-nav">
+                  <img src="img/testimonial-2.jpg" alt="Testimonial" />
+                </div>
+                <div className="slider-nav">
+                  <img src="img/testimonial-3.jpg" alt="Testimonial" />
+                </div>
+                <div className="slider-nav">
+                  <img src="img/testimonial-4.jpg" alt="Testimonial" />
+                </div>
               </div>
             </div>
           </div>
@@ -567,42 +913,90 @@ const Home = () => {
                 <div className="slider-item">
                   <h3>Customer Name</h3>
                   <h4>profession</h4>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem. Curabitur non nisl nec nisi scelerisque maximus.</p>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                    non vulputate. Aliquam metus tortor, auctor id gravida
+                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
+                    scelerisque maximus.
+                  </p>
                 </div>
                 <div className="slider-item">
                   <h3>Customer Name</h3>
                   <h4>profession</h4>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem. Curabitur non nisl nec nisi scelerisque maximus.</p>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                    non vulputate. Aliquam metus tortor, auctor id gravida
+                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
+                    scelerisque maximus.
+                  </p>
                 </div>
                 <div className="slider-item">
                   <h3>Customer Name</h3>
                   <h4>profession</h4>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem. Curabitur non nisl nec nisi scelerisque maximus.</p>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                    non vulputate. Aliquam metus tortor, auctor id gravida
+                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
+                    scelerisque maximus.
+                  </p>
                 </div>
                 <div className="slider-item">
                   <h3>Customer Name</h3>
                   <h4>profession</h4>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem. Curabitur non nisl nec nisi scelerisque maximus.</p>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                    non vulputate. Aliquam metus tortor, auctor id gravida
+                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
+                    scelerisque maximus.
+                  </p>
                 </div>
                 <div className="slider-item">
                   <h3>Customer Name</h3>
                   <h4>profession</h4>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem. Curabitur non nisl nec nisi scelerisque maximus.</p>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                    non vulputate. Aliquam metus tortor, auctor id gravida
+                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
+                    scelerisque maximus.
+                  </p>
                 </div>
                 <div className="slider-item">
                   <h3>Customer Name</h3>
                   <h4>profession</h4>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem. Curabitur non nisl nec nisi scelerisque maximus.</p>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                    non vulputate. Aliquam metus tortor, auctor id gravida
+                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
+                    scelerisque maximus.
+                  </p>
                 </div>
                 <div className="slider-item">
                   <h3>Customer Name</h3>
                   <h4>profession</h4>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem. Curabitur non nisl nec nisi scelerisque maximus.</p>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                    non vulputate. Aliquam metus tortor, auctor id gravida
+                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
+                    scelerisque maximus.
+                  </p>
                 </div>
                 <div className="slider-item">
                   <h3>Customer Name</h3>
                   <h4>profession</h4>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem. Curabitur non nisl nec nisi scelerisque maximus.</p>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
+                    non vulputate. Aliquam metus tortor, auctor id gravida
+                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
+                    scelerisque maximus.
+                  </p>
                 </div>
               </div>
             </div>
@@ -610,7 +1004,6 @@ const Home = () => {
         </div>
       </div>
       {/* <!-- Testimonial End --> */}
-
 
       {/* <!-- Blog Start --> */}
       <div className="blog">
@@ -620,22 +1013,33 @@ const Home = () => {
             <h2>Latest From Our Blog</h2>
           </div>
           <div className="row">
-            <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+            <div
+              className="col-lg-4 col-md-6 wow fadeInUp"
+              data-wow-delay="0.2s"
+            >
               <div className="blog-item">
                 <div className="blog-img">
                   <img src="img/blog-1.jpg" alt="Image" />
                 </div>
                 <div className="blog-title">
                   <h3>Lorem ipsum dolor sit</h3>
-                  <a className="btn" href="">+</a>
+                  <a className="btn" href="">
+                    +
+                  </a>
                 </div>
                 <div className="blog-meta">
-                  <p>By<a href="">Admin</a></p>
-                  <p>In<a href="">Construction</a></p>
+                  <p>
+                    By<a href="">Admin</a>
+                  </p>
+                  <p>
+                    In<a href="">Construction</a>
+                  </p>
                 </div>
                 <div className="blog-text">
                   <p>
-                    Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor
+                    Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi.
+                    Curabitur facilisis ornare velit non vulputate. Aliquam
+                    metus tortor
                   </p>
                 </div>
               </div>
@@ -647,35 +1051,54 @@ const Home = () => {
                 </div>
                 <div className="blog-title">
                   <h3>Lorem ipsum dolor sit</h3>
-                  <a className="btn" href="">+</a>
+                  <a className="btn" href="">
+                    +
+                  </a>
                 </div>
                 <div className="blog-meta">
-                  <p>By<a href="">Admin</a></p>
-                  <p>In<a href="">Construction</a></p>
+                  <p>
+                    By<a href="">Admin</a>
+                  </p>
+                  <p>
+                    In<a href="">Construction</a>
+                  </p>
                 </div>
                 <div className="blog-text">
                   <p>
-                    Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor
+                    Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi.
+                    Curabitur facilisis ornare velit non vulputate. Aliquam
+                    metus tortor
                   </p>
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+            <div
+              className="col-lg-4 col-md-6 wow fadeInUp"
+              data-wow-delay="0.2s"
+            >
               <div className="blog-item">
                 <div className="blog-img">
                   <img src="img/blog-3.jpg" alt="Image" />
                 </div>
                 <div className="blog-title">
                   <h3>Lorem ipsum dolor sit</h3>
-                  <a className="btn" href="">+</a>
+                  <a className="btn" href="">
+                    +
+                  </a>
                 </div>
                 <div className="blog-meta">
-                  <p>By<a href="">Admin</a></p>
-                  <p>In<a href="">Construction</a></p>
+                  <p>
+                    By<a href="">Admin</a>
+                  </p>
+                  <p>
+                    In<a href="">Construction</a>
+                  </p>
                 </div>
                 <div className="blog-text">
                   <p>
-                    Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor
+                    Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi.
+                    Curabitur facilisis ornare velit non vulputate. Aliquam
+                    metus tortor
                   </p>
                 </div>
               </div>
@@ -685,7 +1108,7 @@ const Home = () => {
       </div>
       {/* <!-- Blog End --> */}
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
