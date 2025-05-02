@@ -1,9 +1,11 @@
 import "./../../tailwind.css"; // akses pakai path relatif. jika aktif, beberapa kode akan ditimpammm
 import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   MdOutlineKeyboardArrowLeft,
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
+import { FaHardHat, FaBuilding, FaPhoneAlt } from "react-icons/fa";
 
 const Home = () => {
   const images = [
@@ -82,6 +84,7 @@ const Home = () => {
 
   return (
     <>
+      {/* Hero Section */}
       <div className="w-full h-screen sm:h-fit overflow-hidden relative">
         <div
           ref={carouselRef}
@@ -103,11 +106,49 @@ const Home = () => {
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center text-white px-4">
-                <p className="text-xl sm:text-4xl mb-2">{slide.title}</p>
-                <p className="text-4xl sm:text-6xl mb-6">{slide.subtitle}</p>
-                <button className="border border-white text-white px-12 py-3 hover:bg-white hover:text-black">
-                  Get a Quote
-                </button>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={current}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.7 }}
+                    className="absolute inset-0 flex flex-col justify-center items-center text-center text-white px-4"
+                  >
+                    <motion.p
+                      key={`title-${current}`}
+                      initial={{ x: 100, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      exit={{ x: 100, opacity: 0 }}
+                      transition={{ duration: 0.7 }}
+                      className="text-xl sm:text-4xl mb-2"
+                    >
+                      {texts[current - 1]?.title}
+                    </motion.p>
+
+                    <motion.p
+                      key={`subtitle-${current}`}
+                      initial={{ x: -100, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      exit={{ x: -100, opacity: 0 }}
+                      transition={{ duration: 0.5, delay: 0.1 }}
+                      className="text-4xl sm:text-6xl mb-6"
+                    >
+                      {texts[current - 1]?.subtitle}
+                    </motion.p>
+
+                    <motion.button
+                      key={`button-${current}`}
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 50 }}
+                      transition={{ duration: 0.5, delay: 0.3 }}
+                      className="border border-white text-white px-12 py-3 hover:bg-white hover:text-black"
+                    >
+                      Get a Quote
+                    </motion.button>
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </div>
           ))}
@@ -134,73 +175,117 @@ const Home = () => {
           <MdOutlineKeyboardArrowRight className="h-10 w-10" />
         </button>
       </div>
+      {/* <!-- Hero End --> */}
 
-      {/* <!-- Feature Start--> */}
-      <div className="feature wow fadeInUp" data-wow-delay="0.1s">
-        <div className="container-fluid">
-          <div className="row align-items-center">
-            <div className="col-lg-4 col-md-12">
-              <div className="feature-item">
-                <div className="feature-icon">
-                  <i className="flaticon-worker"></i>
-                </div>
-                <div className="feature-text">
-                  <h3>Expert Worker</h3>
-                  <p>
-                    Lorem ipsum dolor sit amet elit. Phasus nec pretim ornare
-                    velit non
-                  </p>
-                </div>
-              </div>
+      {/* <!-- Feature Start --> */}
+      <motion.div
+        className="flex flex-wrap w-full mb-12 h-60"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        {/* Kolom 1 */}
+        <div className="w-full sm:w-1/3 p-6 flex items-center feature-bg-dark">
+          <div className="flex items-center space-x-4">
+            <div className="w-[60px] h-[60px] flex justify-center items-center rounded-full text-yellow-400">
+              <FaHardHat size={60} />
             </div>
-            <div className="col-lg-4 col-md-12">
-              <div className="feature-item">
-                <div className="feature-icon">
-                  <i className="flaticon-building"></i>
-                </div>
-                <div className="feature-text">
-                  <h3>Quality Work</h3>
-                  <p>
-                    Lorem ipsum dolor sit amet elit. Phasus nec pretim ornare
-                    velit non
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-12">
-              <div className="feature-item">
-                <div className="feature-icon">
-                  <i className="flaticon-call"></i>
-                </div>
-                <div className="feature-text">
-                  <h3>24/7 Support</h3>
-                  <p>
-                    Lorem ipsum dolor sit amet elit. Phasus nec pretim ornare
-                    velit non
-                  </p>
-                </div>
-              </div>
+            <div>
+              <h1 className="text-lg font-bold text-yellow-400">
+                Expert Worker
+              </h1>
+              <p className="text-sm">
+                Lorem ipsum dolor sit amet elit. Phasus nec pretim ornare velit
+                non
+              </p>
             </div>
           </div>
         </div>
-      </div>
-      {/* <!-- Feature End--> */}
 
-      {/* <!-- About Start --> */}
-      <div className="about wow fadeInUp" data-wow-delay="0.1s">
-        <div className="container">
-          <div className="row align-items-center">
-            <div className="col-lg-5 col-md-6">
-              <div className="about-img">
-                <img src="img/about.jpg" alt="Image" />
-              </div>
+        {/* Kolom 2 */}
+        <div className="w-full sm:w-1/3 p-6 flex items-center feature-bg-light">
+          <div className="flex items-center space-x-4">
+            <div className="w-[60px] h-[60px] flex justify-center items-center rounded-full text-black">
+              <FaBuilding size={60} />
             </div>
-            <div className="col-lg-7 col-md-6">
-              <div className="section-header text-left">
-                <p>Welcome to Builderz</p>
-                <h2>25 Years Experience</h2>
+            <div>
+              <h1 className="text-lg font-bold text-black">Quality Work</h1>
+              <p className="text-black text-sm">
+                Lorem ipsum dolor sit amet elit. Phasus nec pretim ornare velit
+                non
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Kolom 3 */}
+        <div className="w-full sm:w-1/3 p-6 flex items-center feature-bg-dark">
+          <div className="flex items-center space-x-4">
+            <div className="w-[60px] h-[60px] flex justify-center items-center rounded-full text-yellow-400">
+              <FaPhoneAlt size={60} />
+            </div>
+            <div>
+              <h1 className="text-lg font-bold text-yellow-400">
+                24/7 Support
+              </h1>
+              <p className="text-sm">
+                Lorem ipsum dolor sit amet elit. Phasus nec pretim ornare velit
+                non
+              </p>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+      {/* Feature End */}
+
+      {/* About Start */}
+      <motion.div
+        className="animate-fade-in-up px-4 py-8 md:py-16"
+        initial={{ opacity: 0, y: 50 }} // Awal animasi (tidak terlihat dan bergeser ke bawah)
+        animate={{ opacity: 1, y: 0 }} // Animasi akhir (terlihat dan posisinya normal)
+        transition={{ duration: 0.6, ease: "easeOut" }} // Durasi animasi dengan easeOut
+      >
+        <div className="container mx-auto">
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            {/* Gambar */}
+            <motion.div
+              className="md:w-5/12 w-full"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.6,
+                ease: "easeOut",
+                delay: 0.6, // Menunggu 0.6 detik setelah animasi pertama selesai
+              }}
+            >
+              <img
+                src="img/about.jpg"
+                alt="Image"
+                className="rounded-lg shadow-lg w-full"
+              />
+            </motion.div>
+
+            {/* Text Content */}
+            <motion.div
+              className="md:w-7/12 w-full"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.6,
+                ease: "easeOut",
+                delay: 0.8, // Menunggu 0.8 detik setelah animasi pertama selesai
+              }}
+            >
+              <div className="mb-4">
+                <p className="text-yellow-500 text-sm uppercase font-semibold tracking-wide">
+                  Welcome to Builderz
+                </p>
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
+                  25 Years Experience
+                </h2>
               </div>
-              <div className="about-text">
+
+              <div className="space-y-4 text-gray-600">
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                   Phasellus nec pretium mi. Curabitur facilisis ornare velit non
@@ -215,15 +300,18 @@ const Home = () => {
                   scelerisque maximus. Aenean consectetur convallis porttitor.
                   Aliquam interdum at lacus non blandit.
                 </p>
-                <a className="btn" href="">
+              </div>
+
+              <div className="about">
+                <a href="#" className="btn">
                   Learn More
                 </a>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </div>
-      {/* <!-- About End --> */}
+      </motion.div>
+      {/* About End */}
 
       {/* <!-- Fact Start --> */}
       <div className="fact">
