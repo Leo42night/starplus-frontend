@@ -184,10 +184,7 @@ const RootLayout = () => {
 
             {/* Right: Button */}
             <div className="hidden md:flex">
-              <a
-                href="#"
-                className="bg-yellow-400 text-white text-black px-4 py-2 rounded hover:bg-yellow-500 btn"
-              >
+              <a href="#" className="btn">
                 Get A Quote
               </a>
             </div>

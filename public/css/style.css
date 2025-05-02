@@ -159,10 +159,6 @@ a:focus {
     transition: .3s;
 }
 
-.nav-bar .container-fluid {
-    padding: 0;
-}
-
 .nav-bar.nav-sticky {
     position: fixed;
     top: 0;
@@ -201,7 +197,9 @@ a:focus {
 .nav-bar .btn {
     color: #ffffff;
     border: 2px solid #ffffff;
+    background: transparent;
     border-radius: 0;
+    padding: 5px 8px; /* 2px top & bottom, 4px left & right */
 }
 
 .nav-bar .btn:hover {
