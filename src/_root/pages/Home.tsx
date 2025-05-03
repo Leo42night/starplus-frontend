@@ -5,9 +5,16 @@ import {
   MdOutlineKeyboardArrowLeft,
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
-import { FaHardHat, FaBuilding, FaPhoneAlt } from "react-icons/fa";
+import {
+  FaHardHat,
+  FaBuilding,
+  FaPhoneAlt,
+  FaMapMarkedAlt,
+  FaIndustry,
+} from "react-icons/fa";
 
 const Home = () => {
+  // Hero Animation Start
   const images = [
     "img/carousel-1.jpg",
     "img/carousel-2.jpg",
@@ -81,6 +88,67 @@ const Home = () => {
       setIsTransitioning(true);
     }
   }, [current]);
+  // Hero Animation End
+
+  // Fact Animation Start
+  const [expertWorkers, setExpertWorkers] = useState(0);
+  const [happyClients, setHappyClients] = useState(0);
+  const [completedProjects, setCompletedProjects] = useState(0);
+  const [runningProjects, setRunningProjects] = useState(0);
+
+  useEffect(() => {
+    // Animasi angka untuk Expert Workers
+    let count = 0;
+    const interval1 = setInterval(() => {
+      if (count < 109) {
+        count++;
+        setExpertWorkers(count);
+      } else {
+        clearInterval(interval1);
+      }
+    }, 10);
+
+    // Animasi angka untuk Happy Clients
+    count = 0;
+    const interval2 = setInterval(() => {
+      if (count < 485) {
+        count++;
+        setHappyClients(count);
+      } else {
+        clearInterval(interval2);
+      }
+    }, 10);
+
+    // Animasi angka untuk Completed Projects
+    count = 0;
+    const interval3 = setInterval(() => {
+      if (count < 789) {
+        count++;
+        setCompletedProjects(count);
+      } else {
+        clearInterval(interval3);
+      }
+    }, 10);
+
+    // Animasi angka untuk Running Projects
+    count = 0;
+    const interval4 = setInterval(() => {
+      if (count < 890) {
+        count++;
+        setRunningProjects(count);
+      } else {
+        clearInterval(interval4);
+      }
+    }, 10);
+
+    return () => {
+      clearInterval(interval1);
+      clearInterval(interval2);
+      clearInterval(interval3);
+      clearInterval(interval4);
+    };
+  }, []);
+  // Fact Animation End
 
   return (
     <>
@@ -314,50 +382,51 @@ const Home = () => {
       {/* About End */}
 
       {/* <!-- Fact Start --> */}
-      <div className="fact">
-        <div className="container-fluid">
-          <div className="row counters">
-            <div className="col-md-6 fact-left wow slideInLeft">
-              <div className="row">
-                <div className="col-6">
-                  <div className="fact-icon">
-                    <i className="flaticon-worker"></i>
-                  </div>
-                  <div className="fact-text">
-                    <h2 data-toggle="counter-up">109</h2>
-                    <p>Expert Workers</p>
-                  </div>
+      <div className="fact-section">
+        <div className="fact-container">
+          {/* Left */}
+          <div className="fact-left">
+            <div className="fact-grid">
+              <div className="fact-item">
+                <div className="fact-icon">
+                  <FaHardHat />
                 </div>
-                <div className="col-6">
-                  <div className="fact-icon">
-                    <i className="flaticon-building"></i>
-                  </div>
-                  <div className="fact-text">
-                    <h2 data-toggle="counter-up">485</h2>
-                    <p>Happy Clients</p>
-                  </div>
+                <div className="fact-text">
+                  <h2>{expertWorkers}</h2>
+                  <p>Expert Workers</p>
+                </div>
+              </div>
+              <div className="fact-item">
+                <div className="fact-icon">
+                  <FaBuilding />
+                </div>
+                <div className="fact-text">
+                  <h2>{happyClients}</h2>
+                  <p>Happy Clients</p>
                 </div>
               </div>
             </div>
-            <div className="col-md-6 fact-right wow slideInRight">
-              <div className="row">
-                <div className="col-6">
-                  <div className="fact-icon">
-                    <i className="flaticon-address"></i>
-                  </div>
-                  <div className="fact-text">
-                    <h2 data-toggle="counter-up">789</h2>
-                    <p>Completed Projects</p>
-                  </div>
+          </div>
+
+          {/* Right */}
+          <div className="fact-right">
+            <div className="fact-grid">
+              <div className="fact-item">
+                <div className="fact-icon">
+                  <FaMapMarkedAlt />
                 </div>
-                <div className="col-6">
-                  <div className="fact-icon">
-                    <i className="flaticon-crane"></i>
-                  </div>
-                  <div className="fact-text">
-                    <h2 data-toggle="counter-up">890</h2>
-                    <p>Running Projects</p>
-                  </div>
+                <div className="fact-text">
+                  <h2>{completedProjects}</h2>
+                  <p>Completed Projects</p>
+                </div>
+              </div>
+              <div className="fact-item">
+                <div className="fact-icon">
+                  <FaIndustry />
+                </div>
+                <div className="fact-text">
+                  <h2>{runningProjects}</h2>
+                  <p>Running Projects</p>
                 </div>
               </div>
             </div>
