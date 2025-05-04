@@ -201,6 +201,55 @@ const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
   // Video Animation End
 
+  // Team Animation Start
+  const teamMembers = [
+    {
+      name: "Adam Phillips",
+      title: "CEO & Founder",
+      image: "img/team-1.jpg",
+      social: {
+        twitter: "",
+        facebook: "",
+        linkedin: "",
+        instagram: "",
+      },
+    },
+    {
+      name: "Dylan Adams",
+      title: "Civil Engineer",
+      image: "img/team-2.jpg",
+      social: {
+        twitter: "",
+        facebook: "",
+        linkedin: "",
+        instagram: "",
+      },
+    },
+    {
+      name: "Jhon Doe",
+      title: "Interior Designer",
+      image: "img/team-3.jpg",
+      social: {
+        twitter: "",
+        facebook: "",
+        linkedin: "",
+        instagram: "",
+      },
+    },
+    {
+      name: "Josh Dunn",
+      title: "Painter",
+      image: "img/team-4.jpg",
+      social: {
+        twitter: "",
+        facebook: "",
+        linkedin: "",
+        instagram: "",
+      },
+    },
+  ];
+  // Team Animation End
+
   return (
     <>
       {/* Hero Section */}
@@ -560,7 +609,7 @@ const Home = () => {
                 onClick={() => setIsOpen(true)}
                 className="relative w-24 h-24 bg-transparent transition flex items-center justify-center shadow-lg z-10"
               >
-                <FaPlayCircle className="text-yellow-500 text-8xl" />
+                <FaPlayCircle className="text-yellow-400 text-8xl" />
               </button>
             </div>
           </div>
@@ -590,128 +639,67 @@ const Home = () => {
       {/* <!-- Video End --> */}
 
       {/* <!-- Team Start --> */}
-      <div className="team">
-        <div className="container">
-          <div className="section-header text-center">
-            <p>Our Team</p>
-            <h2>Meet Our Engineer</h2>
-          </div>
-          <div className="row">
-            <div
-              className="col-lg-3 col-md-6 wow fadeInUp"
-              data-wow-delay="0.1s"
+      <div className="container mx-auto py-12">
+        <div className="text-center mb-12">
+          <p className="text-gray-600 text-lg">Our Team</p>
+          <h2 className="text-4xl font-semibold text-yellow-500">
+            Meet Our Engineer
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          {teamMembers.map((member, index) => (
+            <motion.div
+              key={index}
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{
+                duration: 0.6,
+                delay: index * 0.3, // Menambahkan delay untuk animasi satu per satu
+                ease: "easeOut",
+              }}
+              className="team-item border border-gray-300 bg-[#121518] group hover:bg-[#FDBE33]"
             >
-              <div className="team-item">
-                <div className="team-img">
-                  <img src="img/team-1.jpg" alt="Team Image" />
-                </div>
-                <div className="team-text">
-                  <h2>Adam Phillips</h2>
-                  <p>CEO & Founder</p>
-                </div>
-                <div className="team-social">
-                  <a className="social-tw" href="">
-                    <i className="fab fa-twitter"></i>
-                  </a>
-                  <a className="social-fb" href="">
-                    <i className="fab fa-facebook-f"></i>
-                  </a>
-                  <a className="social-li" href="">
-                    <i className="fab fa-linkedin-in"></i>
-                  </a>
-                  <a className="social-in" href="">
-                    <i className="fab fa-instagram"></i>
-                  </a>
-                </div>
+              <div className="team-img">
+                <img
+                  src={member.image}
+                  alt="Team Image"
+                  className="w-full h-64 object-cover"
+                />
               </div>
-            </div>
-            <div
-              className="col-lg-3 col-md-6 wow fadeInUp"
-              data-wow-delay="0.2s"
-            >
-              <div className="team-item">
-                <div className="team-img">
-                  <img src="img/team-2.jpg" alt="Team Image" />
-                </div>
-                <div className="team-text">
-                  <h2>Dylan Adams</h2>
-                  <p>Civil Engineer</p>
-                </div>
-                <div className="team-social">
-                  <a className="social-tw" href="">
-                    <i className="fab fa-twitter"></i>
-                  </a>
-                  <a className="social-fb" href="">
-                    <i className="fab fa-facebook-f"></i>
-                  </a>
-                  <a className="social-li" href="">
-                    <i className="fab fa-linkedin-in"></i>
-                  </a>
-                  <a className="social-in" href="">
-                    <i className="fab fa-instagram"></i>
-                  </a>
-                </div>
+              <div className="team-text text-center mt-4">
+                {/* Menambahkan hover efek untuk teks dan memastikan warna teks kuning pada awal */}
+                <h2 className="team-member-name text-xl font-bold py-2 text-[#FDBE33] group-hover:text-[#121518] transition-all duration-300">
+                  {member.name}
+                </h2>
+                <p className="text-white py-1 mt-2">{member.title}</p>
               </div>
-            </div>
-            <div
-              className="col-lg-3 col-md-6 wow fadeInUp"
-              data-wow-delay="0.3s"
-            >
-              <div className="team-item">
-                <div className="team-img">
-                  <img src="img/team-3.jpg" alt="Team Image" />
-                </div>
-                <div className="team-text">
-                  <h2>Jhon Doe</h2>
-                  <p>Interior Designer</p>
-                </div>
-                <div className="team-social">
-                  <a className="social-tw" href="">
-                    <i className="fab fa-twitter"></i>
+              <div className="team-social flex justify-center mt-4">
+                {member.social.twitter && (
+                  <a className="social-tw mx-2" href={member.social.twitter}>
+                    <i className="fab fa-twitter text-xl text-blue-500"></i>
                   </a>
-                  <a className="social-fb" href="">
-                    <i className="fab fa-facebook-f"></i>
+                )}
+                {member.social.facebook && (
+                  <a className="social-fb mx-2" href={member.social.facebook}>
+                    <i className="fab fa-facebook-f text-xl text-blue-600"></i>
                   </a>
-                  <a className="social-li" href="">
-                    <i className="fab fa-linkedin-in"></i>
+                )}
+                {member.social.linkedin && (
+                  <a className="social-li mx-2" href={member.social.linkedin}>
+                    <i className="fab fa-linkedin-in text-xl text-blue-700"></i>
                   </a>
-                  <a className="social-in" href="">
-                    <i className="fab fa-instagram"></i>
+                )}
+                {member.social.instagram && (
+                  <a className="social-in mx-2" href={member.social.instagram}>
+                    <i className="fab fa-instagram text-xl text-pink-500"></i>
                   </a>
-                </div>
+                )}
               </div>
-            </div>
-            <div
-              className="col-lg-3 col-md-6 wow fadeInUp"
-              data-wow-delay="0.4s"
-            >
-              <div className="team-item">
-                <div className="team-img">
-                  <img src="img/team-4.jpg" alt="Team Image" />
-                </div>
-                <div className="team-text">
-                  <h2>Josh Dunn</h2>
-                  <p>Painter</p>
-                </div>
-                <div className="team-social">
-                  <a className="social-tw" href="">
-                    <i className="fab fa-twitter"></i>
-                  </a>
-                  <a className="social-fb" href="">
-                    <i className="fab fa-facebook-f"></i>
-                  </a>
-                  <a className="social-li" href="">
-                    <i className="fab fa-linkedin-in"></i>
-                  </a>
-                  <a className="social-in" href="">
-                    <i className="fab fa-instagram"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+            </motion.div>
+          ))}
         </div>
       </div>
+
       {/* <!-- Team End --> */}
 
       {/* <!-- FAQs Start --> */}
