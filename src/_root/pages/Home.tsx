@@ -11,6 +11,7 @@ import {
   FaPhoneAlt,
   FaMapMarkedAlt,
   FaIndustry,
+  FaPlayCircle,
 } from "react-icons/fa";
 
 const Home = () => {
@@ -149,6 +150,56 @@ const Home = () => {
     };
   }, []);
   // Fact Animation End
+
+  // Service Animation Start
+  const services = [
+    {
+      title: "Building Construction",
+      image: "img/service-1.jpg",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi.",
+      delay: 0.1,
+    },
+    {
+      title: "House Renovation",
+      image: "img/service-2.jpg",
+      description:
+        "Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor.",
+      delay: 0.2,
+    },
+    {
+      title: "Architecture Design",
+      image: "img/service-3.jpg",
+      description:
+        "Auctor id gravida condimentum, viverra quis sem. Proin nec fermentum diam.",
+      delay: 0.3,
+    },
+    {
+      title: "Interior Design",
+      image: "img/service-4.jpg",
+      description:
+        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.",
+      delay: 0.4,
+    },
+    {
+      title: "Fixing & Support",
+      image: "img/service-5.jpg",
+      description:
+        "Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.",
+      delay: 0.5,
+    },
+    {
+      title: "Painting",
+      image: "img/service-6.jpg",
+      description: "Et quasi architecto beatae vitae dicta sunt explicabo.",
+      delay: 0.6,
+    },
+  ];
+  // Service Animation End
+
+  // Video Animation Start
+  const [isOpen, setIsOpen] = useState(false);
+  // Video Animation End
 
   return (
     <>
@@ -436,233 +487,106 @@ const Home = () => {
       {/* <!-- Fact End --> */}
 
       {/* <!-- Service Start --> */}
-      <div className="service">
-        <div className="container">
-          <div className="section-header text-center">
-            <p>Our Services</p>
-            <h2>We Provide Services</h2>
-          </div>
-          <div className="row">
-            <div
-              className="col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay="0.1s"
-            >
-              <div className="service-item">
-                <div className="service-img">
-                  <img src="img/service-1.jpg" alt="Image" />
-                  <div className="service-overlay">
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non vulputate. Aliquam metus tortor, auctor id gravida
-                      condimentum, viverra quis sem.
-                    </p>
-                  </div>
-                </div>
-                <div className="service-text">
-                  <h3>Building Construction</h3>
-                  <a
-                    className="btn"
-                    href="img/service-1.jpg"
-                    data-lightbox="service"
-                  >
-                    +
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay="0.2s"
-            >
-              <div className="service-item">
-                <div className="service-img">
-                  <img src="img/service-2.jpg" alt="Image" />
-                  <div className="service-overlay">
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non vulputate. Aliquam metus tortor, auctor id gravida
-                      condimentum, viverra quis sem.
-                    </p>
-                  </div>
-                </div>
-                <div className="service-text">
-                  <h3>House Renovation</h3>
-                  <a
-                    className="btn"
-                    href="img/service-2.jpg"
-                    data-lightbox="service"
-                  >
-                    +
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay="0.3s"
-            >
-              <div className="service-item">
-                <div className="service-img">
-                  <img src="img/service-3.jpg" alt="Image" />
-                  <div className="service-overlay">
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non vulputate. Aliquam metus tortor, auctor id gravida
-                      condimentum, viverra quis sem.
-                    </p>
-                  </div>
-                </div>
-                <div className="service-text">
-                  <h3>Architecture Design</h3>
-                  <a
-                    className="btn"
-                    href="img/service-3.jpg"
-                    data-lightbox="service"
-                  >
-                    +
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay="0.4s"
-            >
-              <div className="service-item">
-                <div className="service-img">
-                  <img src="img/service-4.jpg" alt="Image" />
-                  <div className="service-overlay">
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non vulputate. Aliquam metus tortor, auctor id gravida
-                      condimentum, viverra quis sem.
-                    </p>
-                  </div>
-                </div>
-                <div className="service-text">
-                  <h3>Interior Design</h3>
-                  <a
-                    className="btn"
-                    href="img/service-4.jpg"
-                    data-lightbox="service"
-                  >
-                    +
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay="0.5s"
-            >
-              <div className="service-item">
-                <div className="service-img">
-                  <img src="img/service-5.jpg" alt="Image" />
-                  <div className="service-overlay">
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non vulputate. Aliquam metus tortor, auctor id gravida
-                      condimentum, viverra quis sem.
-                    </p>
-                  </div>
-                </div>
-                <div className="service-text">
-                  <h3>Fixing & Support</h3>
-                  <a
-                    className="btn"
-                    href="img/service-5.jpg"
-                    data-lightbox="service"
-                  >
-                    +
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay="0.6s"
-            >
-              <div className="service-item">
-                <div className="service-img">
-                  <img src="img/service-6.jpg" alt="Image" />
-                  <div className="service-overlay">
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non vulputate. Aliquam metus tortor, auctor id gravida
-                      condimentum, viverra quis sem.
-                    </p>
-                  </div>
-                </div>
-                <div className="service-text">
-                  <h3>Painting</h3>
-                  <a
-                    className="btn"
-                    href="img/service-6.jpg"
-                    data-lightbox="service"
-                  >
-                    +
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+      <section className="bg-white py-16">
+        <div className="text-center mb-12">
+          <p className="text-yellow-500 font-semibold text-lg">Our Services</p>
+          <h2 className="text-4xl font-bold text-gray-900">
+            We Provide Services
+          </h2>
         </div>
-      </div>
+
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
+          {services.map((service, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 60 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: service.delay, duration: 0.6 }}
+              className="group rounded-xl shadow-lg overflow-hidden flex flex-col bg-white"
+            >
+              {/* Gambar dengan overlay */}
+              <div className="relative group h-96 overflow-hidden">
+                <img
+                  src={service.image}
+                  alt={service.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-[#030f27] bg-opacity-80 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center text-white text-sm px-6 text-center">
+                  {service.description}
+                </div>
+              </div>
+
+              {/* Judul dan tombol */}
+              <div
+                className="flex justify-between items-center h-16"
+                style={{ backgroundColor: "#030f27" }}
+              >
+                <h3
+                  className="text-md font-bold leading-snug px-2 py-4"
+                  style={{ color: "#fdbe33" }}
+                >
+                  {service.title}
+                </h3>
+                <span
+                  style={{
+                    backgroundColor: "#fdbe33",
+                  }}
+                  // Ubah warna teks saat parent di-hover
+                  className="flex items-center text-2xl font-bold px-6 transition-colors duration-300 h-full group-hover:text-white"
+                >
+                  +
+                </span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
       {/* <!-- Service End --> */}
 
       {/* <!-- Video Start --> */}
-      <div className="video wow fadeIn" data-wow-delay="0.1s">
-        <div className="container">
-          <button
-            type="button"
-            className="btn-play"
-            data-toggle="modal"
-            data-src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=OPwzuYHXP2MkEIrf"
-            data-target="#videoModal"
-          >
-            <span></span>
-          </button>
-        </div>
-      </div>
-
-      <div
-        className="modal fade"
-        id="videoModal"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-body">
+      <section className="relative h-[500px]">
+        {/* Background fixed */}
+        <div
+          className="w-full h-full bg-fixed bg-center bg-cover"
+          style={{
+            backgroundImage: `url('https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg')`,
+          }}
+        >
+          <div className="w-full h-full bg-[#030f27]/80 flex items-center justify-center">
+            {/* Play Button with pulse animation */}
+            <div className="relative">
+              <span className="absolute inset-0 rounded-full animate-ping bg-yellow-400 opacity-75 scale-110"></span>
               <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
+                onClick={() => setIsOpen(true)}
+                className="relative w-24 h-24 bg-transparent transition flex items-center justify-center shadow-lg z-10"
               >
-                <span aria-hidden="true">&times;</span>
+                <FaPlayCircle className="text-yellow-500 text-8xl" />
               </button>
-              {/* <!-- 16:9 aspect ratio --> */}
-              <div className="embed-responsive embed-responsive-16by9">
-                <iframe
-                  className="embed-responsive-item"
-                  // src=""
-                  id="video"
-                  allow="autoplay"
-                ></iframe>
-              </div>
             </div>
           </div>
         </div>
-      </div>
+
+        {/* Modal */}
+        {isOpen && (
+          <div className="fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center transition duration-300">
+            <div className="relative w-full max-w-4xl aspect-video bg-black">
+              <button
+                onClick={() => setIsOpen(false)}
+                className="absolute -top-10 right-0 text-white text-4xl hover:text-yellow-400 transition"
+              >
+                &times;
+              </button>
+              <iframe
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+                title="Video"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+        )}
+      </section>
       {/* <!-- Video End --> */}
 
       {/* <!-- Team Start --> */}
