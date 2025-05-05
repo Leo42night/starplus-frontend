@@ -14,7 +14,6 @@ import {
   FaPlayCircle,
 } from "react-icons/fa";
 
-
 const Home = () => {
   // Hero Animation Start
   const images = [
@@ -298,6 +297,36 @@ const Home = () => {
     },
   ];
   // FAQ Animation End
+
+  const blogData = [
+    {
+      id: 1,
+      imageSrc: "img/blog-1.jpg",
+      title: "Lorem Ipsum",
+      author: "Admin",
+      category: "Construction",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci quae, corrupti laudantium culpa recusandae ab doloremque quis unde. Minus asperiores saepe ab.",
+    },
+    {
+      id: 2,
+      imageSrc: "img/blog-2.jpg",
+      title: "Dolor Sit Amet",
+      author: "Admin",
+      category: "Technology",
+      description:
+        "Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate.",
+    },
+    {
+      id: 3,
+      imageSrc: "img/blog-3.jpg",
+      title: "Curabitur Facilisis",
+      author: "Admin",
+      category: "Design",
+      description:
+        "Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor.",
+    },
+  ];
 
   return (
     <>
@@ -959,106 +988,45 @@ const Home = () => {
       {/* <!-- Testimonial End --> */}
 
       {/* <!-- Blog Start --> */}
-      <div className="blog">
-        <div className="container">
-          <div className="section-header text-center">
-            <p>Latest Blog</p>
-            <h2>Latest From Our Blog</h2>
+      <div className="py-16 bg-gray-100">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <p className="text-indigo-600 font-semibold">Latest Blog</p>
+            <h2 className="text-3xl font-bold">Latest From Our Blog</h2>
           </div>
-          <div className="row">
-            <div
-              className="col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay="0.2s"
-            >
-              <div className="blog-item">
-                <div className="blog-img">
-                  <img src="img/blog-1.jpg" alt="Image" />
-                </div>
-                <div className="blog-title">
-                  <h3>Lorem ipsum dolor sit</h3>
-                  <a className="btn" href="">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {blogData.map((blog) => (
+              <div className="bg-white shadow-lg  overflow-hidden hover:shadow-xl transition duration-30 h-128">
+                <img
+                  src={blog.imageSrc}
+                  alt={`Blog ${blog.id}`}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="w-full h-1/8 flex">
+                  <div className="w-5/6 h-full flex items-center justify-center text-center bg-[#030f27] text-2xl">
+                    {blog.title}
+                  </div>
+                  <div className="w-1/6 bg-[#fdbe33] h-full flex items-center justify-center text-center text-5xl">
                     +
-                  </a>
+                  </div>
                 </div>
-                <div className="blog-meta">
-                  <p>
-                    By<a href="">Admin</a>
-                  </p>
-                  <p>
-                    In<a href="">Construction</a>
-                  </p>
+                <div className="w-full h-1/8 flex  items-center text-center justify-between px-20">
+                  <span className="text-sm text-gray-600">
+                    by {blog.author}
+                  </span>
+                  <span className="text-sm text-gray-600">
+                    in {blog.category}
+                  </span>
                 </div>
-                <div className="blog-text">
-                  <p>
-                    Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi.
-                    Curabitur facilisis ornare velit non vulputate. Aliquam
-                    metus tortor
-                  </p>
+                <div className="w-full h-1/3 items-center text-center justify-center flex px-8 ">
+                  {blog.description}
                 </div>
               </div>
-            </div>
-            <div className="col-lg-4 col-md-6 wow fadeInUp">
-              <div className="blog-item">
-                <div className="blog-img">
-                  <img src="img/blog-2.jpg" alt="Image" />
-                </div>
-                <div className="blog-title">
-                  <h3>Lorem ipsum dolor sit</h3>
-                  <a className="btn" href="">
-                    +
-                  </a>
-                </div>
-                <div className="blog-meta">
-                  <p>
-                    By<a href="">Admin</a>
-                  </p>
-                  <p>
-                    In<a href="">Construction</a>
-                  </p>
-                </div>
-                <div className="blog-text">
-                  <p>
-                    Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi.
-                    Curabitur facilisis ornare velit non vulputate. Aliquam
-                    metus tortor
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay="0.2s"
-            >
-              <div className="blog-item">
-                <div className="blog-img">
-                  <img src="img/blog-3.jpg" alt="Image" />
-                </div>
-                <div className="blog-title">
-                  <h3>Lorem ipsum dolor sit</h3>
-                  <a className="btn" href="">
-                    +
-                  </a>
-                </div>
-                <div className="blog-meta">
-                  <p>
-                    By<a href="">Admin</a>
-                  </p>
-                  <p>
-                    In<a href="">Construction</a>
-                  </p>
-                </div>
-                <div className="blog-text">
-                  <p>
-                    Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi.
-                    Curabitur facilisis ornare velit non vulputate. Aliquam
-                    metus tortor
-                  </p>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
+
       {/* <!-- Blog End --> */}
     </>
   );
