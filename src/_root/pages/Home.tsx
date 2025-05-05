@@ -250,6 +250,54 @@ const Home = () => {
   ];
   // Team Animation End
 
+  // FAQ Animation Start
+  const faqItems = [
+    {
+      question: "Apa itu layanan kami?",
+      answer:
+        "Layanan kami adalah solusi digital untuk bisnis Anda, mulai dari pembuatan website hingga pengembangan sistem.",
+    },
+    {
+      question: "Bagaimana cara menghubungi tim?",
+      answer:
+        "Anda bisa menghubungi kami melalui halaman kontak atau email support kami.",
+    },
+    {
+      question: "Apakah ada biaya langganan?",
+      answer:
+        "Tergantung pada paket layanan yang Anda pilih, kami menyediakan opsi gratis dan berbayar.",
+    },
+    {
+      question: "Berapa lama proses pengerjaan?",
+      answer: "Biasanya antara 1-3 minggu tergantung kompleksitas proyek.",
+    },
+    {
+      question: "Apakah kami mendapatkan garansi?",
+      answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+    },
+    {
+      question: "Apakah kami mendapatkan garansi?",
+      answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+    },
+    {
+      question: "Apakah kami mendapatkan garansi?",
+      answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+    },
+    {
+      question: "Apakah kami mendapatkan garansi?",
+      answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+    },
+    {
+      question: "Apakah kami mendapatkan garansi?",
+      answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+    },
+    {
+      question: "Apakah kami mendapatkan garansi?",
+      answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+    },
+  ];
+  // FAQ Animation End
+
   return (
     <>
       {/* Hero Section */}
@@ -703,241 +751,52 @@ const Home = () => {
       {/* <!-- Team End --> */}
 
       {/* <!-- FAQs Start --> */}
-      <div className="faqs">
-        <div className="container">
-          <div className="section-header text-center">
-            <p>Frequently Asked Question</p>
-            <h2>You May Ask</h2>
+      <div className="faq-container">
+        <div className="faq-title-container">
+          <div className="faq-title">
+            <p className="faq-subtitle">Frequently Asked Question</p>
+            <h2 className="faq-heading">You May Ask</h2>
+            <div className="faq-divider"></div>
           </div>
-          <div className="row">
-            <div className="col-md-6">
-              <div id="accordion-1">
-                <div className="card wow fadeInLeft" data-wow-delay="0.1s">
-                  <div className="card-header">
-                    <a
-                      className="card-link collapsed"
-                      data-toggle="collapse"
-                      href="#collapseOne"
-                    >
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div
-                    id="collapseOne"
-                    className="collapse"
-                    data-parent="#accordion-1"
+
+          <div className="faq-grid">
+            <div className="faq-divider-vertical"></div>
+
+            {faqItems.map((item, i) => {
+              const isLeft = i % 2 === 0;
+              const direction = isLeft ? -100 : 100;
+
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: direction }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: i * 0.15,
+                    type: "tween",
+                    ease: "easeOut",
+                  }}
+                  className="faq-item"
+                >
+                  <button
+                    className="faq-item-button"
+                    onClick={() => {
+                      const content = document.getElementById(`faq-${i}`);
+                      if (content) {
+                        content.classList.toggle("show");
+                      }
+                    }}
                   >
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non.
-                    </div>
+                    <span>{item.question}</span>
+                    <span className="plus">+</span>
+                  </button>
+                  <div id={`faq-${i}`} className="faq-item-content">
+                    {item.answer}
                   </div>
-                </div>
-                <div className="card wow fadeInLeft" data-wow-delay="0.2s">
-                  <div className="card-header">
-                    <a
-                      className="card-link collapsed"
-                      data-toggle="collapse"
-                      href="#collapseTwo"
-                    >
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div
-                    id="collapseTwo"
-                    className="collapse"
-                    data-parent="#accordion-1"
-                  >
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non.
-                    </div>
-                  </div>
-                </div>
-                <div className="card wow fadeInLeft" data-wow-delay="0.3s">
-                  <div className="card-header">
-                    <a
-                      className="card-link collapsed"
-                      data-toggle="collapse"
-                      href="#collapseThree"
-                    >
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div
-                    id="collapseThree"
-                    className="collapse"
-                    data-parent="#accordion-1"
-                  >
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non.
-                    </div>
-                  </div>
-                </div>
-                <div className="card wow fadeInLeft" data-wow-delay="0.4s">
-                  <div className="card-header">
-                    <a
-                      className="card-link collapsed"
-                      data-toggle="collapse"
-                      href="#collapseFour"
-                    >
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div
-                    id="collapseFour"
-                    className="collapse"
-                    data-parent="#accordion-1"
-                  >
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non.
-                    </div>
-                  </div>
-                </div>
-                <div className="card wow fadeInLeft" data-wow-delay="0.5s">
-                  <div className="card-header">
-                    <a
-                      className="card-link collapsed"
-                      data-toggle="collapse"
-                      href="#collapseFive"
-                    >
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div
-                    id="collapseFive"
-                    className="collapse"
-                    data-parent="#accordion-1"
-                  >
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div id="accordion-2">
-                <div className="card wow fadeInRight" data-wow-delay="0.1s">
-                  <div className="card-header">
-                    <a
-                      className="card-link collapsed"
-                      data-toggle="collapse"
-                      href="#collapseSix"
-                    >
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div
-                    id="collapseSix"
-                    className="collapse"
-                    data-parent="#accordion-2"
-                  >
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non.
-                    </div>
-                  </div>
-                </div>
-                <div className="card wow fadeInRight" data-wow-delay="0.2s">
-                  <div className="card-header">
-                    <a
-                      className="card-link collapsed"
-                      data-toggle="collapse"
-                      href="#collapseSeven"
-                    >
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div
-                    id="collapseSeven"
-                    className="collapse"
-                    data-parent="#accordion-2"
-                  >
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non.
-                    </div>
-                  </div>
-                </div>
-                <div className="card wow fadeInRight" data-wow-delay="0.3s">
-                  <div className="card-header">
-                    <a
-                      className="card-link collapsed"
-                      data-toggle="collapse"
-                      href="#collapseEight"
-                    >
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div
-                    id="collapseEight"
-                    className="collapse"
-                    data-parent="#accordion-2"
-                  >
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non.
-                    </div>
-                  </div>
-                </div>
-                <div className="card wow fadeInRight" data-wow-delay="0.4s">
-                  <div className="card-header">
-                    <a
-                      className="card-link collapsed"
-                      data-toggle="collapse"
-                      href="#collapseNine"
-                    >
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div
-                    id="collapseNine"
-                    className="collapse"
-                    data-parent="#accordion-2"
-                  >
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non.
-                    </div>
-                  </div>
-                </div>
-                <div className="card wow fadeInRight" data-wow-delay="0.5s">
-                  <div className="card-header">
-                    <a
-                      className="card-link collapsed"
-                      data-toggle="collapse"
-                      href="#collapseTen"
-                    >
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div
-                    id="collapseTen"
-                    className="collapse"
-                    data-parent="#accordion-2"
-                  >
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </div>

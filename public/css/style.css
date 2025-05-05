@@ -645,106 +645,141 @@ button:focus {
 /*******************************/
 /*********** FAQs CSS **********/
 /*******************************/
-.faqs {
+/* styles.css */
+
+/* Container */
+.faq-container {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  background-color: white;
+}
+
+/* Title */
+.faq-title-container {
+  max-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
   position: relative;
+}
+
+.faq-title {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 10;
+}
+
+.faq-subtitle {
+  color: #f59e0b; /* yellow-500 */
+  font-weight: 600;
+}
+
+.faq-heading {
+  font-size: 2.25rem; /* 4xl */
+  font-weight: 700;
+  color: #1f2937; /* gray-900 */
+  margin-top: 0.5rem;
+}
+
+.faq-divider {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .faq-divider {
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 1rem;
+    width: 0.125rem;
+    height: 2.5rem;
+    background-color: #f59e0b; /* yellow-400 */
+  }
+}
+
+/* FAQ Grid */
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  position: relative;
+  z-index: 10;
+}
+
+@media (min-width: 768px) {
+  .faq-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.faq-item {
+  border: 1px solid #e5e7eb; /* gray-200 */
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 10;
+}
+
+.faq-item-button {
   width: 100%;
-  padding: 45px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  text-align: left;
+  color: #4b5563; /* gray-800 */
+  font-weight: 500;
+  transition: background-color 0.2s ease;
 }
 
-.faqs .row {
-  position: relative;
+.faq-item-button:hover {
+  background-color: #fef3c7; /* yellow-50 */
 }
 
-.faqs .row::after {
-  position: absolute;
-  content: "";
-  width: 1px;
-  height: 100%;
-  top: 0;
-  left: calc(50% - 0.5px);
-  background: #fdbe33;
+.faq-item-button .plus {
+  color: #f59e0b; /* yellow-500 */
+  font-weight: 700;
+  font-size: 1.25rem; /* text-xl */
 }
 
-.faqs #accordion-1 {
-  padding-right: 15px;
+.faq-item-content {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  color: #4b5563; /* gray-600 */
+  display: none;
+  transition: all 0.2s ease;
 }
 
-.faqs #accordion-2 {
-  padding-left: 15px;
-}
-
-@media (max-width: 767.98px) {
-  .faqs .row::after {
-    display: none;
-  }
-
-  .faqs #accordion-1,
-  .faqs #accordion-2 {
-    padding: 0;
-  }
-
-  .faqs #accordion-2 {
-    padding-top: 15px;
-  }
-}
-
-.faqs .card {
-  margin-bottom: 15px;
-  border: none;
-  border-radius: 0;
-}
-
-.faqs .card:last-child {
-  margin-bottom: 0;
-}
-
-.faqs .card-header {
-  padding: 0;
-  border: none;
-  background: #ffffff;
-}
-
-.faqs .card-header a {
+.faq-item-content.show {
   display: block;
-  padding: 10px 25px;
-  width: 100%;
-  color: #121518;
-  font-size: 16px;
-  line-height: 40px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  transition: 0.5s;
 }
 
-.faqs .card-header [data-toggle="collapse"][aria-expanded="true"] {
-  background: #fdbe33;
+.faq-divider-vertical {
+  display: none;
 }
 
-.faqs .card-header [data-toggle="collapse"]:after {
-  font-family: "font Awesome 5 Free";
-  content: "\f067";
-  float: right;
-  color: #fdbe33;
-  font-size: 12px;
-  font-weight: 900;
-  transition: 0.5s;
-}
-
-.faqs .card-header [data-toggle="collapse"][aria-expanded="true"]:after {
-  font-family: "font Awesome 5 Free";
-  content: "\f068";
-  float: right;
-  color: #030f27;
-  font-size: 12px;
-  font-weight: 900;
-  transition: 0.5s;
-}
-
-.faqs .card-body {
-  padding: 20px 25px;
-  font-size: 16px;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-top: none;
+@media (min-width: 768px) {
+  .faq-divider-vertical {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 0.125rem;
+    height: 100%;
+    background-color: #f59e0b; /* yellow-400 */
+    z-index: 0;
+  }
 }
 
 /*******************************/
