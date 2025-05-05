@@ -14,6 +14,7 @@ import {
   FaPlayCircle,
 } from "react-icons/fa";
 
+
 const Home = () => {
   // Hero Animation Start
   const images = [
@@ -801,6 +802,30 @@ const Home = () => {
         </div>
       </div>
       {/* <!-- FAQs End --> */}
+
+      <div className="w-full items-center justify-center flex flex-col border-4">
+        <div className="w-1/2 items-center justify-center flex flex-col relative">
+          {" "}
+          <img
+            className="rounded-full z-10  w-40 h-40"
+            src="img/testimonial-1.jpg"
+            alt="Testimonial"
+          />
+          <img
+            className="rounded-full ml-30 absolute w-30 h-30"
+            src="img/testimonial-2.jpg"
+            alt="Testimonial"
+          />
+          <img
+            className="rounded-full mr-30 absolute w-30 h-30"
+            src="img/testimonial-3.jpg"
+            alt="Testimonial"
+          />
+        </div>
+        <div>"</div>
+        <div className="items-center justify-center">halo</div>
+        <div className="items-center justify-center">salam</div>
+      </div>
 
       {/* <!-- Testimonial Start --> */}
       <div className="testimonial wow fadeIn" data-wow-delay="0.1s">
