@@ -14,6 +14,8 @@ import {
   FaPlayCircle,
 } from "react-icons/fa";
 
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
+
 const Home = () => {
   // Hero Animation Start
   const images = [
@@ -297,6 +299,39 @@ const Home = () => {
     },
   ];
   // FAQ Animation End
+
+  const testimonials = [
+    {
+      name: "Jane Doe",
+      profession: "UI/UX Designer",
+      image: "/img/testimonial-1.jpg",
+      text: "Sangat puas dengan pelayanannya. Tim sangat profesional dan cepat tanggap.",
+    },
+    {
+      name: "John Smith",
+      profession: "Software Engineer",
+      image: "/img/testimonial-2.jpg",
+      text: "Mereka membantu saya menyelesaikan proyek tepat waktu dengan hasil yang memuaskan.",
+    },
+    {
+      name: "Sarah Lee",
+      profession: "Project Manager",
+      image: "/img/testimonial-3.jpg",
+      text: "Pekerjaan mereka sangat rapi dan detail. Recommended banget!",
+    },
+  ];
+
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const testiPrev = () => {
+    setActiveIndex(
+      (prev) => (prev - 1 + testimonials.length) % testimonials.length
+    );
+  };
+
+  const testiNext = () => {
+    setActiveIndex((prev) => (prev + 1) % testimonials.length);
+  };
 
   const blogData = [
     {
@@ -832,201 +867,125 @@ const Home = () => {
       </div>
       {/* <!-- FAQs End --> */}
 
-      <div className="w-full items-center justify-center flex flex-col border-4">
-        <div className="w-1/2 items-center justify-center flex flex-col relative">
-          {" "}
-          <img
-            className="rounded-full z-10  w-40 h-40"
-            src="img/testimonial-1.jpg"
-            alt="Testimonial"
-          />
-          <img
-            className="rounded-full ml-30 absolute w-30 h-30"
-            src="img/testimonial-2.jpg"
-            alt="Testimonial"
-          />
-          <img
-            className="rounded-full mr-30 absolute w-30 h-30"
-            src="img/testimonial-3.jpg"
-            alt="Testimonial"
-          />
+      {/* <!-- Testimonial Start --> */}
+      <div
+        className="w-full mx-auto text-center relative bg-fixed bg-center bg-cover h-128"
+        style={{
+          backgroundImage: `url('https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg')`,
+        }}
+      >
+        <div className="w-full h-full bg-[#030f27]/80 flex flex-col items-center justify-center">
+          {/* Gambar Profil */}
+          <div className="flex items-center justify-center">
+            {/* Thumbnail Kiri */}
+            <img
+              src={
+                testimonials[
+                  (activeIndex - 1 + testimonials.length) % testimonials.length
+                ].image
+              }
+              alt="Previous Testimonial"
+              className="w-16 h-16 rounded-full object-cover opacity-50 transition duration-300"
+            />
+
+            {/* Gambar Tengah */}
+            <motion.img
+              key={activeIndex}
+              src={testimonials[activeIndex].image}
+              alt="Active Testimonial"
+              className="w-32 h-32 rounded-full object-cover border-4 border-primary shadow-lg"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4 }}
+            />
+
+            {/* Thumbnail Kanan */}
+            <img
+              src={testimonials[(activeIndex + 1) % testimonials.length].image}
+              alt="Next Testimonial"
+              className="w-16 h-16 rounded-full object-cover opacity-50 transition duration-300"
+            />
+          </div>
+
+          {/* Konten Testimoni */}
+          <motion.div
+            key={`text-${activeIndex}`}
+            className="mt-6 px-4 text-white max-w-xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <span className="text-4xl font-semibold text-[#fdbe33]">
+              {testimonials[activeIndex].name}
+            </span>
+            <h6 className=" text-gray-300 text-white pt-4">
+              {testimonials[activeIndex].profession}
+            </h6>
+            <p className="mt-2 text-white">{testimonials[activeIndex].text}</p>
+          </motion.div>
+
+          {/* Tombol Navigasi */}
+          <button
+            onClick={testiPrev}
+            className="absolute left-8 top-1/2 -translate-y-1/2 bg-transparent text-white hover:bg-primary hover:text-[#fdbe33] transition h-16 w-16 flex items-center justify-center rounded-full"
+          >
+            <HiChevronLeft className="text-5xl" />
+          </button>
+
+          <button
+            onClick={testiNext}
+            className="absolute right-8 top-1/2 -translate-y-1/2 bg-transparent text-white hover:bg-primary hover:text-[#fdbe33] transition h-16 w-16 flex items-center justify-center rounded-full"
+          >
+            <HiChevronRight className="text-5xl" />
+          </button>
         </div>
-        <div>"</div>
-        <div className="items-center justify-center">halo</div>
-        <div className="items-center justify-center">salam</div>
       </div>
 
-      {/* <!-- Testimonial Start --> */}
-      <div className="testimonial wow fadeIn" data-wow-delay="0.1s">
-        <div className="container">
-          <div className="row">
-            <div className="col-12">
-              <div className="testimonial-slider-nav">
-                <div className="slider-nav">
-                  <img src="img/testimonial-1.jpg" alt="Testimonial" />
-                </div>
-                <div className="slider-nav">
-                  <img src="img/testimonial-2.jpg" alt="Testimonial" />
-                </div>
-                <div className="slider-nav">
-                  <img src="img/testimonial-3.jpg" alt="Testimonial" />
-                </div>
-                <div className="slider-nav">
-                  <img src="img/testimonial-4.jpg" alt="Testimonial" />
-                </div>
-                <div className="slider-nav">
-                  <img src="img/testimonial-1.jpg" alt="Testimonial" />
-                </div>
-                <div className="slider-nav">
-                  <img src="img/testimonial-2.jpg" alt="Testimonial" />
-                </div>
-                <div className="slider-nav">
-                  <img src="img/testimonial-3.jpg" alt="Testimonial" />
-                </div>
-                <div className="slider-nav">
-                  <img src="img/testimonial-4.jpg" alt="Testimonial" />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-12">
-              <div className="testimonial-slider">
-                <div className="slider-item">
-                  <h3>Customer Name</h3>
-                  <h4>profession</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                    non vulputate. Aliquam metus tortor, auctor id gravida
-                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
-                    scelerisque maximus.
-                  </p>
-                </div>
-                <div className="slider-item">
-                  <h3>Customer Name</h3>
-                  <h4>profession</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                    non vulputate. Aliquam metus tortor, auctor id gravida
-                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
-                    scelerisque maximus.
-                  </p>
-                </div>
-                <div className="slider-item">
-                  <h3>Customer Name</h3>
-                  <h4>profession</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                    non vulputate. Aliquam metus tortor, auctor id gravida
-                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
-                    scelerisque maximus.
-                  </p>
-                </div>
-                <div className="slider-item">
-                  <h3>Customer Name</h3>
-                  <h4>profession</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                    non vulputate. Aliquam metus tortor, auctor id gravida
-                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
-                    scelerisque maximus.
-                  </p>
-                </div>
-                <div className="slider-item">
-                  <h3>Customer Name</h3>
-                  <h4>profession</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                    non vulputate. Aliquam metus tortor, auctor id gravida
-                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
-                    scelerisque maximus.
-                  </p>
-                </div>
-                <div className="slider-item">
-                  <h3>Customer Name</h3>
-                  <h4>profession</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                    non vulputate. Aliquam metus tortor, auctor id gravida
-                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
-                    scelerisque maximus.
-                  </p>
-                </div>
-                <div className="slider-item">
-                  <h3>Customer Name</h3>
-                  <h4>profession</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                    non vulputate. Aliquam metus tortor, auctor id gravida
-                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
-                    scelerisque maximus.
-                  </p>
-                </div>
-                <div className="slider-item">
-                  <h3>Customer Name</h3>
-                  <h4>profession</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                    non vulputate. Aliquam metus tortor, auctor id gravida
-                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
-                    scelerisque maximus.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       {/* <!-- Testimonial End --> */}
 
       {/* <!-- Blog Start --> */}
-      <div className="py-16 bg-gray-100">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <p className="text-indigo-600 font-semibold">Latest Blog</p>
-            <h2 className="text-3xl font-bold">Latest From Our Blog</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogData.map((blog) => (
-              <div className="bg-white shadow-lg  overflow-hidden hover:shadow-xl transition duration-30 h-128">
-                <img
-                  src={blog.imageSrc}
-                  alt={`Blog ${blog.id}`}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="w-full h-1/8 flex">
-                  <div className="w-5/6 h-full flex items-center justify-center text-center bg-[#030f27] text-2xl">
-                    {blog.title}
-                  </div>
-                  <div className="w-1/6 bg-[#fdbe33] h-full flex items-center justify-center text-center text-5xl">
-                    +
-                  </div>
+      <div className="max-w-6xl mx-auto px-4 h-screen py-12">
+        <div className="text-center mb-12">
+          <p className="text-[#fdbe33] font-semibold">Latest Blog</p>
+          <h2 className="text-3xl font-bold">Latest From Our Blog</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {blogData.map((blog, index) => (
+            <motion.div
+              key={blog.id}
+              className="bg-gray-200 shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 h-120"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.3, duration: 0.5 }}
+            >
+              <img
+                src={blog.imageSrc}
+                alt={`Blog ${blog.id}`}
+                className="w-full h-48 object-cover"
+              />
+              <div className="w-full h-1/8 flex">
+                <div className="w-5/6 h-full flex items-center justify-center text-center bg-[#030f27] text-2xl text-[#fdbe33]">
+                  {blog.title}
                 </div>
-                <div className="w-full h-1/8 flex  items-center text-center justify-between px-20">
-                  <span className="text-sm text-gray-600">
-                    by {blog.author}
-                  </span>
-                  <span className="text-sm text-gray-600">
-                    in {blog.category}
-                  </span>
-                </div>
-                <div className="w-full h-1/3 items-center text-center justify-center flex px-8 ">
-                  {blog.description}
+                <div className="w-1/6 bg-[#fdbe33] h-full flex items-center justify-center text-center text-5xl text-[#030f27] hover:text-white transition-colors duration-300">
+                  +
                 </div>
               </div>
-            ))}
-          </div>
+              <div className="w-full h-1/8 flex items-center text-center justify-between px-20">
+                <span className="text-sm text-gray-600 hover:text-[#fdbe33] transition-colors duration-300">
+                  by {blog.author}
+                </span>
+                <span className="text-sm text-gray-600 hover:text-[#fdbe33] transition-colors duration-300">
+                  in {blog.category}
+                </span>
+              </div>
+              <div className="w-full h-1/3 items-center text-center justify-center flex px-8">
+                {blog.description}
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
-
       {/* <!-- Blog End --> */}
     </>
   );
