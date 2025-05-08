@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
+import { FaCalendarAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 
 const RootLayout = () => {
   const location = useLocation();
@@ -9,62 +10,46 @@ const RootLayout = () => {
   return (
     <div>
       <div className="wrapper z-50">
-        {/* Top Bar Start */}
-        <div className="top-bar">
-          <div className="max-w-screen-xl mx-auto px-4">
-            <div className="flex flex-col lg:flex-row items-center">
-              <div className="w-full lg:w-1/3 mb-4 lg:mb-0">
-                <div className="logo">
-                  <a href="index.html">
-                    <h1>Builderz</h1>
-                  </a>
+          <div className="bg-[#fdbe33] py-4">
+            <div className="max-w-screen-xl mx-auto">
+              <div className="flex flex-col lg:flex-row items-center lg:justify-between">
+                {/* Logo - kiri pojok */}
+                <div className="w-full lg:w-auto flex justify-center lg:justify-start text-[#030f27] lg:mb-0">
+                  <span className="text-5xl font-bold">Builderz</span>
                 </div>
-              </div>
 
-              <div className="w-full lg:w-2/3 hidden lg:flex">
-                <div className="flex w-full">
-                  <div className="w-1/3">
-                    <div className="top-bar-item flex items-center space-x-2">
-                      <div className="top-bar-icon">
-                        <i className="flaticon-calendar"></i>
-                      </div>
-                      <div className="top-bar-text">
-                        <h3>Opening Hour</h3>
-                        <p>Mon - Fri, 8:00 - 9:00</p>
-                      </div>
+                {/* Contact Info - kanan pojok */}
+                <div className="hidden lg:flex items-center space-x-8">
+                  {/* Opening Hour */}
+                  <div className="flex items-center space-x-3 px-4">
+                    <FaCalendarAlt className="text-[#030f27] text-3xl" />
+                    <div className="leading-tight">
+                      <p className="text-[#030f27] text-sm m-0">Opening Hour</p>
+                      <p className="text-[#030f27] text-sm m-0">Mon - Fri, 8:00 - 9:00</p>
                     </div>
                   </div>
 
-                  <div className="w-1/3">
-                    <div className="top-bar-item flex items-center space-x-2">
-                      <div className="top-bar-icon">
-                        <i className="flaticon-call"></i>
-                      </div>
-                      <div className="top-bar-text">
-                        <h3>Call Us</h3>
-                        <p>+012 345 6789</p>
-                      </div>
+                  {/* Call Us */}
+                  <div className="flex items-center space-x-3 px-4">
+                    <FaPhoneAlt className="text-[#030f27] text-3xl" />
+                    <div className="leading-tight">
+                      <p className="text-[#030f27] text-sm m-0">Call Us</p>
+                      <p className="text-[#030f27] text-sm m-0">+012 345 6789</p>
                     </div>
                   </div>
 
-                  <div className="w-1/3">
-                    <div className="top-bar-item flex items-center space-x-2">
-                      <div className="top-bar-icon">
-                        <i className="flaticon-send-mail"></i>
-                      </div>
-                      <div className="top-bar-text">
-                        <h3>Email Us</h3>
-                        <p>info@example.com</p>
-                      </div>
+                  {/* Email Us */}
+                  <div className="flex items-center space-x-3 px-4">
+                    <FaEnvelope className="text-[#030f27] text-3xl" />
+                    <div className="leading-tight">
+                      <p className="text-[#030f27] text-sm m-0">Email Us</p>
+                      <p className="text-[#030f27] text-sm m-0">info@example.com</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-
-        {/* <!-- Top Bar End --> */}
 
         {/* <!-- Nav Bar Start --> */}
         <div className="nav-bar">
