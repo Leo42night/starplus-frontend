@@ -413,7 +413,7 @@ const Home = () => {
                       animate={{ x: 0, opacity: 1 }}
                       exit={{ x: -100, opacity: 0 }}
                       transition={{ duration: 0.5, delay: 0.1 }}
-                      className="text-4xl sm:text-6xl mb-6"
+                      className="text-4xl font-bold sm:text-6xl mb-6"
                     >
                       {texts[current - 1]?.subtitle}
                     </motion.p>
@@ -424,7 +424,7 @@ const Home = () => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 50 }}
                       transition={{ duration: 0.5, delay: 0.3 }}
-                      className="border border-white text-white px-12 py-3 hover:bg-white hover:text-black"
+                      className="border-2 border-white text-white px-12 py-3 transition-colors duration-300 hover:bg-[#fdbe33] hover:!text-[#030f27] hover:border-0"
                     >
                       Get a Quote
                     </motion.button>
@@ -558,12 +558,12 @@ const Home = () => {
               }}
             >
               <div className="mb-4">
-                <p className="text-yellow-500 text-sm uppercase font-semibold tracking-wide">
+                <p className="text-[#fdbe33] text-md uppercase font-semibold tracking-wide">
                   Welcome to Builderz
                 </p>
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
+                <p className="text-3xl md:text-5xl font-bold text-gray-800">
                   25 Years Experience
-                </h2>
+                </p>
               </div>
 
               <div className="space-y-4 text-gray-600">
@@ -652,9 +652,9 @@ const Home = () => {
       <section className="bg-white py-16">
         <div className="text-center mb-12">
           <p className="text-yellow-500 font-semibold text-lg">Our Services</p>
-          <h2 className="text-4xl font-bold text-gray-900">
+          <p className="text-5xl font-bold text-gray-900">
             We Provide Services
-          </h2>
+          </p>
         </div>
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
@@ -683,18 +683,18 @@ const Home = () => {
                 className="flex justify-between items-center h-16"
                 style={{ backgroundColor: "#030f27" }}
               >
-                <h3
-                  className="text-md font-bold leading-snug px-2 py-4"
+                <h5
+                  className="text-lg leading-snug px-4 py-4"
                   style={{ color: "#fdbe33" }}
                 >
                   {service.title}
-                </h3>
+                </h5>
                 <span
                   style={{
                     backgroundColor: "#fdbe33",
                   }}
                   // Ubah warna teks saat parent di-hover
-                  className="flex items-center text-2xl font-bold px-6 transition-colors duration-300 h-full group-hover:text-white"
+                  className="flex items-center text-2xl font-bold px-6 transition-colors duration-300 h-full group-hover:text-white text-[#030f27]"
                 >
                   +
                 </span>
@@ -754,7 +754,7 @@ const Home = () => {
       {/* <!-- Team Start --> */}
       <div className="container mx-auto py-12">
         <div className="text-center mb-12">
-          <p className="text-gray-600 text-lg">Our Team</p>
+          <p className="text-[#fdbe33] text-lg">Our Team</p>
           <h2 className="text-4xl font-semibold text-yellow-500">
             Meet Our Engineer
           </h2>
@@ -820,8 +820,7 @@ const Home = () => {
         <div className="faq-title-container">
           <div className="faq-title">
             <p className="faq-subtitle">Frequently Asked Question</p>
-            <h2 className="faq-heading">You May Ask</h2>
-            <div className="faq-divider"></div>
+            <p className="faq-heading">You May Ask</p>
           </div>
 
           <div className="faq-grid">
@@ -915,12 +914,12 @@ const Home = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <span className="text-4xl font-semibold text-[#fdbe33]">
+            <span className="text-xl font-semibold text-[#fdbe33]">
               {testimonials[activeIndex].name}
             </span>
-            <h6 className=" text-gray-300 text-white pt-4">
+            <p className="font-style: italic font-[10px] text-gray-300 pt-1">
               {testimonials[activeIndex].profession}
-            </h6>
+            </p>
             <p className="mt-2 text-white">{testimonials[activeIndex].text}</p>
           </motion.div>
 
