@@ -210,10 +210,10 @@ const Home = () => {
       title: "CEO & Founder",
       image: "img/team-1.jpg",
       social: {
-        twitter: "",
-        facebook: "",
-        linkedin: "",
-        instagram: "",
+        twitter: "https://twitter.com/adam",
+        facebook: "https://facebook.com/adam",
+        linkedin: "https://linkedin.com/in/adam",
+        instagram: "https://instagram.com/adam",
       },
     },
     {
@@ -221,10 +221,10 @@ const Home = () => {
       title: "Civil Engineer",
       image: "img/team-2.jpg",
       social: {
-        twitter: "",
-        facebook: "",
-        linkedin: "",
-        instagram: "",
+        twitter: "https://twitter.com/dylan",
+        facebook: "https://facebook.com/dylan",
+        linkedin: "https://linkedin.com/in/dylan",
+        instagram: "https://instagram.com/dylan",
       },
     },
     {
@@ -232,10 +232,10 @@ const Home = () => {
       title: "Interior Designer",
       image: "img/team-3.jpg",
       social: {
-        twitter: "",
-        facebook: "",
-        linkedin: "",
-        instagram: "",
+        twitter: "https://twitter.com/jhon",
+        facebook: "https://facebook.com/jhon",
+        linkedin: "https://linkedin.com/in/jhon",
+        instagram: "https://instagram.com/jhon",
       },
     },
     {
@@ -243,13 +243,15 @@ const Home = () => {
       title: "Painter",
       image: "img/team-4.jpg",
       social: {
-        twitter: "",
-        facebook: "",
-        linkedin: "",
-        instagram: "",
+        twitter: "https://twitter.com/josh",
+        facebook: "https://facebook.com/josh",
+        linkedin: "https://linkedin.com/in/josh",
+        instagram: "https://instagram.com/josh",
       },
     },
   ];
+  
+
   // Team Animation End
 
   // FAQ Animation Start
@@ -767,46 +769,50 @@ const Home = () => {
               animate={{ y: 0, opacity: 1 }}
               transition={{
                 duration: 0.6,
-                delay: index * 0.3, // Menambahkan delay untuk animasi satu per satu
+                delay: index * 0.3,
                 ease: "easeOut",
               }}
-              className="team-item border border-gray-300 bg-[#121518] group hover:bg-[#FDBE33]"
+              className="relative team-item overflow-hidden border border-gray-300 bg-[#121518] group hover:bg-[#FDBE33] transition-all duration-300"
             >
+              {/* Social Icons - Appear on hover */}
+              <div className="absolute top-0 left-0 flex flex-col bg-[#121518] group-hover:opacity-100 opacity-0 transition-opacity duration-300 z-10">
+                <a href={member.social.twitter} target="_blank">
+                  <div className="w-10 h-10 flex items-center justify-center hover:bg-[#FDBE33] transition">
+                    <i className="fab fa-twitter text-white" />
+                  </div>
+                </a>
+                <a href={member.social.facebook} target="_blank">
+                  <div className="w-10 h-10 flex items-center justify-center hover:bg-[#FDBE33] transition">
+                    <i className="fab fa-facebook-f text-white" />
+                  </div>
+                </a>
+                <a href={member.social.linkedin} target="_blank">
+                  <div className="w-10 h-10 flex items-center justify-center hover:bg-[#FDBE33] transition">
+                    <i className="fab fa-linkedin-in text-white" />
+                  </div>
+                </a>
+                <a href={member.social.instagram} target="_blank">
+                  <div className="w-10 h-10 flex items-center justify-center hover:bg-[#FDBE33] transition">
+                    <i className="fab fa-instagram text-white" />
+                  </div>
+                </a>
+              </div>
+
+              {/* Image */}
               <div className="team-img">
                 <img
                   src={member.image}
-                  alt="Team Image"
+                  alt={member.name}
                   className="w-full h-64 object-cover"
                 />
               </div>
+
+              {/* Text */}
               <div className="team-text text-center mt-4">
-                {/* Menambahkan hover efek untuk teks dan memastikan warna teks kuning pada awal */}
-                <h2 className="team-member-name text-xl font-bold py-2 text-[#FDBE33] group-hover:text-[#121518] transition-all duration-300">
+                <p className="text-xl font-bold py-2 text-[#FDBE33] group-hover:text-[#121518] transition-all duration-300">
                   {member.name}
-                </h2>
-                <p className="text-white py-1 mt-2">{member.title}</p>
-              </div>
-              <div className="team-social flex justify-center mt-4">
-                {member.social.twitter && (
-                  <a className="social-tw mx-2" href={member.social.twitter}>
-                    <i className="fab fa-twitter text-xl text-blue-500"></i>
-                  </a>
-                )}
-                {member.social.facebook && (
-                  <a className="social-fb mx-2" href={member.social.facebook}>
-                    <i className="fab fa-facebook-f text-xl text-blue-600"></i>
-                  </a>
-                )}
-                {member.social.linkedin && (
-                  <a className="social-li mx-2" href={member.social.linkedin}>
-                    <i className="fab fa-linkedin-in text-xl text-blue-700"></i>
-                  </a>
-                )}
-                {member.social.instagram && (
-                  <a className="social-in mx-2" href={member.social.instagram}>
-                    <i className="fab fa-instagram text-xl text-pink-500"></i>
-                  </a>
-                )}
+                </p>
+                <p className="text-white">{member.title}</p>
               </div>
             </motion.div>
           ))}
