@@ -12,7 +12,7 @@ const Blog = () => {
   const filteredBlogs = tagParam
   ? blogs.filter((blog) => blog.category.toLowerCase() === tagParam.toLowerCase())
   : blogs;
-  const totalPages = Math.ceil(filteredBlogs.length / itemsPerPage);
+  const totalPages = Math.ceil(blogs.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentBlogs = blogs.slice(startIndex, startIndex + itemsPerPage);
 
