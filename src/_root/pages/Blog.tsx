@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import blogs from '../../data/blogs'; // Sesuaikan path jika berbeda
+import posts from '../../data/single-post';
+import { useSearchParams } from "react-router-dom";
 
 const Blog = () => {
   const itemsPerPage = 6;
+  // get query
+  const [searchParams] = useSearchParams();
+  const tagParam = searchParams.get("tag");
   const [currentPage, setCurrentPage] = useState(1);
-
-  const totalPages = Math.ceil(blogs.length / itemsPerPage);
+  const filteredBlogs = tagParam
+  ? blogs.filter((blog) => blog.category.toLowerCase() === tagParam.toLowerCase())
+  : blogs;
+  const totalPages = Math.ceil(filteredBlogs.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentBlogs = blogs.slice(startIndex, startIndex + itemsPerPage);
 

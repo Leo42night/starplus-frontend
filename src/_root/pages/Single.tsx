@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import posts from "../../data/single-post"; // file dummy kamu
+import blogs from "../../data/blogs";
 import { useEffect, useState } from "react";
 
 interface Post {
@@ -21,21 +22,118 @@ interface Post {
     date: string;
   }[];
 }
+interface recentPost {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  date: string;
+  category: string;
+  author?: {
+    name: string;
+    image: string;
+  };
+}
 const Single = () => {
   const { id } = useParams();
   const [post, setPost] = useState<Post | null>(null);
   const [relatedPosts, setRelatedPosts] = useState<Post[]>([]);
+  const [recentPosts, setRecentPosts] = useState<recentPost[]>([]);
+  const [allTags, setAllTags] = useState<string[]>([]);
+  const [categoriesWithCounts, setCategoriesWithCounts] = useState<{ category: string; count: number }[]>([]);
+  const [featuredPosts, setFeaturedPosts] = useState<recentPost[]>([]);
+  const [popularPosts, setPopularPosts] = useState<recentPost[]>([]);
+  const [latestPosts, setLatestPosts] = useState<recentPost[]>([]);
+  const [activeTab, setActiveTab] = useState("featured");
 
+  const tabData: { [key: string]: recentPost[] } = {
+    featured: featuredPosts,
+    popular: popularPosts,
+    latest: latestPosts,
+  };
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = date.toLocaleString("en-US", { month: "short" }); // Jan, Feb, etc.
+    const year = date.getFullYear();
+    return `${day} ${month} ${year}`;
+  };
   useEffect(() => {
     const foundPost = posts.find((post: Post) => post.id === Number(id));
     if (foundPost) {
       setPost(foundPost);
-      console.log(foundPost);
+      console.log(foundPost.comments);
     }
+
+    const latest_posts = blogs
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 5)
+      .map((blog) => {
+        const postAuthor = posts.find((p) => p.id === blog.id)?.author;
+        return {
+          ...blog,
+          author: postAuthor ? { name: postAuthor.name, image: postAuthor.image } : undefined,
+        };
+      });
+    setLatestPosts(latest_posts);
+
+    const popular_posts = blogs
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 5)
+      .map((blog) => {
+        const postAuthor = posts.find((p) => p.id === blog.id)?.author;
+        return {
+          ...blog,
+          author: postAuthor ? { name: postAuthor.name, image: postAuthor.image } : undefined,
+        };
+      });
+    setPopularPosts(popular_posts);
+
+    const featured_posts = blogs
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 5)
+      .map((blog) => {
+        const postAuthor = posts.find((p) => p.id === blog.id)?.author;
+        return {
+          ...blog,
+          author: postAuthor ? { name: postAuthor.name, image: postAuthor.image } : undefined,
+        };
+      });
+    setFeaturedPosts(featured_posts);
 
     const relatedPosts = posts.filter((post: Post) => post.id !== foundPost?.id && post.tags.includes(foundPost?.tags[0] || ""));
     setRelatedPosts(relatedPosts);
-    console.log("relatedPosts", relatedPosts);
+
+    const recentposts = blogs
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 5)
+      .map((blog) => {
+        const postAuthor = posts.find((p) => p.id === blog.id)?.author;
+        return {
+          ...blog,
+          author: postAuthor ? { name: postAuthor.name, image: postAuthor.image } : undefined,
+        };
+      });
+    setRecentPosts(recentposts);
+
+    // Kumpulkan semua tags unik dari posts
+    const uniqueTags = Array.from(new Set(posts.flatMap((post) => post.tags)));
+    setAllTags(uniqueTags);
+
+    const counts: { [key: string]: number } = {};
+
+    blogs.forEach((post) => {
+      const category = post.category;
+      counts[category] = (counts[category] || 0) + 1;
+    });
+
+    const mergedCategories = Object.entries(counts).map(([category, count]) => ({
+      category,
+      count,
+    }));
+
+    setCategoriesWithCounts(mergedCategories);
+    console.log(mergedCategories);
   }, [id]);
 
   // Inisialisasi Owl setelah data ter-set dan DOM siap
@@ -94,7 +192,7 @@ const Single = () => {
           <div className="row">
             <div className="col-lg-8">
               <div className="single-content wow fadeInUp">
-                <img src="img/single.jpg" />
+                <img src={post.cover} />
                 <h2>{post.title}</h2>
                 <div className="mb-4 blog-detail" dangerouslySetInnerHTML={{ __html: post.text }} />
               </div>
@@ -118,10 +216,31 @@ const Single = () => {
               {relatedPosts.length > 0 && (
                 <div className="single-related wow fadeInUp">
                   <h2>Related Post</h2>
-                  <div className="owl-carousel related-slider">
-                    {relatedPosts.map((post, index) => (
+                  {relatedPosts.length > 3 ? (
+                    <div className="owl-carousel related-slider">
+                      {relatedPosts.map((post, index) => (
+                        <div className="post-item" key={index}>
+                          <div className="post-img">
+                            <img src={`${post.cover}`} />
+                          </div>
+                          <div className="post-text">
+                            <a href="">{post.title}</a>
+                            <div className="post-meta">
+                              <p>
+                                By<a href="">{post.author.name}</a>
+                              </p>
+                              <p>
+                                In<a href="">{post.tags[0]}</a>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    relatedPosts.map((post, index) => (
                       <div className="post-item" key={index}>
-                        <div  className="post-img">
+                        <div className="post-img">
                           <img src={`${post.cover}`} />
                         </div>
                         <div className="post-text">
@@ -136,71 +255,32 @@ const Single = () => {
                           </div>
                         </div>
                       </div>
-                    ))}
-                  </div>
+                    ))
+                  )}
                 </div>
               )}
-
               <div className="single-comment wow fadeInUp">
-                <h2>3 Comments</h2>
+                <h2>{post.comments.length} Comments</h2>
                 <ul className="comment-list">
-                  <li className="comment-item">
-                    <div className="comment-body">
-                      <div className="comment-img">
-                        <img src="img/user.jpg" />
-                      </div>
-                      <div className="comment-text">
-                        <h3>
-                          <a href="">Josh Dunn</a>
-                        </h3>
-                        <span>01 Jan 2045 at 12:00pm</span>
-                        <p>Lorem ipsum dolor sit amet elit. Integer lorem augue purus mollis sapien, non eros leo in nunc. Donec a nulla vel turpis tempor ac vel justo. In hac platea dictumst.</p>
-                        <a className="btn" href="">
-                          Reply
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                  <li className="comment-item">
-                    <div className="comment-body">
-                      <div className="comment-img">
-                        <img src="img/user.jpg" />
-                      </div>
-                      <div className="comment-text">
-                        <h3>
-                          <a href="">Josh Dunn</a>
-                        </h3>
-                        <p>
-                          <span>01 Jan 2045 at 12:00pm</span>
-                        </p>
-                        <p>Lorem ipsum dolor sit amet elit. Integer lorem augue purus mollis sapien, non eros leo in nunc. Donec a nulla vel turpis tempor ac vel justo. In hac platea dictumst.</p>
-                        <a className="btn" href="">
-                          Reply
-                        </a>
-                      </div>
-                    </div>
-                    <ul className="comment-child">
-                      <li className="comment-item">
-                        <div className="comment-body">
-                          <div className="comment-img">
-                            <img src="img/user.jpg" />
-                          </div>
-                          <div className="comment-text">
-                            <h3>
-                              <a href="">Josh Dunn</a>
-                            </h3>
-                            <p>
-                              <span>01 Jan 2045 at 12:00pm</span>
-                            </p>
-                            <p>Lorem ipsum dolor sit amet elit. Integer lorem augue purus mollis sapien, non eros leo in nunc. Donec a nulla vel turpis tempor ac vel justo. In hac platea dictumst.</p>
-                            <a className="btn" href="">
-                              Reply
-                            </a>
-                          </div>
+                  {post.comments.map((comment, index) => (
+                    <li key={index} className="comment-item">
+                      <div className="comment-body">
+                        <div className="comment-img">
+                          <img src={comment.image} />
                         </div>
-                      </li>
-                    </ul>
-                  </li>
+                        <div className="comment-text">
+                          <h3>
+                            <a href="">{comment.name}</a>
+                          </h3>
+                          <span>{formatDate(comment.date)}</span>
+                          <p>{comment.text}</p>
+                          <a className="btn" href="">
+                            Reply
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="comment-form wow fadeInUp">
@@ -246,93 +326,31 @@ const Single = () => {
                 <div className="sidebar-widget wow fadeInUp">
                   <h2 className="widget-title">Recent Post</h2>
                   <div className="recent-post">
-                    <div className="post-item">
-                      <div className="post-img">
-                        <img src="img/post-1.jpg" />
-                      </div>
-                      <div className="post-text">
-                        <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                        <div className="post-meta">
-                          <p>
-                            By<a href="">Admin</a>
-                          </p>
-                          <p>
-                            In<a href="">Design</a>
-                          </p>
+                    {recentPosts.map((post, index) => (
+                      <div key={index} className="post-item">
+                        <div className="post-img">
+                          <img src={post.image} />
+                        </div>
+                        <div className="post-text">
+                          <a href="">{post.title}</a>
+                          <div className="post-meta">
+                            <p>
+                              By<a href="">{post.author?.name}</a>
+                            </p>
+                            <p>
+                              In<a href="">{post.category}</a>
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="post-item">
-                      <div className="post-img">
-                        <img src="img/post-2.jpg" />
-                      </div>
-                      <div className="post-text">
-                        <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                        <div className="post-meta">
-                          <p>
-                            By<a href="">Admin</a>
-                          </p>
-                          <p>
-                            In<a href="">Design</a>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="post-item">
-                      <div className="post-img">
-                        <img src="img/post-3.jpg" />
-                      </div>
-                      <div className="post-text">
-                        <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                        <div className="post-meta">
-                          <p>
-                            By<a href="">Admin</a>
-                          </p>
-                          <p>
-                            In<a href="">Design</a>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="post-item">
-                      <div className="post-img">
-                        <img src="img/post-4.jpg" />
-                      </div>
-                      <div className="post-text">
-                        <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                        <div className="post-meta">
-                          <p>
-                            By<a href="">Admin</a>
-                          </p>
-                          <p>
-                            In<a href="">Design</a>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="post-item">
-                      <div className="post-img">
-                        <img src="img/post-5.jpg" />
-                      </div>
-                      <div className="post-text">
-                        <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                        <div className="post-meta">
-                          <p>
-                            By<a href="">Admin</a>
-                          </p>
-                          <p>
-                            In<a href="">Design</a>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
 
                 <div className="sidebar-widget wow fadeInUp">
                   <div className="image-widget">
                     <a href="#">
-                      <img src="img/blog-1.jpg" alt="Image" />
+                      <img src="/img/blog-1.jpg" alt="Image" />
                     </a>
                   </div>
                 </div>
@@ -340,269 +358,35 @@ const Single = () => {
                 <div className="sidebar-widget wow fadeInUp">
                   <div className="tab-post">
                     <ul className="nav nav-pills nav-justified">
-                      <li className="nav-item">
-                        <a className="nav-link active" data-toggle="pill" href="#featured">
-                          Featured
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a className="nav-link" data-toggle="pill" href="#popular">
-                          Popular
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a className="nav-link" data-toggle="pill" href="#latest">
-                          Latest
-                        </a>
-                      </li>
+                      {["featured", "popular", "latest"].map((tab, index) => (
+                        <li className="nav-item" key={index}>
+                          <a className={`nav-link ${activeTab === tab ? "active" : ""}`} onClick={() => setActiveTab(tab)} href="#">
+                            {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                          </a>
+                        </li>
+                      ))}
                     </ul>
 
                     <div className="tab-content">
-                      <div id="featured" className="container tab-pane active">
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-1.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>
-                                By<a href="">Admin</a>
-                              </p>
-                              <p>
-                                In<a href="">Design</a>
-                              </p>
+                      <div className="container tab-pane active">
+                        {tabData[activeTab]?.map((post) => (
+                          <div className="post-item" key={post.id}>
+                            <div className="post-img">
+                              <img src={post.image } />
+                            </div>
+                            <div className="post-text">
+                              <a href={`/single/${post.id}`}>{post.title}</a>
+                              <div className="post-meta">
+                                <p>
+                                  By<a href="">{post.author?.name || "Admin"}</a>
+                                </p>
+                                <p>
+                                  In<a href="">{post.category }</a>
+                                </p>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-2.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>
-                                By<a href="">Admin</a>
-                              </p>
-                              <p>
-                                In<a href="">Design</a>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-3.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>
-                                By<a href="">Admin</a>
-                              </p>
-                              <p>
-                                In<a href="">Design</a>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-4.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>
-                                By<a href="">Admin</a>
-                              </p>
-                              <p>
-                                In<a href="">Design</a>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-5.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>
-                                By<a href="">Admin</a>
-                              </p>
-                              <p>
-                                In<a href="">Design</a>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div id="popular" className="container tab-pane fade">
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-1.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>
-                                By<a href="">Admin</a>
-                              </p>
-                              <p>
-                                In<a href="">Design</a>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-2.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>
-                                By<a href="">Admin</a>
-                              </p>
-                              <p>
-                                In<a href="">Design</a>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-3.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>
-                                By<a href="">Admin</a>
-                              </p>
-                              <p>
-                                In<a href="">Design</a>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-4.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>
-                                By<a href="">Admin</a>
-                              </p>
-                              <p>
-                                In<a href="">Design</a>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-5.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>
-                                By<a href="">Admin</a>
-                              </p>
-                              <p>
-                                In<a href="">Design</a>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div id="latest" className="container tab-pane fade">
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-1.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>
-                                By<a href="">Admin</a>
-                              </p>
-                              <p>
-                                In<a href="">Design</a>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-2.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>
-                                By<a href="">Admin</a>
-                              </p>
-                              <p>
-                                In<a href="">Design</a>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-3.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>
-                                By<a href="">Admin</a>
-                              </p>
-                              <p>
-                                In<a href="">Design</a>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-4.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>
-                                By<a href="">Admin</a>
-                              </p>
-                              <p>
-                                In<a href="">Design</a>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-5.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>
-                                By<a href="">Admin</a>
-                              </p>
-                              <p>
-                                In<a href="">Design</a>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -611,7 +395,7 @@ const Single = () => {
                 <div className="sidebar-widget wow fadeInUp">
                   <div className="image-widget">
                     <a href="#">
-                      <img src="img/blog-2.jpg" alt="Image" />
+                      <img src="/img/blog-2.jpg" alt="Image" />
                     </a>
                   </div>
                 </div>
@@ -620,34 +404,12 @@ const Single = () => {
                   <h2 className="widget-title">Categories</h2>
                   <div className="category-widget">
                     <ul>
-                      <li>
-                        <a href="">National</a>
-                        <span>(98)</span>
-                      </li>
-                      <li>
-                        <a href="">International</a>
-                        <span>(87)</span>
-                      </li>
-                      <li>
-                        <a href="">Economics</a>
-                        <span>(76)</span>
-                      </li>
-                      <li>
-                        <a href="">Politics</a>
-                        <span>(65)</span>
-                      </li>
-                      <li>
-                        <a href="">Lifestyle</a>
-                        <span>(54)</span>
-                      </li>
-                      <li>
-                        <a href="">Technology</a>
-                        <span>(43)</span>
-                      </li>
-                      <li>
-                        <a href="">Trades</a>
-                        <span>(32)</span>
-                      </li>
+                      {categoriesWithCounts.map((item) => (
+                        <li>
+                          <a href={`/blogs?category=${item.category}`}>{item.category}</a>
+                          <span>({item.count})</span>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
@@ -663,13 +425,9 @@ const Single = () => {
                 <div className="sidebar-widget wow fadeInUp">
                   <h2 className="widget-title">Tags Cloud</h2>
                   <div className="tag-widget">
-                    <a href="">National</a>
-                    <a href="">International</a>
-                    <a href="">Economics</a>
-                    <a href="">Politics</a>
-                    <a href="">Lifestyle</a>
-                    <a href="">Technology</a>
-                    <a href="">Trades</a>
+                    {allTags.map((tag) => (
+                      <a href={`/blog?tag=${tag}`}>{tag}</a>
+                    ))}
                   </div>
                 </div>
 
