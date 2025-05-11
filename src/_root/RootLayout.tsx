@@ -267,19 +267,19 @@ const RootLayout = () => {
                   <i className="fa fa-envelope mr-2"></i>info@example.com
                 </p>
                 <div className="flex space-x-4">
-                  <a href="" className="text-gray-600 hover:text-blue-500">
+                  <a href="" className="hover:text-blue-500">
                     <i className="fab fa-twitter"></i>
                   </a>
-                  <a href="" className="text-gray-600 hover:text-blue-500">
+                  <a href="" className="hover:text-blue-500">
                     <i className="fab fa-facebook-f"></i>
                   </a>
-                  <a href="" className="text-gray-600 hover:text-blue-500">
+                  <a href="" className="hover:text-blue-500">
                     <i className="fab fa-youtube"></i>
                   </a>
-                  <a href="" className="text-gray-600 hover:text-blue-500">
+                  <a href="" className="hover:text-blue-500">
                     <i className="fab fa-instagram"></i>
                   </a>
-                  <a href="" className="text-gray-600 hover:text-blue-500">
+                  <a href="" className="hover:text-blue-500">
                     <i className="fab fa-linkedin-in"></i>
                   </a>
                 </div>
@@ -288,19 +288,19 @@ const RootLayout = () => {
               {/* Services Areas */}
               <div className="space-y-2">
                 <h2 className="text-xl font-bold">Service Areas</h2>
-                <a href="" className="block text-gray-700 hover:text-blue-500">
+                <a href="" className="block  hover:text-blue-500">
                   Building Construction
                 </a>
-                <a href="" className="block text-gray-700 hover:text-blue-500">
+                <a href="" className="block  hover:text-blue-500">
                   House Renovation
                 </a>
-                <a href="" className="block text-gray-700 hover:text-blue-500">
+                <a href="" className="block  hover:text-blue-500">
                   Architecture Design
                 </a>
-                <a href="" className="block text-gray-700 hover:text-blue-500">
+                <a href="" className="block  hover:text-blue-500">
                   Interior Design
                 </a>
-                <a href="" className="block text-gray-700 hover:text-blue-500">
+                <a href="" className="block  hover:text-blue-500">
                   Painting
                 </a>
               </div>
@@ -308,36 +308,36 @@ const RootLayout = () => {
               {/* Useful Pages */}
               <div className="space-y-2">
                 <h2 className="text-xl font-bold">Useful Pages</h2>
-                <a href="" className="block text-gray-700 hover:text-blue-500">
+                <a href="" className="block  hover:text-blue-500">
                   About Us
                 </a>
-                <a href="" className="block text-gray-700 hover:text-blue-500">
+                <a href="" className="block  hover:text-blue-500">
                   Contact Us
                 </a>
-                <a href="" className="block text-gray-700 hover:text-blue-500">
+                <a href="" className="block  hover:text-blue-500">
                   Our Team
                 </a>
-                <a href="" className="block text-gray-700 hover:text-blue-500">
+                <a href="" className="block  hover:text-blue-500">
                   Projects
                 </a>
-                <a href="" className="block text-gray-700 hover:text-blue-500">
+                <a href="" className="block  hover:text-blue-500">
                   Testimonial
                 </a>
               </div>
 
               {/* Newsletter */}
-              <div className="space-y-4">
+              <div className="newsletter space-y-4">
                 <h2 className="text-xl font-bold">Newsletter</h2>
-                <p className="text-gray-700">
+                <p className="">
                   Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur
                   facilisis ornare velit non vulpu.
                 </p>
-                <div className="flex space-x-2">
+                <div className="form flex space-x-2">
                   <input
-                    className="flex-grow px-4 py-2 border border-gray-300 rounded"
+                    className="flex-grow px-4 py-2 w-full text-gray-700 bg-white border border-gray-300 rounded-md transition duration-150 ease-in-out focus:border-blue-500 focus:ring-blue-500"
                     placeholder="Email here"
                   />
-                  <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                  <button className="btn px-4 me-2 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
                     Submit
                   </button>
                 </div>
