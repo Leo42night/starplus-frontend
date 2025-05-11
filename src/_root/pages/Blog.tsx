@@ -1,25 +1,43 @@
+import { useState } from 'react'; 
+import blogs from '../../data/blogs'; // Sesuaikan path jika berbeda
+// import posts from '../../data/single-post';
+// import { useSearchParams } from "react-router-dom";
 
 const Blog = () => {
+  const itemsPerPage = 6;
+  // get query
+  // const [searchParams] = useSearchParams();
+  // const tagParam = searchParams.get("tag");
+  const [currentPage, setCurrentPage] = useState(1);
+  // const filteredBlogs = tagParam
+  // ? blogs.filter((blog) => blog.category.toLowerCase() === tagParam.toLowerCase())
+  // : blogs;
+  const totalPages = Math.ceil(blogs.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentBlogs = blogs.slice(startIndex, startIndex + itemsPerPage);
+
+  const handlePageChange = (page: number) => {
+    if (page > 0 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
   return (
     <>
-      {/* <!-- Page Header Start --> */}
+      {/* Page Header */}
       <div className="page-header">
         <div className="container">
           <div className="row">
+            <div className="col-12"><h2>Our Blog</h2></div>
             <div className="col-12">
-              <h2>Our Blog</h2>
-            </div>
-            <div className="col-12">
-              <a href="">Home</a>
-              <a href="">Our Blog</a>
+              <a href="/">Home</a>
+              <a href="#">Our Blog</a>
             </div>
           </div>
         </div>
       </div>
-      {/* <!-- Page Header End --> */}
 
-
-      {/* <!-- Blog Start --> */}
+      {/* Blog Section */}
       <div className="blog">
         <div className="container">
           <div className="section-header text-center">
@@ -27,143 +45,50 @@ const Blog = () => {
             <h2>Latest From Our Blog</h2>
           </div>
           <div className="row blog-page">
-            <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
-              <div className="blog-item">
-                <div className="blog-img">
-                  <img src="img/blog-1.jpg" alt="Image" />
-                </div>
-                <div className="blog-title">
-                  <h3>Lorem ipsum dolor sit</h3>
-                  <a className="btn" href="">+</a>
-                </div>
-                <div className="blog-meta">
-                  <p>By<a href="">Admin</a></p>
-                  <p>In<a href="">Construction</a></p>
-                </div>
-                <div className="blog-text">
-                  <p>
-                    Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6 wow fadeInUp">
-              <div className="blog-item">
-                <div className="blog-img">
-                  <img src="img/blog-2.jpg" alt="Image" />
-                </div>
-                <div className="blog-title">
-                  <h3>Lorem ipsum dolor sit</h3>
-                  <a className="btn" href="">+</a>
-                </div>
-                <div className="blog-meta">
-                  <p>By<a href="">Admin</a></p>
-                  <p>In<a href="">Construction</a></p>
-                </div>
-                <div className="blog-text">
-                  <p>
-                    Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor
-                  </p>
+            {currentBlogs.map((blog, idx) => (
+              <div key={idx} className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+                <div className="blog-item">
+                  <div className="blog-img">
+                    <img src={blog.image} alt={blog.title} />
+                  </div>
+                  <div className="blog-title">
+                    <h3>{blog.title}</h3>
+                    <a className="btn" href={`/single/${blog.id}`}>+</a>
+                  </div>
+                  <div className="blog-meta">
+                    <p>By <a href="#">Admin</a></p>
+                    <p>In <a href="#">{blog.category}</a></p>
+                  </div>
+                  <div className="blog-text">
+                    <p>{blog.description}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
-              <div className="blog-item">
-                <div className="blog-img">
-                  <img src="img/blog-3.jpg" alt="Image" />
-                </div>
-                <div className="blog-title">
-                  <h3>Lorem ipsum dolor sit</h3>
-                  <a className="btn" href="">+</a>
-                </div>
-                <div className="blog-meta">
-                  <p>By<a href="">Admin</a></p>
-                  <p>In<a href="">Construction</a></p>
-                </div>
-                <div className="blog-text">
-                  <p>
-                    Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
-              <div className="blog-item">
-                <div className="blog-img">
-                  <img src="img/blog-1.jpg" alt="Image" />
-                </div>
-                <div className="blog-title">
-                  <h3>Lorem ipsum dolor sit</h3>
-                  <a className="btn" href="">+</a>
-                </div>
-                <div className="blog-meta">
-                  <p>By<a href="">Admin</a></p>
-                  <p>In<a href="">Construction</a></p>
-                </div>
-                <div className="blog-text">
-                  <p>
-                    Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6 wow fadeInUp">
-              <div className="blog-item">
-                <div className="blog-img">
-                  <img src="img/blog-2.jpg" alt="Image" />
-                </div>
-                <div className="blog-title">
-                  <h3>Lorem ipsum dolor sit</h3>
-                  <a className="btn" href="">+</a>
-                </div>
-                <div className="blog-meta">
-                  <p>By<a href="">Admin</a></p>
-                  <p>In<a href="">Construction</a></p>
-                </div>
-                <div className="blog-text">
-                  <p>
-                    Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
-              <div className="blog-item">
-                <div className="blog-img">
-                  <img src="img/blog-3.jpg" alt="Image" />
-                </div>
-                <div className="blog-title">
-                  <h3>Lorem ipsum dolor sit</h3>
-                  <a className="btn" href="">+</a>
-                </div>
-                <div className="blog-meta">
-                  <p>By<a href="">Admin</a></p>
-                  <p>In<a href="">Construction</a></p>
-                </div>
-                <div className="blog-text">
-                  <p>
-                    Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor
-                  </p>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
+
+          {/* Pagination */}
           <div className="row">
             <div className="col-12">
               <ul className="pagination justify-content-center">
-                <li className="page-item disabled"><a className="page-link" href="#">Previous</a></li>
-                <li className="page-item"><a className="page-link" href="#">1</a></li>
-                <li className="page-item active"><a className="page-link" href="#">2</a></li>
-                <li className="page-item"><a className="page-link" href="#">3</a></li>
-                <li className="page-item"><a className="page-link" href="#">Next</a></li>
+                <li className={`page-item ${currentPage === 1 ? 'disabled d-none' : 'd-block'}`}>
+                  <a className="page-link" href="#" onClick={() => handlePageChange(currentPage - 1)}>Previous</a>
+                </li>
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
+                    <a className="page-link" href="#" onClick={() => handlePageChange(i + 1)}>{i + 1}</a>
+                  </li>
+                ))}
+                <li className={`page-item ${currentPage === totalPages ? 'disabled d-none' : 'd-block'}`}>
+                  <a className="page-link" href="#" onClick={() => handlePageChange(currentPage + 1)}>Next</a>
+                </li>
               </ul>
             </div>
           </div>
         </div>
       </div>
-      {/* <!-- Blog End --> */}
     </>
-  )
-}
+  );
+};
 
-export default Blog
+export default Blog;

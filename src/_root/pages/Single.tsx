@@ -1,5 +1,173 @@
+import { useParams } from "react-router-dom";
+import posts from "../../data/single-post"; // file dummy kamu
+import blogs from "../../data/blogs";
+import { useEffect, useState } from "react";
 
+interface Post {
+  id: number;
+  title: string;
+  text: string;
+  cover: string;
+  date: string;
+  author: {
+    name: string;
+    image: string;
+    description: string;
+  };
+  tags: string[];
+  comments: {
+    name: string;
+    image: string;
+    text: string;
+    date: string;
+  }[];
+}
+interface recentPost {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  date: string;
+  category: string;
+  author?: {
+    name: string;
+    image: string;
+  };
+}
 const Single = () => {
+  const { id } = useParams();
+  const [post, setPost] = useState<Post | null>(null);
+  const [relatedPosts, setRelatedPosts] = useState<Post[]>([]);
+  const [recentPosts, setRecentPosts] = useState<recentPost[]>([]);
+  const [allTags, setAllTags] = useState<string[]>([]);
+  const [categoriesWithCounts, setCategoriesWithCounts] = useState<{ category: string; count: number }[]>([]);
+  const [featuredPosts, setFeaturedPosts] = useState<recentPost[]>([]);
+  const [popularPosts, setPopularPosts] = useState<recentPost[]>([]);
+  const [latestPosts, setLatestPosts] = useState<recentPost[]>([]);
+  const [activeTab, setActiveTab] = useState("featured");
+
+  const tabData: { [key: string]: recentPost[] } = {
+    featured: featuredPosts,
+    popular: popularPosts,
+    latest: latestPosts,
+  };
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = date.toLocaleString("en-US", { month: "short" }); // Jan, Feb, etc.
+    const year = date.getFullYear();
+    return `${day} ${month} ${year}`;
+  };
+  useEffect(() => {
+    const foundPost = posts.find((post: Post) => post.id === Number(id));
+    if (foundPost) {
+      setPost(foundPost);
+      console.log(foundPost.comments);
+    }
+
+    const latest_posts = blogs
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 5)
+      .map((blog) => {
+        const postAuthor = posts.find((p) => p.id === blog.id)?.author;
+        return {
+          ...blog,
+          author: postAuthor ? { name: postAuthor.name, image: postAuthor.image } : undefined,
+        };
+      });
+    setLatestPosts(latest_posts);
+
+    const popular_posts = blogs
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 5)
+      .map((blog) => {
+        const postAuthor = posts.find((p) => p.id === blog.id)?.author;
+        return {
+          ...blog,
+          author: postAuthor ? { name: postAuthor.name, image: postAuthor.image } : undefined,
+        };
+      });
+    setPopularPosts(popular_posts);
+
+    const featured_posts = blogs
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 5)
+      .map((blog) => {
+        const postAuthor = posts.find((p) => p.id === blog.id)?.author;
+        return {
+          ...blog,
+          author: postAuthor ? { name: postAuthor.name, image: postAuthor.image } : undefined,
+        };
+      });
+    setFeaturedPosts(featured_posts);
+
+    const relatedPosts = posts.filter((post: Post) => post.id !== foundPost?.id && post.tags.includes(foundPost?.tags[0] || ""));
+    setRelatedPosts(relatedPosts);
+
+    const recentposts = blogs
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 5)
+      .map((blog) => {
+        const postAuthor = posts.find((p) => p.id === blog.id)?.author;
+        return {
+          ...blog,
+          author: postAuthor ? { name: postAuthor.name, image: postAuthor.image } : undefined,
+        };
+      });
+    setRecentPosts(recentposts);
+
+    // Kumpulkan semua tags unik dari posts
+    const uniqueTags = Array.from(new Set(posts.flatMap((post) => post.tags)));
+    setAllTags(uniqueTags);
+
+    const counts: { [key: string]: number } = {};
+
+    blogs.forEach((post) => {
+      const category = post.category;
+      counts[category] = (counts[category] || 0) + 1;
+    });
+
+    const mergedCategories = Object.entries(counts).map(([category, count]) => ({
+      category,
+      count,
+    }));
+
+    setCategoriesWithCounts(mergedCategories);
+    console.log(mergedCategories);
+  }, [id]);
+
+  // Inisialisasi Owl setelah data ter-set dan DOM siap
+  useEffect(() => {
+    if (relatedPosts.length > 0 && (window as Window).$) {
+      setTimeout(() => {
+        const $ = (window as any).$;
+        const $carousel = $(".owl-carousel");
+        if ($carousel.length > 0 && $carousel.owlCarousel) {
+          $carousel.trigger("destroy.owl.carousel"); // optional: destroy previous if any
+          $carousel.owlCarousel({
+            loop: true,
+            margin: 10,
+            nav: true,
+            dots: true,
+            navText: ['<i class="bi bi-chevron-left"></i>', '<i class="bi bi-chevron-right"></i>'],
+            responsive: {
+              0: { items: 1 },
+              768: { items: 2 },
+              992: { items: 3 },
+            },
+          });
+        }
+      }, 100);
+    }
+  }, [relatedPosts]);
+
+  if (!post) {
+    return (
+      <div className="container mt-5">
+        <h2>Blog not found.</h2>
+      </div>
+    );
+  }
   return (
     <>
       {/* <!-- Page Header Start --> */}
@@ -10,7 +178,7 @@ const Single = () => {
               <h2>Single Page</h2>
             </div>
             <div className="col-12">
-              <a href="">Home</a>
+              <a href="/">Home</a>
               <a href="">Single Page</a>
             </div>
           </div>
@@ -18,166 +186,101 @@ const Single = () => {
       </div>
       {/* <!-- Page Header End --> */}
 
-
       {/* <!-- Single Post Start--> */}
       <div className="single">
         <div className="container">
           <div className="row">
             <div className="col-lg-8">
               <div className="single-content wow fadeInUp">
-                <img src="img/single.jpg" />
-                <h2>Lorem ipsum dolor sit amet</h2>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer molestie, lorem eu eleifend bibendum, augue purus mollis sapien, non rhoncus eros leo in nunc. Donec a nulla vel turpis consectetur tempor ac vel justo. In hac habitasse platea dictumst. Cras nec sollicitudin eros. Nunc eu enim non turpis sagittis rhoncus consectetur id augue. Mauris dignissim neque felis. Phasellus mollis mi a pharetra cursus. Maecenas vulputate augue placerat lacus mattis, nec ornare risus sollicitudin.
-                </p>
-                <p>
-                  Mauris eu pulvinar tellus, eu luctus nisl. Pellentesque suscipit mi eu varius pulvinar. Aenean vulputate, massa eget elementum finibus, ipsum arcu commodo est, ut mattis eros orci ac risus. Suspendisse ornare, massa in feugiat facilisis, eros nisl auctor lacus, laoreet tempus elit dolor eu lorem. Nunc a arcu suscipit, suscipit quam quis, semper augue.
-                </p>
-                <p>
-                  Quisque arcu nulla, convallis nec orci vel, suscipit elementum odio. Curabitur volutpat velit non diam tincidunt sodales. Nullam sapien libero, bibendum nec viverra in, iaculis ut eros.
-                </p>
-                <h3>Lorem ipsum dolor sit amet</h3>
-                <p>
-                  Vestibulum sit amet ullamcorper sem. Integer hendrerit elit eget purus sodales maximus. Quisque ac nulla arcu. Morbi venenatis arcu ac arcu cursus pharetra. Morbi sit amet viverra augue, ac ultricies libero. Praesent elementum lectus mi, eu elementum urna venenatis sed. Donec auctor purus ut mattis feugiat. Integer mi erat, consectetur sed tincidunt vitae, sagittis elementum libero. Vivamus a mauris consequat, hendrerit lectus in, fermentum libero. Integer mattis bibendum neque et porttitor.
-                </p>
-                <p>
-                  Mauris quis arcu finibus, posuere dolor eu, viverra felis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In porta, ex vitae accumsan facilisis, nisi tellus dictum metus, quis fringilla dui tellus in tellus. Praesent pharetra orci at vehicula posuere. Sed molestie fringilla lorem, vel imperdiet tortor blandit at. Quisque non ultrices lorem, eget rhoncus orci. Fusce porttitor placerat diam et mattis. Nam laoreet, ex eu posuere sollicitudin, sem tortor pellentesque ipsum, quis mattis purus lectus ut lacus. Integer eu risus ac est interdum scelerisque.
-                </p>
-                <h4>Lorem ipsum dolor sit amet</h4>
-                <p>
-                  Praesent ultricies, mauris eget vestibulum viverra, neque lorem malesuada mauris, eget rhoncus lectus enim a lorem. Vivamus at vehicula risus, eget facilisis massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras et posuere sapien. Fusce bibendum lorem sem, quis tincidunt felis mattis nec.
-                </p>
-                <p>
-                  Proin vel nulla purus. Nunc nec eros in nisi efficitur rutrum quis sed eros. Mauris felis dolor, rhoncus eget gravida vitae, pretium vel arcu. Cras blandit tellus eget tellus dictum venenatis. Sed ultricies bibendum dictum. Etiam facilisis erat id turpis tincidunt malesuada. Duis bibendum sapien eu condimentum sagittis. Proin nunc lorem, ullamcorper vel tortor sodales, imperdiet lacinia dui. Sed congue, felis id rhoncus varius, urna lacus imperdiet nunc, ut porttitor mauris mi quis mi. Integer rutrum est finibus metus eleifend scelerisque. Morbi auctor dignissim purus in interdum. Vestibulum eu dictum enim. Suspendisse et sem vitae velit feugiat facilisis.
-                </p>
-                <p>
-                  Nam sodales scelerisque nunc sed convallis. Vestibulum facilisis porta erat, sit amet pharetra tortor blandit id. Nunc velit tellus, consectetur sed convallis in, tincidunt finibus nulla. Integer vel ex in mauris tincidunt tincidunt nec sed elit. Etiam pretium lectus lectus, sed aliquet erat tristique euismod. Praesent faucibus nisl augue, ac tempus libero pellentesque malesuada. Vivamus iaculis imperdiet laoreet. Aliquam vel felis felis. Proin sed sapien erat. Etiam a quam et metus tempor rutrum. Curabitur in faucibus justo. Etiam imperdiet iaculis urna.
-                </p>
+                <img src={post.cover} />
+                <h2>{post.title}</h2>
+                <div className="mb-4 blog-detail" dangerouslySetInnerHTML={{ __html: post.text }} />
               </div>
               <div className="single-tags wow fadeInUp">
-                <a href="">National</a>
-                <a href="">International</a>
-                <a href="">Economics</a>
-                <a href="">Politics</a>
-                <a href="">Lifestyle</a>
-                <a href="">Technology</a>
-                <a href="">Trades</a>
+                {post.tags &&
+                  post.tags.map((tag, index) => (
+                    <a key={index} href={`/single?tag=${tag}`}>
+                      {tag}
+                    </a>
+                  ))}
               </div>
               <div className="single-bio wow fadeInUp">
                 <div className="single-bio-img">
-                  <img src="img/user.jpg" />
+                  <img src={`${post.author.image}`} />
                 </div>
                 <div className="single-bio-text">
-                  <h3>Author Name</h3>
-                  <p>
-                    Lorem ipsum dolor sit amet elit. Integer lorem augue purus mollis sapien, non eros leo in nunc. Donec a nulla vel turpis tempor ac vel justo. In hac platea dictumst.
-                  </p>
+                  <h3>{post.author.name}</h3>
+                  <p>{post.author.description}</p>
                 </div>
               </div>
-              <div className="single-related wow fadeInUp">
-                <h2>Related Post</h2>
-                <div className="owl-carousel related-slider">
-                  <div className="post-item">
-                    <div className="post-img">
-                      <img src="img/post-1.jpg" />
-                    </div>
-                    <div className="post-text">
-                      <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                      <div className="post-meta">
-                        <p>By<a href="">Admin</a></p>
-                        <p>In<a href="">Design</a></p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="post-item">
-                    <div className="post-img">
-                      <img src="img/post-2.jpg" />
-                    </div>
-                    <div className="post-text">
-                      <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                      <div className="post-meta">
-                        <p>By<a href="">Admin</a></p>
-                        <p>In<a href="">Design</a></p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="post-item">
-                    <div className="post-img">
-                      <img src="img/post-3.jpg" />
-                    </div>
-                    <div className="post-text">
-                      <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                      <div className="post-meta">
-                        <p>By<a href="">Admin</a></p>
-                        <p>In<a href="">Design</a></p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="post-item">
-                    <div className="post-img">
-                      <img src="img/post-4.jpg" />
-                    </div>
-                    <div className="post-text">
-                      <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                      <div className="post-meta">
-                        <p>By<a href="">Admin</a></p>
-                        <p>In<a href="">Design</a></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="single-comment wow fadeInUp">
-                <h2>3 Comments</h2>
-                <ul className="comment-list">
-                  <li className="comment-item">
-                    <div className="comment-body">
-                      <div className="comment-img">
-                        <img src="img/user.jpg" />
-                      </div>
-                      <div className="comment-text">
-                        <h3><a href="">Josh Dunn</a></h3>
-                        <span>01 Jan 2045 at 12:00pm</span>
-                        <p>
-                          Lorem ipsum dolor sit amet elit. Integer lorem augue purus mollis sapien, non eros leo in nunc. Donec a nulla vel turpis tempor ac vel justo. In hac platea dictumst.
-                        </p>
-                        <a className="btn" href="">Reply</a>
-                      </div>
-                    </div>
-                  </li>
-                  <li className="comment-item">
-                    <div className="comment-body">
-                      <div className="comment-img">
-                        <img src="img/user.jpg" />
-                      </div>
-                      <div className="comment-text">
-                        <h3><a href="">Josh Dunn</a></h3>
-                        <p><span>01 Jan 2045 at 12:00pm</span></p>
-                        <p>
-                          Lorem ipsum dolor sit amet elit. Integer lorem augue purus mollis sapien, non eros leo in nunc. Donec a nulla vel turpis tempor ac vel justo. In hac platea dictumst.
-                        </p>
-                        <a className="btn" href="">Reply</a>
-                      </div>
-                    </div>
-                    <ul className="comment-child">
-                      <li className="comment-item">
-                        <div className="comment-body">
-                          <div className="comment-img">
-                            <img src="img/user.jpg" />
+              {relatedPosts.length > 0 && (
+                <div className="single-related wow fadeInUp">
+                  <h2>Related Post</h2>
+                  {relatedPosts.length > 3 ? (
+                    <div className="owl-carousel related-slider">
+                      {relatedPosts.map((post, index) => (
+                        <div className="post-item" key={index}>
+                          <div className="post-img">
+                            <img src={`${post.cover}`} />
                           </div>
-                          <div className="comment-text">
-                            <h3><a href="">Josh Dunn</a></h3>
-                            <p><span>01 Jan 2045 at 12:00pm</span></p>
-                            <p>
-                              Lorem ipsum dolor sit amet elit. Integer lorem augue purus mollis sapien, non eros leo in nunc. Donec a nulla vel turpis tempor ac vel justo. In hac platea dictumst.
-                            </p>
-                            <a className="btn" href="">Reply</a>
+                          <div className="post-text">
+                            <a href="">{post.title}</a>
+                            <div className="post-meta">
+                              <p>
+                                By<a href="">{post.author.name}</a>
+                              </p>
+                              <p>
+                                In<a href="">{post.tags[0]}</a>
+                              </p>
+                            </div>
                           </div>
                         </div>
-                      </li>
-                    </ul>
-                  </li>
+                      ))}
+                    </div>
+                  ) : (
+                    relatedPosts.map((post, index) => (
+                      <div className="post-item" key={index}>
+                        <div className="post-img">
+                          <img src={`${post.cover}`} />
+                        </div>
+                        <div className="post-text">
+                          <a href="">{post.title}</a>
+                          <div className="post-meta">
+                            <p>
+                              By<a href="">{post.author.name}</a>
+                            </p>
+                            <p>
+                              In<a href="">{post.tags[0]}</a>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              )}
+              <div className="single-comment wow fadeInUp">
+                <h2>{post.comments.length} Comments</h2>
+                <ul className="comment-list">
+                  {post.comments.map((comment, index) => (
+                    <li key={index} className="comment-item">
+                      <div className="comment-body">
+                        <div className="comment-img">
+                          <img src={comment.image} />
+                        </div>
+                        <div className="comment-text">
+                          <h3>
+                            <a href="">{comment.name}</a>
+                          </h3>
+                          <span>{formatDate(comment.date)}</span>
+                          <p>{comment.text}</p>
+                          <a className="btn" href="">
+                            Reply
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="comment-form wow fadeInUp">
@@ -213,7 +316,9 @@ const Single = () => {
                   <div className="search-widget">
                     <form>
                       <input className="form-control" type="text" placeholder="Search Keyword" />
-                      <button className="btn"><i className="fa fa-search"></i></button>
+                      <button className="btn">
+                        <i className="fa fa-search"></i>
+                      </button>
                     </form>
                   </div>
                 </div>
@@ -221,275 +326,67 @@ const Single = () => {
                 <div className="sidebar-widget wow fadeInUp">
                   <h2 className="widget-title">Recent Post</h2>
                   <div className="recent-post">
-                    <div className="post-item">
-                      <div className="post-img">
-                        <img src="img/post-1.jpg" />
-                      </div>
-                      <div className="post-text">
-                        <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                        <div className="post-meta">
-                          <p>By<a href="">Admin</a></p>
-                          <p>In<a href="">Design</a></p>
+                    {recentPosts.map((post, index) => (
+                      <div key={index} className="post-item">
+                        <div className="post-img">
+                          <img src={post.image} />
+                        </div>
+                        <div className="post-text">
+                          <a href="">{post.title}</a>
+                          <div className="post-meta">
+                            <p>
+                              By<a href="">{post.author?.name}</a>
+                            </p>
+                            <p>
+                              In<a href="">{post.category}</a>
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="post-item">
-                      <div className="post-img">
-                        <img src="img/post-2.jpg" />
-                      </div>
-                      <div className="post-text">
-                        <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                        <div className="post-meta">
-                          <p>By<a href="">Admin</a></p>
-                          <p>In<a href="">Design</a></p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="post-item">
-                      <div className="post-img">
-                        <img src="img/post-3.jpg" />
-                      </div>
-                      <div className="post-text">
-                        <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                        <div className="post-meta">
-                          <p>By<a href="">Admin</a></p>
-                          <p>In<a href="">Design</a></p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="post-item">
-                      <div className="post-img">
-                        <img src="img/post-4.jpg" />
-                      </div>
-                      <div className="post-text">
-                        <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                        <div className="post-meta">
-                          <p>By<a href="">Admin</a></p>
-                          <p>In<a href="">Design</a></p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="post-item">
-                      <div className="post-img">
-                        <img src="img/post-5.jpg" />
-                      </div>
-                      <div className="post-text">
-                        <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                        <div className="post-meta">
-                          <p>By<a href="">Admin</a></p>
-                          <p>In<a href="">Design</a></p>
-                        </div>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
 
                 <div className="sidebar-widget wow fadeInUp">
                   <div className="image-widget">
-                    <a href="#"><img src="img/blog-1.jpg" alt="Image" /></a>
+                    <a href="#">
+                      <img src="/img/blog-1.jpg" alt="Image" />
+                    </a>
                   </div>
                 </div>
 
                 <div className="sidebar-widget wow fadeInUp">
                   <div className="tab-post">
                     <ul className="nav nav-pills nav-justified">
-                      <li className="nav-item">
-                        <a className="nav-link active" data-toggle="pill" href="#featured">Featured</a>
-                      </li>
-                      <li className="nav-item">
-                        <a className="nav-link" data-toggle="pill" href="#popular">Popular</a>
-                      </li>
-                      <li className="nav-item">
-                        <a className="nav-link" data-toggle="pill" href="#latest">Latest</a>
-                      </li>
+                      {["featured", "popular", "latest"].map((tab, index) => (
+                        <li className="nav-item" key={index}>
+                          <a className={`nav-link ${activeTab === tab ? "active" : ""}`} onClick={() => setActiveTab(tab)} href="#">
+                            {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                          </a>
+                        </li>
+                      ))}
                     </ul>
 
                     <div className="tab-content">
-                      <div id="featured" className="container tab-pane active">
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-1.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>By<a href="">Admin</a></p>
-                              <p>In<a href="">Design</a></p>
+                      <div className="container tab-pane active">
+                        {tabData[activeTab]?.map((post) => (
+                          <div className="post-item" key={post.id}>
+                            <div className="post-img">
+                              <img src={post.image } />
+                            </div>
+                            <div className="post-text">
+                              <a href={`/single/${post.id}`}>{post.title}</a>
+                              <div className="post-meta">
+                                <p>
+                                  By<a href="">{post.author?.name || "Admin"}</a>
+                                </p>
+                                <p>
+                                  In<a href="">{post.category }</a>
+                                </p>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-2.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>By<a href="">Admin</a></p>
-                              <p>In<a href="">Design</a></p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-3.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>By<a href="">Admin</a></p>
-                              <p>In<a href="">Design</a></p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-4.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>By<a href="">Admin</a></p>
-                              <p>In<a href="">Design</a></p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-5.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>By<a href="">Admin</a></p>
-                              <p>In<a href="">Design</a></p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div id="popular" className="container tab-pane fade">
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-1.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>By<a href="">Admin</a></p>
-                              <p>In<a href="">Design</a></p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-2.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>By<a href="">Admin</a></p>
-                              <p>In<a href="">Design</a></p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-3.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>By<a href="">Admin</a></p>
-                              <p>In<a href="">Design</a></p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-4.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>By<a href="">Admin</a></p>
-                              <p>In<a href="">Design</a></p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-5.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>By<a href="">Admin</a></p>
-                              <p>In<a href="">Design</a></p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div id="latest" className="container tab-pane fade">
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-1.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>By<a href="">Admin</a></p>
-                              <p>In<a href="">Design</a></p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-2.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>By<a href="">Admin</a></p>
-                              <p>In<a href="">Design</a></p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-3.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>By<a href="">Admin</a></p>
-                              <p>In<a href="">Design</a></p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-4.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>By<a href="">Admin</a></p>
-                              <p>In<a href="">Design</a></p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="post-item">
-                          <div className="post-img">
-                            <img src="img/post-5.jpg" />
-                          </div>
-                          <div className="post-text">
-                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                            <div className="post-meta">
-                              <p>By<a href="">Admin</a></p>
-                              <p>In<a href="">Design</a></p>
-                            </div>
-                          </div>
-                        </div>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -497,7 +394,9 @@ const Single = () => {
 
                 <div className="sidebar-widget wow fadeInUp">
                   <div className="image-widget">
-                    <a href="#"><img src="img/blog-2.jpg" alt="Image" /></a>
+                    <a href="#">
+                      <img src="/img/blog-2.jpg" alt="Image" />
+                    </a>
                   </div>
                 </div>
 
@@ -505,42 +404,37 @@ const Single = () => {
                   <h2 className="widget-title">Categories</h2>
                   <div className="category-widget">
                     <ul>
-                      <li><a href="">National</a><span>(98)</span></li>
-                      <li><a href="">International</a><span>(87)</span></li>
-                      <li><a href="">Economics</a><span>(76)</span></li>
-                      <li><a href="">Politics</a><span>(65)</span></li>
-                      <li><a href="">Lifestyle</a><span>(54)</span></li>
-                      <li><a href="">Technology</a><span>(43)</span></li>
-                      <li><a href="">Trades</a><span>(32)</span></li>
+                      {categoriesWithCounts.map((item) => (
+                        <li>
+                          <a href={`/blogs?category=${item.category}`}>{item.category}</a>
+                          <span>({item.count})</span>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
 
                 <div className="sidebar-widget wow fadeInUp">
                   <div className="image-widget">
-                    <a href="#"><img src="img/blog-3.jpg" alt="Image" /></a>
+                    <a href="#">
+                      <img src="img/blog-3.jpg" alt="Image" />
+                    </a>
                   </div>
                 </div>
 
                 <div className="sidebar-widget wow fadeInUp">
                   <h2 className="widget-title">Tags Cloud</h2>
                   <div className="tag-widget">
-                    <a href="">National</a>
-                    <a href="">International</a>
-                    <a href="">Economics</a>
-                    <a href="">Politics</a>
-                    <a href="">Lifestyle</a>
-                    <a href="">Technology</a>
-                    <a href="">Trades</a>
+                    {allTags.map((tag) => (
+                      <a href={`/blog?tag=${tag}`}>{tag}</a>
+                    ))}
                   </div>
                 </div>
 
                 <div className="sidebar-widget wow fadeInUp">
                   <h2 className="widget-title">Text Widget</h2>
                   <div className="text-widget">
-                    <p>
-                      Lorem ipsum dolor sit amet elit. Integer lorem augue purus mollis sapien, non eros leo in nunc. Donec a nulla vel turpis tempor ac vel justo. In hac platea nec eros. Nunc eu enim non turpis id augue.
-                    </p>
+                    <p>Lorem ipsum dolor sit amet elit. Integer lorem augue purus mollis sapien, non eros leo in nunc. Donec a nulla vel turpis tempor ac vel justo. In hac platea nec eros. Nunc eu enim non turpis id augue.</p>
                   </div>
                 </div>
               </div>
@@ -550,7 +444,7 @@ const Single = () => {
       </div>
       {/* <!-- Single Post End-->    */}
     </>
-  )
-}
+  );
+};
 
-export default Single
+export default Single;
