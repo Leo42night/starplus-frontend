@@ -64,7 +64,8 @@ const Home = () => {
   useEffect(() => {
     startAutoSlide();
     return () => stopAutoSlide();
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); 
 
   const handlePrev = () => {
     setIsTransitioning(true);
@@ -89,7 +90,7 @@ const Home = () => {
       }, 700);
     } else {
       setIsTransitioning(true);
-    }
+    }// eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current]);
   // Hero Animation End
 
@@ -304,19 +305,19 @@ const Home = () => {
 
   const testimonials = [
     {
-      name: "Jane Doe",
+      name: "Mark Doe",
       profession: "UI/UX Designer",
       image: "/img/testimonial-1.jpg",
       text: "Sangat puas dengan pelayanannya. Tim sangat profesional dan cepat tanggap.",
     },
     {
-      name: "John Smith",
+      name: "Sarah Lee",
       profession: "Software Engineer",
       image: "/img/testimonial-2.jpg",
       text: "Mereka membantu saya menyelesaikan proyek tepat waktu dengan hasil yang memuaskan.",
     },
     {
-      name: "Sarah Lee",
+      name: "John Smith",
       profession: "Project Manager",
       image: "/img/testimonial-3.jpg",
       text: "Pekerjaan mereka sangat rapi dan detail. Recommended banget!",
@@ -713,7 +714,7 @@ const Home = () => {
         <div
           className="w-full h-full bg-fixed bg-center bg-cover"
           style={{
-            backgroundImage: `url('https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg')`,
+            backgroundImage: `url('https://plus.unsplash.com/premium_photo-1678134786065-8e264416fa6f?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
           }}
         >
           <div className="w-full h-full bg-[#030f27]/80 flex items-center justify-center">
@@ -742,7 +743,7 @@ const Home = () => {
               </button>
               <iframe
                 className="w-full h-full"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+                src="https://www.youtube.com/embed/Cjmv_0T90N4?autoplay=1"
                 title="Video"
                 allow="autoplay; encrypted-media"
                 allowFullScreen
@@ -876,7 +877,7 @@ const Home = () => {
       <div
         className="w-full mx-auto text-center relative bg-fixed bg-center bg-cover h-128"
         style={{
-          backgroundImage: `url('https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg')`,
+          backgroundImage: `url('https://plus.unsplash.com/premium_photo-1678134786065-8e264416fa6f?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
         }}
       >
         <div className="w-full h-full bg-[#030f27]/80 flex flex-col items-center justify-center">
