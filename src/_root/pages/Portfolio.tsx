@@ -1,3 +1,4 @@
+import projects from "../../data/porfolios"
 
 const Portfolio = () => {
   return (
