@@ -252,71 +252,94 @@ const RootLayout = () => {
       <div className="wrapper">
         {/* <!-- Footer Start --> */}
         <div className="footer wow fadeIn" data-wow-delay="0.3s">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-6 col-lg-3">
-                <div className="footer-contact">
-                  <h2>Office Contact</h2>
-                  <p>
-                    <i className="fa fa-map-marker-alt"></i>123 Street, New
-                    York, USA
-                  </p>
-                  <p>
-                    <i className="fa fa-phone-alt"></i>+012 345 67890
-                  </p>
-                  <p>
-                    <i className="fa fa-envelope"></i>info@example.com
-                  </p>
-                  <div className="footer-social">
-                    <a href="">
-                      <i className="fab fa-twitter"></i>
-                    </a>
-                    <a href="">
-                      <i className="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="">
-                      <i className="fab fa-youtube"></i>
-                    </a>
-                    <a href="">
-                      <i className="fab fa-instagram"></i>
-                    </a>
-                    <a href="">
-                      <i className="fab fa-linkedin-in"></i>
-                    </a>
-                  </div>
+          <div className="max-w-7xl mx-auto p-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {/* Office Contact */}
+              <div className="space-y-4">
+                <h2 className="text-xl font-bold">Office Contact</h2>
+                <p className="flex items-center">
+                  <i className="fa fa-map-marker-alt mr-2"></i>123 Street, New York, USA
+                </p>
+                <p className="flex items-center">
+                  <i className="fa fa-phone-alt mr-2"></i>+012 345 67890
+                </p>
+                <p className="flex items-center">
+                  <i className="fa fa-envelope mr-2"></i>info@example.com
+                </p>
+                <div className="flex space-x-4">
+                  <a href="" className="text-gray-600 hover:text-blue-500">
+                    <i className="fab fa-twitter"></i>
+                  </a>
+                  <a href="" className="text-gray-600 hover:text-blue-500">
+                    <i className="fab fa-facebook-f"></i>
+                  </a>
+                  <a href="" className="text-gray-600 hover:text-blue-500">
+                    <i className="fab fa-youtube"></i>
+                  </a>
+                  <a href="" className="text-gray-600 hover:text-blue-500">
+                    <i className="fab fa-instagram"></i>
+                  </a>
+                  <a href="" className="text-gray-600 hover:text-blue-500">
+                    <i className="fab fa-linkedin-in"></i>
+                  </a>
                 </div>
               </div>
-              <div className="col-md-6 col-lg-3">
-                <div className="footer-link">
-                  <h2>Services Areas</h2>
-                  <a href="">Building Construction</a>
-                  <a href="">House Renovation</a>
-                  <a href="">Architecture Design</a>
-                  <a href="">Interior Design</a>
-                  <a href="">Painting</a>
-                </div>
+
+              {/* Services Areas */}
+              <div className="space-y-2">
+                <h2 className="text-xl font-bold">Service Areas</h2>
+                <a href="" className="block text-gray-700 hover:text-blue-500">
+                  Building Construction
+                </a>
+                <a href="" className="block text-gray-700 hover:text-blue-500">
+                  House Renovation
+                </a>
+                <a href="" className="block text-gray-700 hover:text-blue-500">
+                  Architecture Design
+                </a>
+                <a href="" className="block text-gray-700 hover:text-blue-500">
+                  Interior Design
+                </a>
+                <a href="" className="block text-gray-700 hover:text-blue-500">
+                  Painting
+                </a>
               </div>
-              <div className="col-md-6 col-lg-3">
-                <div className="footer-link">
-                  <h2>Useful Pages</h2>
-                  <a href="">About Us</a>
-                  <a href="">Contact Us</a>
-                  <a href="">Our Team</a>
-                  <a href="">Projects</a>
-                  <a href="">Testimonial</a>
-                </div>
+
+              {/* Useful Pages */}
+              <div className="space-y-2">
+                <h2 className="text-xl font-bold">Useful Pages</h2>
+                <a href="" className="block text-gray-700 hover:text-blue-500">
+                  About Us
+                </a>
+                <a href="" className="block text-gray-700 hover:text-blue-500">
+                  Contact Us
+                </a>
+                <a href="" className="block text-gray-700 hover:text-blue-500">
+                  Our Team
+                </a>
+                <a href="" className="block text-gray-700 hover:text-blue-500">
+                  Projects
+                </a>
+                <a href="" className="block text-gray-700 hover:text-blue-500">
+                  Testimonial
+                </a>
               </div>
-              <div className="col-md-6 col-lg-3">
-                <div className="newsletter">
-                  <h2>Newsletter</h2>
-                  <p>
-                    Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi.
-                    Curabitur facilisis ornare velit non vulpu
-                  </p>
-                  <div className="form">
-                    <input className="form-control" placeholder="Email here" />
-                    <button className="btn">Submit</button>
-                  </div>
+
+              {/* Newsletter */}
+              <div className="space-y-4">
+                <h2 className="text-xl font-bold">Newsletter</h2>
+                <p className="text-gray-700">
+                  Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur
+                  facilisis ornare velit non vulpu.
+                </p>
+                <div className="flex space-x-2">
+                  <input
+                    className="flex-grow px-4 py-2 border border-gray-300 rounded"
+                    placeholder="Email here"
+                  />
+                  <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                    Submit
+                  </button>
                 </div>
               </div>
             </div>
