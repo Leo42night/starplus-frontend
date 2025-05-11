@@ -138,7 +138,7 @@ const Single = () => {
 
   // Inisialisasi Owl setelah data ter-set dan DOM siap
   useEffect(() => {
-    if (relatedPosts.length > 0 && (window as any).$) {
+    if (relatedPosts.length > 0 && (window as Window).$) {
       setTimeout(() => {
         const $ = (window as any).$;
         const $carousel = $(".owl-carousel");
