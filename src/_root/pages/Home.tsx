@@ -14,6 +14,8 @@ import {
   FaPlayCircle,
 } from "react-icons/fa";
 
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
+
 const Home = () => {
   // Hero Animation Start
   const images = [
@@ -62,7 +64,8 @@ const Home = () => {
   useEffect(() => {
     startAutoSlide();
     return () => stopAutoSlide();
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); 
 
   const handlePrev = () => {
     setIsTransitioning(true);
@@ -87,7 +90,7 @@ const Home = () => {
       }, 700);
     } else {
       setIsTransitioning(true);
-    }
+    }// eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current]);
   // Hero Animation End
 
@@ -208,10 +211,10 @@ const Home = () => {
       title: "CEO & Founder",
       image: "img/team-1.jpg",
       social: {
-        twitter: "",
-        facebook: "",
-        linkedin: "",
-        instagram: "",
+        twitter: "https://twitter.com/adam",
+        facebook: "https://facebook.com/adam",
+        linkedin: "https://linkedin.com/in/adam",
+        instagram: "https://instagram.com/adam",
       },
     },
     {
@@ -219,10 +222,10 @@ const Home = () => {
       title: "Civil Engineer",
       image: "img/team-2.jpg",
       social: {
-        twitter: "",
-        facebook: "",
-        linkedin: "",
-        instagram: "",
+        twitter: "https://twitter.com/dylan",
+        facebook: "https://facebook.com/dylan",
+        linkedin: "https://linkedin.com/in/dylan",
+        instagram: "https://instagram.com/dylan",
       },
     },
     {
@@ -230,10 +233,10 @@ const Home = () => {
       title: "Interior Designer",
       image: "img/team-3.jpg",
       social: {
-        twitter: "",
-        facebook: "",
-        linkedin: "",
-        instagram: "",
+        twitter: "https://twitter.com/jhon",
+        facebook: "https://facebook.com/jhon",
+        linkedin: "https://linkedin.com/in/jhon",
+        instagram: "https://instagram.com/jhon",
       },
     },
     {
@@ -241,14 +244,127 @@ const Home = () => {
       title: "Painter",
       image: "img/team-4.jpg",
       social: {
-        twitter: "",
-        facebook: "",
-        linkedin: "",
-        instagram: "",
+        twitter: "https://twitter.com/josh",
+        facebook: "https://facebook.com/josh",
+        linkedin: "https://linkedin.com/in/josh",
+        instagram: "https://instagram.com/josh",
       },
     },
   ];
+  
+
   // Team Animation End
+
+  // FAQ Animation Start
+  const faqItems = [
+    {
+      question: "Apa itu layanan kami?",
+      answer:
+        "Layanan kami adalah solusi digital untuk bisnis Anda, mulai dari pembuatan website hingga pengembangan sistem.",
+    },
+    {
+      question: "Bagaimana cara menghubungi tim?",
+      answer:
+        "Anda bisa menghubungi kami melalui halaman kontak atau email support kami.",
+    },
+    {
+      question: "Apakah ada biaya langganan?",
+      answer:
+        "Tergantung pada paket layanan yang Anda pilih, kami menyediakan opsi gratis dan berbayar.",
+    },
+    {
+      question: "Berapa lama proses pengerjaan?",
+      answer: "Biasanya antara 1-3 minggu tergantung kompleksitas proyek.",
+    },
+    {
+      question: "Apakah kami mendapatkan garansi?",
+      answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+    },
+    {
+      question: "Apakah kami mendapatkan garansi?",
+      answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+    },
+    {
+      question: "Apakah kami mendapatkan garansi?",
+      answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+    },
+    {
+      question: "Apakah kami mendapatkan garansi?",
+      answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+    },
+    {
+      question: "Apakah kami mendapatkan garansi?",
+      answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+    },
+    {
+      question: "Apakah kami mendapatkan garansi?",
+      answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+    },
+  ];
+  // FAQ Animation End
+
+  const testimonials = [
+    {
+      name: "Mark Doe",
+      profession: "UI/UX Designer",
+      image: "/img/testimonial-1.jpg",
+      text: "Sangat puas dengan pelayanannya. Tim sangat profesional dan cepat tanggap.",
+    },
+    {
+      name: "Sarah Lee",
+      profession: "Software Engineer",
+      image: "/img/testimonial-2.jpg",
+      text: "Mereka membantu saya menyelesaikan proyek tepat waktu dengan hasil yang memuaskan.",
+    },
+    {
+      name: "John Smith",
+      profession: "Project Manager",
+      image: "/img/testimonial-3.jpg",
+      text: "Pekerjaan mereka sangat rapi dan detail. Recommended banget!",
+    },
+  ];
+
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const testiPrev = () => {
+    setActiveIndex(
+      (prev) => (prev - 1 + testimonials.length) % testimonials.length
+    );
+  };
+
+  const testiNext = () => {
+    setActiveIndex((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const blogData = [
+    {
+      id: 1,
+      imageSrc: "img/blog-1.jpg",
+      title: "Lorem Ipsum",
+      author: "Admin",
+      category: "Construction",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci quae, corrupti laudantium culpa recusandae ab doloremque quis unde. Minus asperiores saepe ab.",
+    },
+    {
+      id: 2,
+      imageSrc: "img/blog-2.jpg",
+      title: "Dolor Sit Amet",
+      author: "Admin",
+      category: "Technology",
+      description:
+        "Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate.",
+    },
+    {
+      id: 3,
+      imageSrc: "img/blog-3.jpg",
+      title: "Curabitur Facilisis",
+      author: "Admin",
+      category: "Design",
+      description:
+        "Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor.",
+    },
+  ];
 
   return (
     <>
@@ -300,7 +416,7 @@ const Home = () => {
                       animate={{ x: 0, opacity: 1 }}
                       exit={{ x: -100, opacity: 0 }}
                       transition={{ duration: 0.5, delay: 0.1 }}
-                      className="text-4xl sm:text-6xl mb-6"
+                      className="text-4xl font-bold sm:text-6xl mb-6"
                     >
                       {texts[current - 1]?.subtitle}
                     </motion.p>
@@ -311,7 +427,7 @@ const Home = () => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 50 }}
                       transition={{ duration: 0.5, delay: 0.3 }}
-                      className="border border-white text-white px-12 py-3 hover:bg-white hover:text-black"
+                      className="border-2 border-white text-white px-12 py-3 transition-colors duration-300 hover:bg-[#fdbe33] hover:!text-[#030f27] hover:border-0"
                     >
                       Get a Quote
                     </motion.button>
@@ -445,12 +561,12 @@ const Home = () => {
               }}
             >
               <div className="mb-4">
-                <p className="text-yellow-500 text-sm uppercase font-semibold tracking-wide">
+                <p className="text-[#fdbe33] text-md uppercase font-semibold tracking-wide">
                   Welcome to Builderz
                 </p>
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
+                <p className="text-3xl md:text-5xl font-bold text-gray-800">
                   25 Years Experience
-                </h2>
+                </p>
               </div>
 
               <div className="space-y-4 text-gray-600">
@@ -539,9 +655,9 @@ const Home = () => {
       <section className="bg-white py-16">
         <div className="text-center mb-12">
           <p className="text-yellow-500 font-semibold text-lg">Our Services</p>
-          <h2 className="text-4xl font-bold text-gray-900">
+          <p className="text-5xl font-bold text-gray-900">
             We Provide Services
-          </h2>
+          </p>
         </div>
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
@@ -570,18 +686,18 @@ const Home = () => {
                 className="flex justify-between items-center h-16"
                 style={{ backgroundColor: "#030f27" }}
               >
-                <h3
-                  className="text-md font-bold leading-snug px-2 py-4"
+                <h5
+                  className="text-lg leading-snug px-4 py-4"
                   style={{ color: "#fdbe33" }}
                 >
                   {service.title}
-                </h3>
+                </h5>
                 <span
                   style={{
                     backgroundColor: "#fdbe33",
                   }}
                   // Ubah warna teks saat parent di-hover
-                  className="flex items-center text-2xl font-bold px-6 transition-colors duration-300 h-full group-hover:text-white"
+                  className="flex items-center text-2xl font-bold px-6 transition-colors duration-300 h-full group-hover:text-white text-[#030f27]"
                 >
                   +
                 </span>
@@ -598,7 +714,7 @@ const Home = () => {
         <div
           className="w-full h-full bg-fixed bg-center bg-cover"
           style={{
-            backgroundImage: `url('https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg')`,
+            backgroundImage: `url('https://plus.unsplash.com/premium_photo-1678134786065-8e264416fa6f?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
           }}
         >
           <div className="w-full h-full bg-[#030f27]/80 flex items-center justify-center">
@@ -627,7 +743,7 @@ const Home = () => {
               </button>
               <iframe
                 className="w-full h-full"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+                src="https://www.youtube.com/embed/Cjmv_0T90N4?autoplay=1"
                 title="Video"
                 allow="autoplay; encrypted-media"
                 allowFullScreen
@@ -641,7 +757,7 @@ const Home = () => {
       {/* <!-- Team Start --> */}
       <div className="container mx-auto py-12">
         <div className="text-center mb-12">
-          <p className="text-gray-600 text-lg">Our Team</p>
+          <p className="text-[#fdbe33] text-lg">Our Team</p>
           <h2 className="text-4xl font-semibold text-yellow-500">
             Meet Our Engineer
           </h2>
@@ -654,46 +770,50 @@ const Home = () => {
               animate={{ y: 0, opacity: 1 }}
               transition={{
                 duration: 0.6,
-                delay: index * 0.3, // Menambahkan delay untuk animasi satu per satu
+                delay: index * 0.3,
                 ease: "easeOut",
               }}
-              className="team-item border border-gray-300 bg-[#121518] group hover:bg-[#FDBE33]"
+              className="relative team-item overflow-hidden border border-gray-300 bg-[#121518] group hover:bg-[#FDBE33] transition-all duration-300"
             >
+              {/* Social Icons - Appear on hover */}
+              <div className="absolute top-0 left-0 flex flex-col bg-[#121518] group-hover:opacity-100 opacity-0 transition-opacity duration-300 z-10">
+                <a href={member.social.twitter} target="_blank">
+                  <div className="w-10 h-10 flex items-center justify-center hover:bg-[#FDBE33] transition">
+                    <i className="fab fa-twitter text-white" />
+                  </div>
+                </a>
+                <a href={member.social.facebook} target="_blank">
+                  <div className="w-10 h-10 flex items-center justify-center hover:bg-[#FDBE33] transition">
+                    <i className="fab fa-facebook-f text-white" />
+                  </div>
+                </a>
+                <a href={member.social.linkedin} target="_blank">
+                  <div className="w-10 h-10 flex items-center justify-center hover:bg-[#FDBE33] transition">
+                    <i className="fab fa-linkedin-in text-white" />
+                  </div>
+                </a>
+                <a href={member.social.instagram} target="_blank">
+                  <div className="w-10 h-10 flex items-center justify-center hover:bg-[#FDBE33] transition">
+                    <i className="fab fa-instagram text-white" />
+                  </div>
+                </a>
+              </div>
+
+              {/* Image */}
               <div className="team-img">
                 <img
                   src={member.image}
-                  alt="Team Image"
+                  alt={member.name}
                   className="w-full h-64 object-cover"
                 />
               </div>
+
+              {/* Text */}
               <div className="team-text text-center mt-4">
-                {/* Menambahkan hover efek untuk teks dan memastikan warna teks kuning pada awal */}
-                <h2 className="team-member-name text-xl font-bold py-2 text-[#FDBE33] group-hover:text-[#121518] transition-all duration-300">
+                <p className="text-xl font-bold py-2 text-[#FDBE33] group-hover:text-[#121518] transition-all duration-300">
                   {member.name}
-                </h2>
-                <p className="text-white py-1 mt-2">{member.title}</p>
-              </div>
-              <div className="team-social flex justify-center mt-4">
-                {member.social.twitter && (
-                  <a className="social-tw mx-2" href={member.social.twitter}>
-                    <i className="fab fa-twitter text-xl text-blue-500"></i>
-                  </a>
-                )}
-                {member.social.facebook && (
-                  <a className="social-fb mx-2" href={member.social.facebook}>
-                    <i className="fab fa-facebook-f text-xl text-blue-600"></i>
-                  </a>
-                )}
-                {member.social.linkedin && (
-                  <a className="social-li mx-2" href={member.social.linkedin}>
-                    <i className="fab fa-linkedin-in text-xl text-blue-700"></i>
-                  </a>
-                )}
-                {member.social.instagram && (
-                  <a className="social-in mx-2" href={member.social.instagram}>
-                    <i className="fab fa-instagram text-xl text-pink-500"></i>
-                  </a>
-                )}
+                </p>
+                <p className="text-white">{member.title}</p>
               </div>
             </motion.div>
           ))}
@@ -703,476 +823,173 @@ const Home = () => {
       {/* <!-- Team End --> */}
 
       {/* <!-- FAQs Start --> */}
-      <div className="faqs">
-        <div className="container">
-          <div className="section-header text-center">
-            <p>Frequently Asked Question</p>
-            <h2>You May Ask</h2>
+      <div className="faq-container">
+        <div className="faq-title-container">
+          <div className="faq-title">
+            <p className="faq-subtitle">Frequently Asked Question</p>
+            <p className="faq-heading">You May Ask</p>
           </div>
-          <div className="row">
-            <div className="col-md-6">
-              <div id="accordion-1">
-                <div className="card wow fadeInLeft" data-wow-delay="0.1s">
-                  <div className="card-header">
-                    <a
-                      className="card-link collapsed"
-                      data-toggle="collapse"
-                      href="#collapseOne"
-                    >
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div
-                    id="collapseOne"
-                    className="collapse"
-                    data-parent="#accordion-1"
+
+          <div className="faq-grid">
+            <div className="faq-divider-vertical"></div>
+
+            {faqItems.map((item, i) => {
+              const isLeft = i % 2 === 0;
+              const direction = isLeft ? -100 : 100;
+
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: direction }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: i * 0.15,
+                    type: "tween",
+                    ease: "easeOut",
+                  }}
+                  className="faq-item"
+                >
+                  <button
+                    className="faq-item-button"
+                    onClick={() => {
+                      const content = document.getElementById(`faq-${i}`);
+                      if (content) {
+                        content.classList.toggle("show");
+                      }
+                    }}
                   >
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non.
-                    </div>
+                    <span>{item.question}</span>
+                    <span className="plus">+</span>
+                  </button>
+                  <div id={`faq-${i}`} className="faq-item-content">
+                    {item.answer}
                   </div>
-                </div>
-                <div className="card wow fadeInLeft" data-wow-delay="0.2s">
-                  <div className="card-header">
-                    <a
-                      className="card-link collapsed"
-                      data-toggle="collapse"
-                      href="#collapseTwo"
-                    >
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div
-                    id="collapseTwo"
-                    className="collapse"
-                    data-parent="#accordion-1"
-                  >
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non.
-                    </div>
-                  </div>
-                </div>
-                <div className="card wow fadeInLeft" data-wow-delay="0.3s">
-                  <div className="card-header">
-                    <a
-                      className="card-link collapsed"
-                      data-toggle="collapse"
-                      href="#collapseThree"
-                    >
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div
-                    id="collapseThree"
-                    className="collapse"
-                    data-parent="#accordion-1"
-                  >
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non.
-                    </div>
-                  </div>
-                </div>
-                <div className="card wow fadeInLeft" data-wow-delay="0.4s">
-                  <div className="card-header">
-                    <a
-                      className="card-link collapsed"
-                      data-toggle="collapse"
-                      href="#collapseFour"
-                    >
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div
-                    id="collapseFour"
-                    className="collapse"
-                    data-parent="#accordion-1"
-                  >
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non.
-                    </div>
-                  </div>
-                </div>
-                <div className="card wow fadeInLeft" data-wow-delay="0.5s">
-                  <div className="card-header">
-                    <a
-                      className="card-link collapsed"
-                      data-toggle="collapse"
-                      href="#collapseFive"
-                    >
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div
-                    id="collapseFive"
-                    className="collapse"
-                    data-parent="#accordion-1"
-                  >
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div id="accordion-2">
-                <div className="card wow fadeInRight" data-wow-delay="0.1s">
-                  <div className="card-header">
-                    <a
-                      className="card-link collapsed"
-                      data-toggle="collapse"
-                      href="#collapseSix"
-                    >
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div
-                    id="collapseSix"
-                    className="collapse"
-                    data-parent="#accordion-2"
-                  >
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non.
-                    </div>
-                  </div>
-                </div>
-                <div className="card wow fadeInRight" data-wow-delay="0.2s">
-                  <div className="card-header">
-                    <a
-                      className="card-link collapsed"
-                      data-toggle="collapse"
-                      href="#collapseSeven"
-                    >
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div
-                    id="collapseSeven"
-                    className="collapse"
-                    data-parent="#accordion-2"
-                  >
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non.
-                    </div>
-                  </div>
-                </div>
-                <div className="card wow fadeInRight" data-wow-delay="0.3s">
-                  <div className="card-header">
-                    <a
-                      className="card-link collapsed"
-                      data-toggle="collapse"
-                      href="#collapseEight"
-                    >
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div
-                    id="collapseEight"
-                    className="collapse"
-                    data-parent="#accordion-2"
-                  >
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non.
-                    </div>
-                  </div>
-                </div>
-                <div className="card wow fadeInRight" data-wow-delay="0.4s">
-                  <div className="card-header">
-                    <a
-                      className="card-link collapsed"
-                      data-toggle="collapse"
-                      href="#collapseNine"
-                    >
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div
-                    id="collapseNine"
-                    className="collapse"
-                    data-parent="#accordion-2"
-                  >
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non.
-                    </div>
-                  </div>
-                </div>
-                <div className="card wow fadeInRight" data-wow-delay="0.5s">
-                  <div className="card-header">
-                    <a
-                      className="card-link collapsed"
-                      data-toggle="collapse"
-                      href="#collapseTen"
-                    >
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div
-                    id="collapseTen"
-                    className="collapse"
-                    data-parent="#accordion-2"
-                  >
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                      non.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </div>
       {/* <!-- FAQs End --> */}
 
       {/* <!-- Testimonial Start --> */}
-      <div className="testimonial wow fadeIn" data-wow-delay="0.1s">
-        <div className="container">
-          <div className="row">
-            <div className="col-12">
-              <div className="testimonial-slider-nav">
-                <div className="slider-nav">
-                  <img src="img/testimonial-1.jpg" alt="Testimonial" />
-                </div>
-                <div className="slider-nav">
-                  <img src="img/testimonial-2.jpg" alt="Testimonial" />
-                </div>
-                <div className="slider-nav">
-                  <img src="img/testimonial-3.jpg" alt="Testimonial" />
-                </div>
-                <div className="slider-nav">
-                  <img src="img/testimonial-4.jpg" alt="Testimonial" />
-                </div>
-                <div className="slider-nav">
-                  <img src="img/testimonial-1.jpg" alt="Testimonial" />
-                </div>
-                <div className="slider-nav">
-                  <img src="img/testimonial-2.jpg" alt="Testimonial" />
-                </div>
-                <div className="slider-nav">
-                  <img src="img/testimonial-3.jpg" alt="Testimonial" />
-                </div>
-                <div className="slider-nav">
-                  <img src="img/testimonial-4.jpg" alt="Testimonial" />
-                </div>
-              </div>
-            </div>
+      <div
+        className="w-full mx-auto text-center relative bg-fixed bg-center bg-cover h-128"
+        style={{
+          backgroundImage: `url('https://plus.unsplash.com/premium_photo-1678134786065-8e264416fa6f?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
+        }}
+      >
+        <div className="w-full h-full bg-[#030f27]/80 flex flex-col items-center justify-center">
+          {/* Gambar Profil */}
+          <div className="flex items-center justify-center">
+            {/* Thumbnail Kiri */}
+            <img
+              src={
+                testimonials[
+                  (activeIndex - 1 + testimonials.length) % testimonials.length
+                ].image
+              }
+              alt="Previous Testimonial"
+              className="w-16 h-16 rounded-full object-cover opacity-50 transition duration-300"
+            />
+
+            {/* Gambar Tengah */}
+            <motion.img
+              key={activeIndex}
+              src={testimonials[activeIndex].image}
+              alt="Active Testimonial"
+              className="w-32 h-32 rounded-full object-cover border-4 border-primary shadow-lg"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4 }}
+            />
+
+            {/* Thumbnail Kanan */}
+            <img
+              src={testimonials[(activeIndex + 1) % testimonials.length].image}
+              alt="Next Testimonial"
+              className="w-16 h-16 rounded-full object-cover opacity-50 transition duration-300"
+            />
           </div>
-          <div className="row">
-            <div className="col-12">
-              <div className="testimonial-slider">
-                <div className="slider-item">
-                  <h3>Customer Name</h3>
-                  <h4>profession</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                    non vulputate. Aliquam metus tortor, auctor id gravida
-                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
-                    scelerisque maximus.
-                  </p>
-                </div>
-                <div className="slider-item">
-                  <h3>Customer Name</h3>
-                  <h4>profession</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                    non vulputate. Aliquam metus tortor, auctor id gravida
-                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
-                    scelerisque maximus.
-                  </p>
-                </div>
-                <div className="slider-item">
-                  <h3>Customer Name</h3>
-                  <h4>profession</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                    non vulputate. Aliquam metus tortor, auctor id gravida
-                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
-                    scelerisque maximus.
-                  </p>
-                </div>
-                <div className="slider-item">
-                  <h3>Customer Name</h3>
-                  <h4>profession</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                    non vulputate. Aliquam metus tortor, auctor id gravida
-                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
-                    scelerisque maximus.
-                  </p>
-                </div>
-                <div className="slider-item">
-                  <h3>Customer Name</h3>
-                  <h4>profession</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                    non vulputate. Aliquam metus tortor, auctor id gravida
-                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
-                    scelerisque maximus.
-                  </p>
-                </div>
-                <div className="slider-item">
-                  <h3>Customer Name</h3>
-                  <h4>profession</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                    non vulputate. Aliquam metus tortor, auctor id gravida
-                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
-                    scelerisque maximus.
-                  </p>
-                </div>
-                <div className="slider-item">
-                  <h3>Customer Name</h3>
-                  <h4>profession</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                    non vulputate. Aliquam metus tortor, auctor id gravida
-                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
-                    scelerisque maximus.
-                  </p>
-                </div>
-                <div className="slider-item">
-                  <h3>Customer Name</h3>
-                  <h4>profession</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                    non vulputate. Aliquam metus tortor, auctor id gravida
-                    condimentum, viverra quis sem. Curabitur non nisl nec nisi
-                    scelerisque maximus.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+
+          {/* Konten Testimoni */}
+          <motion.div
+            key={`text-${activeIndex}`}
+            className="mt-6 px-4 text-white max-w-xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <span className="text-xl font-semibold text-[#fdbe33]">
+              {testimonials[activeIndex].name}
+            </span>
+            <p className="font-style: italic font-[10px] text-gray-300 pt-1">
+              {testimonials[activeIndex].profession}
+            </p>
+            <p className="mt-2 text-white">{testimonials[activeIndex].text}</p>
+          </motion.div>
+
+          {/* Tombol Navigasi */}
+          <button
+            onClick={testiPrev}
+            className="absolute left-8 top-1/2 -translate-y-1/2 bg-transparent text-white hover:bg-primary hover:text-[#fdbe33] transition h-16 w-16 flex items-center justify-center rounded-full"
+          >
+            <HiChevronLeft className="text-5xl" />
+          </button>
+
+          <button
+            onClick={testiNext}
+            className="absolute right-8 top-1/2 -translate-y-1/2 bg-transparent text-white hover:bg-primary hover:text-[#fdbe33] transition h-16 w-16 flex items-center justify-center rounded-full"
+          >
+            <HiChevronRight className="text-5xl" />
+          </button>
         </div>
       </div>
+
       {/* <!-- Testimonial End --> */}
 
       {/* <!-- Blog Start --> */}
-      <div className="blog">
-        <div className="container">
-          <div className="section-header text-center">
-            <p>Latest Blog</p>
-            <h2>Latest From Our Blog</h2>
-          </div>
-          <div className="row">
-            <div
-              className="col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay="0.2s"
+      <div className="max-w-6xl mx-auto px-4 h-screen py-12">
+        <div className="text-center mb-12">
+          <p className="text-[#fdbe33] font-semibold">Latest Blog</p>
+          <h2 className="text-3xl font-bold">Latest From Our Blog</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {blogData.map((blog, index) => (
+            <motion.div
+              key={blog.id}
+              className="bg-gray-200 shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 h-120"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.3, duration: 0.5 }}
             >
-              <div className="blog-item">
-                <div className="blog-img">
-                  <img src="img/blog-1.jpg" alt="Image" />
+              <img
+                src={blog.imageSrc}
+                alt={`Blog ${blog.id}`}
+                className="w-full h-48 object-cover"
+              />
+              <div className="w-full h-1/8 flex">
+                <div className="w-5/6 h-full flex items-center justify-center text-center bg-[#030f27] text-2xl text-[#fdbe33]">
+                  {blog.title}
                 </div>
-                <div className="blog-title">
-                  <h3>Lorem ipsum dolor sit</h3>
-                  <a className="btn" href="">
-                    +
-                  </a>
-                </div>
-                <div className="blog-meta">
-                  <p>
-                    By<a href="">Admin</a>
-                  </p>
-                  <p>
-                    In<a href="">Construction</a>
-                  </p>
-                </div>
-                <div className="blog-text">
-                  <p>
-                    Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi.
-                    Curabitur facilisis ornare velit non vulputate. Aliquam
-                    metus tortor
-                  </p>
+                <div className="w-1/6 bg-[#fdbe33] h-full flex items-center justify-center text-center text-5xl text-[#030f27] hover:text-white transition-colors duration-300">
+                  +
                 </div>
               </div>
-            </div>
-            <div className="col-lg-4 col-md-6 wow fadeInUp">
-              <div className="blog-item">
-                <div className="blog-img">
-                  <img src="img/blog-2.jpg" alt="Image" />
-                </div>
-                <div className="blog-title">
-                  <h3>Lorem ipsum dolor sit</h3>
-                  <a className="btn" href="">
-                    +
-                  </a>
-                </div>
-                <div className="blog-meta">
-                  <p>
-                    By<a href="">Admin</a>
-                  </p>
-                  <p>
-                    In<a href="">Construction</a>
-                  </p>
-                </div>
-                <div className="blog-text">
-                  <p>
-                    Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi.
-                    Curabitur facilisis ornare velit non vulputate. Aliquam
-                    metus tortor
-                  </p>
-                </div>
+              <div className="w-full h-1/8 flex items-center text-center justify-between px-20">
+                <span className="text-sm text-gray-600 hover:text-[#fdbe33] transition-colors duration-300">
+                  by {blog.author}
+                </span>
+                <span className="text-sm text-gray-600 hover:text-[#fdbe33] transition-colors duration-300">
+                  in {blog.category}
+                </span>
               </div>
-            </div>
-            <div
-              className="col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay="0.2s"
-            >
-              <div className="blog-item">
-                <div className="blog-img">
-                  <img src="img/blog-3.jpg" alt="Image" />
-                </div>
-                <div className="blog-title">
-                  <h3>Lorem ipsum dolor sit</h3>
-                  <a className="btn" href="">
-                    +
-                  </a>
-                </div>
-                <div className="blog-meta">
-                  <p>
-                    By<a href="">Admin</a>
-                  </p>
-                  <p>
-                    In<a href="">Construction</a>
-                  </p>
-                </div>
-                <div className="blog-text">
-                  <p>
-                    Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi.
-                    Curabitur facilisis ornare velit non vulputate. Aliquam
-                    metus tortor
-                  </p>
-                </div>
+              <div className="w-full h-1/3 items-center text-center justify-center flex px-8">
+                {blog.description}
               </div>
-            </div>
-          </div>
+            </motion.div>
+          ))}
         </div>
       </div>
       {/* <!-- Blog End --> */}
