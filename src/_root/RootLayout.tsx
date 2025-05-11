@@ -1,58 +1,63 @@
 import { useState } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
 import { FaCalendarAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
+import { Logo } from "../assets/icons";
+// import './../tailwind.css';
 
 const RootLayout = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
     <div>
       <div className="wrapper z-50">
-          <div className="bg-[#fdbe33] py-4">
-            <div className="max-w-screen-xl mx-auto">
-              <div className="flex flex-col lg:flex-row items-center lg:justify-between">
-                {/* Logo - kiri pojok */}
-                <div className="w-full lg:w-auto flex justify-center lg:justify-start text-[#030f27] lg:mb-0">
-                  <span className="text-5xl font-bold">Builderz</span>
+        <div className="bg-[#fdbe33] py-4">
+          <div className="mx-auto md:px-16">
+            <div className="flex flex-col lg:flex-row items-center lg:justify-between">
+              {/* Logo - kiri pojok */}
+              <div className="w-full lg:w-auto flex justify-center items-center lg:justify-start text-[#030f27] lg:mb-0">
+                <Logo />
+                <div className="ml-3 flex flex-col">
+                  <span className="text-xl font-bold">Mechanical</span>
+                  <span className="text-sm font-light">Construction</span>
+                </div>
+              </div>
+
+              {/* Contact Info - kanan pojok */}
+              <div className="hidden lg:flex items-center xl:space-x-8">
+                {/* Opening Hour */}
+                <div className="flex items-center space-x-3 px-4">
+                  <FaCalendarAlt className="text-[#030f27] text-3xl" />
+                  <div className="leading-tight">
+                    <p className="text-[#030f27] text-sm m-0">Opening Hour</p>
+                    <p className="text-[#030f27] text-sm m-0">Mon - Fri, 8:00 - 9:00</p>
+                  </div>
                 </div>
 
-                {/* Contact Info - kanan pojok */}
-                <div className="hidden lg:flex items-center space-x-8">
-                  {/* Opening Hour */}
-                  <div className="flex items-center space-x-3 px-4">
-                    <FaCalendarAlt className="text-[#030f27] text-3xl" />
-                    <div className="leading-tight">
-                      <p className="text-[#030f27] text-sm m-0">Opening Hour</p>
-                      <p className="text-[#030f27] text-sm m-0">Mon - Fri, 8:00 - 9:00</p>
-                    </div>
+                {/* Call Us */}
+                <div className="flex items-center space-x-3 px-4">
+                  <FaPhoneAlt className="text-[#030f27] text-3xl" />
+                  <div className="leading-tight">
+                    <p className="text-[#030f27] text-sm m-0">Call Us</p>
+                    <p className="text-[#030f27] text-sm m-0">+021-557-33371</p>
                   </div>
+                </div>
 
-                  {/* Call Us */}
-                  <div className="flex items-center space-x-3 px-4">
-                    <FaPhoneAlt className="text-[#030f27] text-3xl" />
-                    <div className="leading-tight">
-                      <p className="text-[#030f27] text-sm m-0">Call Us</p>
-                      <p className="text-[#030f27] text-sm m-0">+012 345 6789</p>
-                    </div>
-                  </div>
-
-                  {/* Email Us */}
-                  <div className="flex items-center space-x-3 px-4">
-                    <FaEnvelope className="text-[#030f27] text-3xl" />
-                    <div className="leading-tight">
-                      <p className="text-[#030f27] text-sm m-0">Email Us</p>
-                      <p className="text-[#030f27] text-sm m-0">info@example.com</p>
-                    </div>
+                {/* Email Us */}
+                <div className="flex items-center space-x-3 px-4">
+                  <FaEnvelope className="text-[#030f27] text-3xl" />
+                  <div className="leading-tight">
+                    <p className="text-[#030f27] text-sm m-0">Email Us</p>
+                    <p className="text-[#030f27] text-sm m-0">starplusnaver@example.com</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
         {/* <!-- Nav Bar Start --> */}
-        <div className="nav-bar">
+        <div className="nav-bar md:px-16">
           <div className="navbar flex justify-between items-center h-16">
             {/* Mobile - Left: MENU */}
             <div className="flex items-center">
@@ -65,112 +70,77 @@ const RootLayout = () => {
             <div className="hidden pl-3 md:flex flex-1 justify-start space-x-6 items-center text-white">
               <Link
                 to="/"
-                className={`transition-colors duration-200 ${
-                  location.pathname === "/"
-                    ? "text-yellow-400 font-bold"
-                    : "text-white hover:text-yellow-400"
-                }`}
+                className={`transition-colors duration-200 ${location.pathname === "/"
+                  ? "text-yellow-400 font-bold"
+                  : "text-white hover:text-yellow-400"
+                  }`}
               >
                 <div>Home</div>
               </Link>
 
               <Link
                 to="/about"
-                className={`${
-                  location.pathname === "/about"
-                    ? "text-yellow-400 font-bold"
-                    : "text-white hover:text-yellow-400"
-                }`}
+                className={`${location.pathname === "/about"
+                  ? "text-yellow-400 font-bold"
+                  : "text-white hover:text-yellow-400"
+                  }`}
               >
                 About
               </Link>
               <Link
                 to="/service"
-                className={`hover:text-yellow-400 ${
-                  location.pathname === "/service"
-                    ? "text-yellow-400 font-bold"
-                    : "text-white hover:text-yellow-400"
-                }`}
+                className={`hover:text-yellow-400 ${location.pathname === "/service"
+                  ? "text-yellow-400 font-bold"
+                  : "text-white hover:text-yellow-400"
+                  }`}
               >
                 Service
               </Link>
               <Link
                 to="/team"
-                className={`hover:text-yellow-400 ${
-                  location.pathname === "/team"
-                    ? "text-yellow-400 font-bold"
-                    : "text-white hover:text-yellow-400"
-                }`}
+                className={`hover:text-yellow-400 ${location.pathname === "/team"
+                  ? "text-yellow-400 font-bold"
+                  : "text-white hover:text-yellow-400"
+                  }`}
               >
                 Team
               </Link>
               <Link
                 to="/portfolio"
-                className={`hover:text-yellow-400 ${
-                  location.pathname === "/portfolio"
-                    ? "text-yellow-400 font-bold"
-                    : "text-white hover:text-yellow-400"
-                }`}
+                className={`hover:text-yellow-400 ${location.pathname === "/portfolio"
+                  ? "text-yellow-400 font-bold"
+                  : "text-white hover:text-yellow-400"
+                  }`}
               >
                 Portfolio
               </Link>
-
-              {/* Dropdown for Pages */}
-              <div className="relative">
-                <button
-                  type="button"
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="flex items-center hover:text-yellow-400"
-                >
-                  Pages
-                  <svg
-                    className="w-4 h-4 ml-1"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.293l3.71-4.06a.75.75 0 111.1 1.02l-4.25 4.65a.75.75 0 01-1.1 0l-4.25-4.65a.75.75 0 01.02-1.06z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </button>
-                {isDropdownOpen && (
-                  <div className="absolute mt-2 w-32 bg-white text-black rounded shadow-lg">
-                    <Link
-                      to="/blog"
-                      className="block px-4 py-2 hover:bg-gray-200"
-                      onClick={() => setIsDropdownOpen(false)}
-                    >
-                      Blog
-                    </Link>
-                    <Link
-                      to="/single"
-                      className="block px-4 py-2 hover:bg-gray-200"
-                      onClick={() => setIsDropdownOpen(false)}
-                    >
-                      Single
-                    </Link>
-                  </div>
-                )}
-              </div>
-
+              <Link
+                to="/blog"
+                className={`hover:text-yellow-400 ${location.pathname === "/blog"
+                  ? "text-yellow-400 font-bold"
+                  : "text-white hover:text-yellow-400"
+                  }`}
+              >
+                Blog
+              </Link>
               <Link
                 to="/contact"
-                className={`hover:text-yellow-400 ${
-                  location.pathname === "/contact"
-                    ? "text-yellow-400 font-bold"
-                    : "text-white hover:text-yellow-400"
-                }`}
+                className={`hover:text-yellow-400 ${location.pathname === "/contact"
+                  ? "text-yellow-400 font-bold"
+                  : "text-white hover:text-yellow-400"
+                  }`}
               >
                 Contact
               </Link>
             </div>
 
             {/* Right: Button */}
-            <div className="hidden md:flex">
+            <div className="hidden md:flex gap-2 items-center">
               <a href="#" className="btn">
-                Get A Quote
+                Log in
+              </a>
+              <a href="#" className="btn">
+                Sign up
               </a>
             </div>
 
@@ -248,28 +218,13 @@ const RootLayout = () => {
               >
                 Portfolio
               </Link>
-
-              {/* Dropdown inside mobile */}
-              <div>
-                <div className="text-gray-300">Pages</div>
-                <div className="pl-4 space-y-1">
-                  <Link
-                    to="/blog"
-                    className="text-white block hover:text-yellow-400"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Blog
-                  </Link>
-                  <Link
-                    to="/single"
-                    className="text-white block hover:text-yellow-400"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Single
-                  </Link>
-                </div>
-              </div>
-
+              <Link
+                to="/blog"
+                className="text-white block hover:text-yellow-400"
+                onClick={() => setIsOpen(false)}
+              >
+                Blog
+              </Link>
               <Link
                 to="/contact"
                 className="text-white block hover:text-yellow-400"

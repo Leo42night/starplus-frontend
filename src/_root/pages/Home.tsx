@@ -16,28 +16,226 @@ import {
 
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 
-const Home = () => {
-  // Hero Animation Start
-  const images = [
-    "img/carousel-1.jpg",
-    "img/carousel-2.jpg",
-    "img/carousel-3.jpg",
-  ];
+const texts = [
+  {
+    title: "Construction & Installation",
+    subtitle: "For Your Dream Project",
+  },
+  {
+    title: "Professional Scaffolder",
+    subtitle: "We Build Your Machine",
+  },
+  {
+    title: "Insulation",
+    subtitle: "For Your City Dream",
+  },
+];
 
-  const texts = [
-    {
-      title: "We Are Professional",
-      subtitle: "For Your Dream Project",
+// Hero Animation Start
+const images = [
+  "assets/building-construction.jpg",
+  "assets/carousel-2.jpg",
+  "assets/carousel-3.jpg",
+];
+
+// Team Animation Start
+const teamMembers = [
+  {
+    name: "Adam Phillips",
+    title: "CEO & Founder",
+    image: "img/team-1.jpg",
+    social: {
+      twitter: "https://twitter.com/adam",
+      facebook: "https://facebook.com/adam",
+      linkedin: "https://linkedin.com/in/adam",
+      instagram: "https://instagram.com/adam",
     },
-    {
-      title: "Professional Builder",
-      subtitle: "We Build Your Home",
+  },
+  {
+    name: "Dylan Adams",
+    title: "Civil Engineer",
+    image: "img/team-2.jpg",
+    social: {
+      twitter: "https://twitter.com/dylan",
+      facebook: "https://facebook.com/dylan",
+      linkedin: "https://linkedin.com/in/dylan",
+      instagram: "https://instagram.com/dylan",
     },
-    {
-      title: "We Are Trusted",
-      subtitle: "For Your Dream Home",
+  },
+  {
+    name: "Jhon Doe",
+    title: "Interior Designer",
+    image: "img/team-3.jpg",
+    social: {
+      twitter: "https://twitter.com/jhon",
+      facebook: "https://facebook.com/jhon",
+      linkedin: "https://linkedin.com/in/jhon",
+      instagram: "https://instagram.com/jhon",
     },
-  ];
+  },
+  {
+    name: "Josh Dunn",
+    title: "Painter",
+    image: "img/team-4.jpg",
+    social: {
+      twitter: "https://twitter.com/josh",
+      facebook: "https://facebook.com/josh",
+      linkedin: "https://linkedin.com/in/josh",
+      instagram: "https://instagram.com/josh",
+    },
+  },
+];
+
+
+// Team Animation End
+
+// FAQ Animation Start
+const faqItems = [
+  {
+    question: "Apa itu layanan kami?",
+    answer:
+      "Layanan kami adalah solusi digital untuk bisnis Anda, mulai dari pembuatan website hingga pengembangan sistem.",
+  },
+  {
+    question: "Bagaimana cara menghubungi tim?",
+    answer:
+      "Anda bisa menghubungi kami melalui halaman kontak atau email support kami.",
+  },
+  {
+    question: "Apakah ada biaya langganan?",
+    answer:
+      "Tergantung pada paket layanan yang Anda pilih, kami menyediakan opsi gratis dan berbayar.",
+  },
+  {
+    question: "Berapa lama proses pengerjaan?",
+    answer: "Biasanya antara 1-3 minggu tergantung kompleksitas proyek.",
+  },
+  {
+    question: "Apakah kami mendapatkan garansi?",
+    answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+  },
+  {
+    question: "Apakah kami mendapatkan garansi?",
+    answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+  },
+  {
+    question: "Apakah kami mendapatkan garansi?",
+    answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+  },
+  {
+    question: "Apakah kami mendapatkan garansi?",
+    answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+  },
+  {
+    question: "Apakah kami mendapatkan garansi?",
+    answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+  },
+  {
+    question: "Apakah kami mendapatkan garansi?",
+    answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+  },
+];
+// FAQ Animation End
+
+const testimonials = [
+  {
+    name: "Andi Pratama",
+    profession: "Manajer Proyek Konstruksi",
+    image: "/img/testimonial-1.jpg",
+    text: "Kualitas pekerjaan sangat luar biasa. Tim bekerja dengan efisien dan selalu tepat waktu dalam menyelesaikan proyek.",
+  },
+  {
+    name: "Sarah Wijaya",
+    profession: "Arsitek",
+    image: "/img/testimonial-2.jpg",
+    text: "Pelayanan sangat profesional dengan hasil yang melebihi ekspektasi. Saya sangat merekomendasikan layanan ini!",
+  },
+  {
+    name: "David Susanto",
+    profession: "Kontraktor",
+    image: "/img/testimonial-3.jpg",
+    text: "Tim yang berpengalaman dan responsif. Semua detail pekerjaan diperhatikan dengan baik, memberikan hasil yang sempurna.",
+  },
+];
+
+const services = [
+  {
+    title: "Building Construction",
+    image: "img/service-1.jpg",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi.",
+    delay: 0.1,
+  },
+  {
+    title: "House Renovation",
+    image: "img/service-2.jpg",
+    description:
+      "Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor.",
+    delay: 0.2,
+  },
+  {
+    title: "Architecture Design",
+    image: "img/service-3.jpg",
+    description:
+      "Auctor id gravida condimentum, viverra quis sem. Proin nec fermentum diam.",
+    delay: 0.3,
+  },
+  {
+    title: "Interior Design",
+    image: "img/service-4.jpg",
+    description:
+      "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.",
+    delay: 0.4,
+  },
+  {
+    title: "Fixing & Support",
+    image: "img/service-5.jpg",
+    description:
+      "Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.",
+    delay: 0.5,
+  },
+  {
+    title: "Painting",
+    image: "img/service-6.jpg",
+    description: "Et quasi architecto beatae vitae dicta sunt explicabo.",
+    delay: 0.6,
+  },
+];
+
+const blogData = [
+  {
+    id: 1,
+    imageSrc: "img/blog-1.jpg",
+    title: "Lorem Ipsum",
+    author: "Admin",
+    category: "Construction",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci quae, corrupti laudantium culpa recusandae ab doloremque quis unde. Minus asperiores saepe ab.",
+  },
+  {
+    id: 2,
+    imageSrc: "img/blog-2.jpg",
+    title: "Dolor Sit Amet",
+    author: "Admin",
+    category: "Technology",
+    description:
+      "Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate.",
+  },
+  {
+    id: 3,
+    imageSrc: "img/blog-3.jpg",
+    title: "Curabitur Facilisis",
+    author: "Admin",
+    category: "Design",
+    description:
+      "Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor.",
+  },
+];
+
+
+const Home = () => {
+
+
 
   const [current, setCurrent] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(true);
@@ -64,8 +262,8 @@ const Home = () => {
   useEffect(() => {
     startAutoSlide();
     return () => stopAutoSlide();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handlePrev = () => {
     setIsTransitioning(true);
@@ -155,174 +353,14 @@ const Home = () => {
   // Fact Animation End
 
   // Service Animation Start
-  const services = [
-    {
-      title: "Building Construction",
-      image: "img/service-1.jpg",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi.",
-      delay: 0.1,
-    },
-    {
-      title: "House Renovation",
-      image: "img/service-2.jpg",
-      description:
-        "Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor.",
-      delay: 0.2,
-    },
-    {
-      title: "Architecture Design",
-      image: "img/service-3.jpg",
-      description:
-        "Auctor id gravida condimentum, viverra quis sem. Proin nec fermentum diam.",
-      delay: 0.3,
-    },
-    {
-      title: "Interior Design",
-      image: "img/service-4.jpg",
-      description:
-        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.",
-      delay: 0.4,
-    },
-    {
-      title: "Fixing & Support",
-      image: "img/service-5.jpg",
-      description:
-        "Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.",
-      delay: 0.5,
-    },
-    {
-      title: "Painting",
-      image: "img/service-6.jpg",
-      description: "Et quasi architecto beatae vitae dicta sunt explicabo.",
-      delay: 0.6,
-    },
-  ];
+
   // Service Animation End
 
   // Video Animation Start
   const [isOpen, setIsOpen] = useState(false);
   // Video Animation End
 
-  // Team Animation Start
-  const teamMembers = [
-    {
-      name: "Adam Phillips",
-      title: "CEO & Founder",
-      image: "img/team-1.jpg",
-      social: {
-        twitter: "https://twitter.com/adam",
-        facebook: "https://facebook.com/adam",
-        linkedin: "https://linkedin.com/in/adam",
-        instagram: "https://instagram.com/adam",
-      },
-    },
-    {
-      name: "Dylan Adams",
-      title: "Civil Engineer",
-      image: "img/team-2.jpg",
-      social: {
-        twitter: "https://twitter.com/dylan",
-        facebook: "https://facebook.com/dylan",
-        linkedin: "https://linkedin.com/in/dylan",
-        instagram: "https://instagram.com/dylan",
-      },
-    },
-    {
-      name: "Jhon Doe",
-      title: "Interior Designer",
-      image: "img/team-3.jpg",
-      social: {
-        twitter: "https://twitter.com/jhon",
-        facebook: "https://facebook.com/jhon",
-        linkedin: "https://linkedin.com/in/jhon",
-        instagram: "https://instagram.com/jhon",
-      },
-    },
-    {
-      name: "Josh Dunn",
-      title: "Painter",
-      image: "img/team-4.jpg",
-      social: {
-        twitter: "https://twitter.com/josh",
-        facebook: "https://facebook.com/josh",
-        linkedin: "https://linkedin.com/in/josh",
-        instagram: "https://instagram.com/josh",
-      },
-    },
-  ];
-  
 
-  // Team Animation End
-
-  // FAQ Animation Start
-  const faqItems = [
-    {
-      question: "Apa itu layanan kami?",
-      answer:
-        "Layanan kami adalah solusi digital untuk bisnis Anda, mulai dari pembuatan website hingga pengembangan sistem.",
-    },
-    {
-      question: "Bagaimana cara menghubungi tim?",
-      answer:
-        "Anda bisa menghubungi kami melalui halaman kontak atau email support kami.",
-    },
-    {
-      question: "Apakah ada biaya langganan?",
-      answer:
-        "Tergantung pada paket layanan yang Anda pilih, kami menyediakan opsi gratis dan berbayar.",
-    },
-    {
-      question: "Berapa lama proses pengerjaan?",
-      answer: "Biasanya antara 1-3 minggu tergantung kompleksitas proyek.",
-    },
-    {
-      question: "Apakah kami mendapatkan garansi?",
-      answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
-    },
-    {
-      question: "Apakah kami mendapatkan garansi?",
-      answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
-    },
-    {
-      question: "Apakah kami mendapatkan garansi?",
-      answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
-    },
-    {
-      question: "Apakah kami mendapatkan garansi?",
-      answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
-    },
-    {
-      question: "Apakah kami mendapatkan garansi?",
-      answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
-    },
-    {
-      question: "Apakah kami mendapatkan garansi?",
-      answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
-    },
-  ];
-  // FAQ Animation End
-
-  const testimonials = [
-    {
-      name: "Mark Doe",
-      profession: "UI/UX Designer",
-      image: "/img/testimonial-1.jpg",
-      text: "Sangat puas dengan pelayanannya. Tim sangat profesional dan cepat tanggap.",
-    },
-    {
-      name: "Sarah Lee",
-      profession: "Software Engineer",
-      image: "/img/testimonial-2.jpg",
-      text: "Mereka membantu saya menyelesaikan proyek tepat waktu dengan hasil yang memuaskan.",
-    },
-    {
-      name: "John Smith",
-      profession: "Project Manager",
-      image: "/img/testimonial-3.jpg",
-      text: "Pekerjaan mereka sangat rapi dan detail. Recommended banget!",
-    },
-  ];
 
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -336,47 +374,16 @@ const Home = () => {
     setActiveIndex((prev) => (prev + 1) % testimonials.length);
   };
 
-  const blogData = [
-    {
-      id: 1,
-      imageSrc: "img/blog-1.jpg",
-      title: "Lorem Ipsum",
-      author: "Admin",
-      category: "Construction",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci quae, corrupti laudantium culpa recusandae ab doloremque quis unde. Minus asperiores saepe ab.",
-    },
-    {
-      id: 2,
-      imageSrc: "img/blog-2.jpg",
-      title: "Dolor Sit Amet",
-      author: "Admin",
-      category: "Technology",
-      description:
-        "Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate.",
-    },
-    {
-      id: 3,
-      imageSrc: "img/blog-3.jpg",
-      title: "Curabitur Facilisis",
-      author: "Admin",
-      category: "Design",
-      description:
-        "Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor.",
-    },
-  ];
-
   return (
     <>
       {/* Hero Section */}
       <div className="w-full h-screen sm:h-fit overflow-hidden relative">
         <div
           ref={carouselRef}
-          className={`flex ${
-            isTransitioning
-              ? "transition-transform duration-700 ease-in-out"
-              : ""
-          }`}
+          className={`flex ${isTransitioning
+            ? "transition-transform duration-700 ease-in-out"
+            : ""
+            }`}
           style={{ transform: `translateX(-${current * 100}%)` }}
         >
           {extendedSlides.map((slide, index) => (
@@ -429,7 +436,7 @@ const Home = () => {
                       transition={{ duration: 0.5, delay: 0.3 }}
                       className="border-2 border-white text-white px-12 py-3 transition-colors duration-300 hover:bg-[#fdbe33] hover:!text-[#030f27] hover:border-0"
                     >
-                      Get a Quote
+                      Explore Our Plan
                     </motion.button>
                   </motion.div>
                 </AnimatePresence>
@@ -479,8 +486,7 @@ const Home = () => {
                 Expert Worker
               </h1>
               <p className="text-sm">
-                Lorem ipsum dolor sit amet elit. Phasus nec pretim ornare velit
-                non
+                Skilled and certified professionals you can trust.
               </p>
             </div>
           </div>
@@ -495,8 +501,7 @@ const Home = () => {
             <div>
               <h1 className="text-lg font-bold text-black">Quality Work</h1>
               <p className="text-black text-sm">
-                Lorem ipsum dolor sit amet elit. Phasus nec pretim ornare velit
-                non
+                Precision and excellence in every project we deliver.
               </p>
             </div>
           </div>
@@ -513,8 +518,7 @@ const Home = () => {
                 24/7 Support
               </h1>
               <p className="text-sm">
-                Lorem ipsum dolor sit amet elit. Phasus nec pretim ornare velit
-                non
+                Ready to assist you anytime, day or night.
               </p>
             </div>
           </div>
@@ -543,7 +547,7 @@ const Home = () => {
               }}
             >
               <img
-                src="img/about.jpg"
+                src="assets/experience.jpg"
                 alt="Image"
                 className="rounded-lg shadow-lg w-full"
               />
@@ -562,31 +566,23 @@ const Home = () => {
             >
               <div className="mb-4">
                 <p className="text-[#fdbe33] text-md uppercase font-semibold tracking-wide">
-                  Welcome to Builderz
+                  Welcome to Starplus
                 </p>
                 <p className="text-3xl md:text-5xl font-bold text-gray-800">
-                  25 Years Experience
+                  12 Years Experience
                 </p>
               </div>
 
               <div className="space-y-4 text-gray-600">
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Phasellus nec pretium mi. Curabitur facilisis ornare velit non
-                  vulputate. Aliquam metus tortor, auctor id gravida
-                  condimentum, viverra quis sem.
+                  PT. Star Plus is a steel fabrication and installation company established in 2013 in Tangerang, Indonesia. We specialize in civil construction, steel structure, pipe fabrication, assembly, electrical work, and manpower supply. Our experienced and ISO-certified team ensures high-quality results.
                 </p>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Phasellus nec pretium mi. Curabitur facilisis ornare velit non
-                  vulputate. Aliquam metus tortor, auctor id gravida
-                  condimentum, viverra quis sem. Curabitur non nisl nec nisi
-                  scelerisque maximus. Aenean consectetur convallis porttitor.
-                  Aliquam interdum at lacus non blandit.
+                  We deliver safe and timely services, supported by complete facilities and strong professional values based on communication, trust, and integrity in working with our partners and clients.
                 </p>
               </div>
 
-              <div className="about">
+              <div className="about mt-8">
                 <a href="#" className="btn">
                   Learn More
                 </a>
@@ -809,7 +805,7 @@ const Home = () => {
               </div>
 
               {/* Text */}
-              <div className="team-text text-center mt-4">
+              <div className="team-text text-center m-4">
                 <p className="text-xl font-bold py-2 text-[#FDBE33] group-hover:text-[#121518] transition-all duration-300">
                   {member.name}
                 </p>

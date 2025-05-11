@@ -6,3 +6,18 @@ body,
 #root {
   width: 100%;
 } */
+
+
+:root {
+  --color-primary: #4057a5;
+  /* --secondary-color: #fff;
+  --third-color: #333; */
+}
+
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.text-primary {
+  color: var(--color-primary);
+}

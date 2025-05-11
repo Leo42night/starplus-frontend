@@ -18,7 +18,7 @@ h6 {
 }
 
 a {
-  color: #666666;
+  /* color: #666666; */
   transition: 0.3s;
 }
 
@@ -135,10 +135,6 @@ a:focus {
 }
 
 @media (min-width: 992px) {
-  .nav-bar {
-    padding: 0 75px;
-  }
-
   .nav-bar.nav-sticky {
     padding: 0;
   }
