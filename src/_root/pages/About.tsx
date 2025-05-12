@@ -1,6 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "react-feather";
+import {
+  FaHardHat,
+  FaBuilding,
+  FaMapMarkedAlt,
+  FaIndustry,
+} from "react-icons/fa";
 
 const directors = [
   {
@@ -26,9 +32,62 @@ const directors = [
   },
 ];
 
+const faqItems = [
+  {
+    question: "Apa saja layanan yang ditawarkan oleh perusahaan Anda?",
+    answer:
+      "Kami menyediakan layanan konstruksi mekanikal seperti instalasi pipa industri, sistem HVAC, fire protection, dan perawatan fasilitas mekanikal.",
+  },
+  {
+    question: "Bagaimana cara menghubungi tim proyek Anda?",
+    answer:
+      "Anda dapat menghubungi kami melalui halaman kontak di website atau langsung melalui email dan nomor telepon yang tersedia.",
+  },
+  {
+    question: "Apakah perusahaan menyediakan konsultasi proyek?",
+    answer:
+      "Ya, kami menyediakan layanan konsultasi teknis dan survei awal sebelum proyek dimulai.",
+  },
+  {
+    question: "Berapa lama durasi pengerjaan proyek biasanya?",
+    answer:
+      "Durasi tergantung pada skala dan kompleksitas proyek, namun rata-rata proyek kami selesai dalam 2-8 minggu.",
+  },
+  {
+    question: "Apakah ada garansi untuk pekerjaan yang dilakukan?",
+    answer:
+      "Tentu, kami memberikan garansi kualitas pengerjaan dan perbaikan untuk setiap proyek yang kami tangani.",
+  },
+  {
+    question: "Apakah perusahaan menangani proyek skala besar?",
+    answer:
+      "Ya, kami berpengalaman dalam menangani proyek industri berskala besar di berbagai sektor seperti manufaktur, energi, dan properti komersial.",
+  },
+  {
+    question: "Apakah perusahaan memiliki sertifikasi resmi?",
+    answer:
+      "Kami telah memiliki sertifikasi yang dibutuhkan seperti ISO dan sertifikat keselamatan kerja (K3).",
+  },
+  {
+    question: "Bagaimana proses kerja sama dimulai?",
+    answer:
+      "Proses kerja sama dimulai dengan konsultasi awal, peninjauan lokasi, pengajuan penawaran, lalu penandatanganan kontrak.",
+  },
+  {
+    question:
+      "Apakah perusahaan menyediakan perawatan rutin setelah instalasi?",
+    answer:
+      "Ya, kami menyediakan layanan maintenance rutin maupun darurat untuk memastikan sistem tetap berfungsi optimal.",
+  },
+  {
+    question: "Apakah Anda melayani proyek di luar kota atau pulau?",
+    answer:
+      "Kami siap menangani proyek di berbagai wilayah Indonesia sesuai dengan kebutuhan klien.",
+  },
+];
+
 const About = () => {
-  const [expanded, setExpanded] = useState(false);
-  const toggleReadMore = () => setExpanded(!expanded);
+  const [showMore, setShowMore] = useState(false);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -44,78 +103,284 @@ const About = () => {
     );
   };
 
+  const [expertWorkers, setExpertWorkers] = useState(0);
+  const [happyClients, setHappyClients] = useState(0);
+  const [completedProjects, setCompletedProjects] = useState(0);
+  const [runningProjects, setRunningProjects] = useState(0);
+
+  useEffect(() => {
+    // Animasi angka untuk Expert Workers
+    let count = 0;
+    const interval1 = setInterval(() => {
+      if (count < 109) {
+        count++;
+        setExpertWorkers(count);
+      } else {
+        clearInterval(interval1);
+      }
+    }, 10);
+
+    // Animasi angka untuk Happy Clients
+    count = 0;
+    const interval2 = setInterval(() => {
+      if (count < 485) {
+        count++;
+        setHappyClients(count);
+      } else {
+        clearInterval(interval2);
+      }
+    }, 10);
+
+    // Animasi angka untuk Completed Projects
+    count = 0;
+    const interval3 = setInterval(() => {
+      if (count < 789) {
+        count++;
+        setCompletedProjects(count);
+      } else {
+        clearInterval(interval3);
+      }
+    }, 10);
+
+    // Animasi angka untuk Running Projects
+    count = 0;
+    const interval4 = setInterval(() => {
+      if (count < 890) {
+        count++;
+        setRunningProjects(count);
+      } else {
+        clearInterval(interval4);
+      }
+    }, 10);
+
+    return () => {
+      clearInterval(interval1);
+      clearInterval(interval2);
+      clearInterval(interval3);
+      clearInterval(interval4);
+    };
+  }, []);
+
   return (
     <>
-      <section className="relative w-full min-h-screen sm:h-fit overflow-hidden border-4 border-black text-white">
-        {/* Background Image */}
-        <div
-          className="absolute inset-0 bg-cover bg-center z-0"
-          style={{
-            backgroundImage: "url('/assets/about.jpg')",
-            backgroundAttachment: "fixed",
-          }}
-        />
-
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-[#030f27] opacity-80 z-10" />
-
-        {/* Content */}
-        <div className="relative z-20 px-6 py-12 sm:py-20 max-w-4xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-6 !text-[#fdbe33]">
-            About Us
-          </h2>
-          <p className="text-base sm:text-lg leading-relaxed">
-            PT. Star Plus is a steel fabrication and installation company
-            established in 2013 at Tangerang, Indonesia. Our company is engaged
-            and developing in the sector of civil construction, steel structure,
-            fabrication pipes, tank fabrication, assembly and erection work...
-            {!expanded && (
-              <span className="text-blue-300 font-semibold"> (read more)</span>
-            )}
-          </p>
-
-          {expanded && (
-            <div className="text-base sm:text-lg leading-relaxed mt-4 space-y-4">
-              <p>
-                We are also supported by quality human resources and credibility
-                that has been tested and able to make a real contribution in the
-                implementation and execution of various projects.
-              </p>
-              <p>
-                STAR PLUS has excellent reputation for quality steel fabrication
-                and erection, performance and safety. Our crews are highly
-                skilled in steel-related machines, welding, fitting, assembly,
-                pumps, piping, motors, rigging, demolition, and more — all
-                supported by experienced engineers and capable foremen.
-              </p>
-              <p>
-                Our workshop facility is equipped with machines for steel
-                fabrication, shot blasting, painting, assembly, and repair. Our
-                trained and certified workers follow ISO standards and are
-                always ready to handle even the toughest jobs.
-              </p>
-              <p>
-                We do our best to provide competitive bids, work within scope,
-                and deliver projects safely and on time. We value communication,
-                trust, and integrity with our partners.
-              </p>
-              <p>
-                In conclusion, STAR PLUS sincerely promises to always serve you
-                better and be a company that continuously reforms to offer a
-                better working environment and satisfactory benefits to our
-                partners and clients.
-              </p>
+      {/* <!-- Page Header Start --> */}
+      <div className="page-header">
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
+              <h2>About Us</h2>
             </div>
-          )}
-
-          <button
-            onClick={toggleReadMore}
-            className="mt-6 px-4 py-2 border border-white text-sm sm:text-base rounded-lg hover:bg-white hover:text-black transition"
-          >
-            {expanded ? "Show Less" : "Read More"}
-          </button>
+            <div className="col-12">
+              <a href="">Home</a>
+              <a href="">About Us</a>
+            </div>
+          </div>
         </div>
-      </section>
+      </div>
+      {/* <!-- Page Header End --> */}
+      <motion.div
+        className="animate-fade-in-up px-4 py-8 md:py-16"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        <div className="container mx-auto">
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            {/* Gambar */}
+            <motion.div
+              className="md:w-5/12 w-full"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.6,
+                ease: "easeOut",
+                delay: 0.6,
+              }}
+            >
+              <img
+                src="assets/experience.jpg"
+                alt="Image"
+                className="rounded-lg shadow-lg w-full"
+              />
+            </motion.div>
+
+            {/* Text Content */}
+            <motion.div
+              className="md:w-7/12 w-full"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.6,
+                ease: "easeOut",
+                delay: 0.8,
+              }}
+            >
+              <div className="mb-4">
+                <p className="text-[#fdbe33] text-md uppercase font-semibold tracking-wide">
+                  Welcome to Starplus
+                </p>
+                <p className="text-3xl md:text-5xl font-bold text-gray-800">
+                  12 Years Experience
+                </p>
+              </div>
+
+              <div className="space-y-4 text-gray-600">
+                <p>
+                  PT. Star Plus is a steel fabrication and installation company
+                  established in 2013 in Tangerang, Indonesia. We specialize in
+                  civil construction, steel structure, pipe fabrication,
+                  assembly, electrical work, and manpower supply. Our
+                  experienced and ISO-certified team ensures high-quality
+                  results.
+                </p>
+                <p>
+                  We deliver safe and timely services, supported by complete
+                  facilities and strong professional values based on
+                  communication, trust, and integrity in working with our
+                  partners and clients.
+                </p>
+
+                {/* Teks tambahan */}
+                {showMore && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4 }}
+                    className="space-y-4"
+                  >
+                    <p>
+                      With over a decade of industry expertise, Star Plus has
+                      successfully completed numerous national and international
+                      projects, showcasing our commitment to excellence and
+                      continuous innovation.
+                    </p>
+                    <p>
+                      Our vision is to be the most trusted construction and
+                      fabrication company in Southeast Asia, delivering
+                      sustainable solutions through advanced technologies and
+                      skilled workforce.
+                    </p>
+                  </motion.div>
+                )}
+              </div>
+
+              {/* Tombol toggle */}
+              <div className="about mt-8">
+                <button
+                  onClick={() => setShowMore((prev) => !prev)}
+                  className="btn"
+                >
+                  {showMore ? "Show Less" : "Read More"}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </motion.div>
+      {/* About End */}
+
+      <div className="fact-section">
+        <div className="fact-container">
+          {/* Left */}
+          <div className="fact-left">
+            <div className="fact-grid">
+              <div className="fact-item">
+                <div className="fact-icon">
+                  <FaHardHat />
+                </div>
+                <div className="fact-text">
+                  <h2>{expertWorkers}</h2>
+                  <p>Expert Workers</p>
+                </div>
+              </div>
+              <div className="fact-item">
+                <div className="fact-icon">
+                  <FaBuilding />
+                </div>
+                <div className="fact-text">
+                  <h2>{happyClients}</h2>
+                  <p>Happy Clients</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right */}
+          <div className="fact-right">
+            <div className="fact-grid">
+              <div className="fact-item">
+                <div className="fact-icon">
+                  <FaMapMarkedAlt />
+                </div>
+                <div className="fact-text">
+                  <h2>{completedProjects}</h2>
+                  <p>Completed Projects</p>
+                </div>
+              </div>
+              <div className="fact-item">
+                <div className="fact-icon">
+                  <FaIndustry />
+                </div>
+                <div className="fact-text">
+                  <h2>{runningProjects}</h2>
+                  <p>Running Projects</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* <!-- Fact End --> */}
+
+      <div className="faq-container">
+        <div className="faq-title-container">
+          <div className="faq-title">
+            <p className="faq-subtitle">Frequently Asked Question</p>
+            <p className="faq-heading">You May Ask</p>
+          </div>
+
+          <div className="faq-grid">
+            <div className="faq-divider-vertical"></div>
+
+            {faqItems.map((item, i) => {
+              const isLeft = i % 2 === 0;
+              const direction = isLeft ? -100 : 100;
+
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: direction }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: i * 0.15,
+                    type: "tween",
+                    ease: "easeOut",
+                  }}
+                  className="faq-item"
+                >
+                  <button
+                    className="faq-item-button"
+                    onClick={() => {
+                      const content = document.getElementById(`faq-${i}`);
+                      if (content) {
+                        content.classList.toggle("show");
+                      }
+                    }}
+                  >
+                    <span>{item.question}</span>
+                    <span className="plus">+</span>
+                  </button>
+                  <div id={`faq-${i}`} className="faq-item-content">
+                    {item.answer}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
       <section className="w-full  py-12 px-6 sm:py-20 bg-white text-black">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl font-bold mb-8 !text-[#fdbe33]">
