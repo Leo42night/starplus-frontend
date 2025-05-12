@@ -86,7 +86,6 @@ const teamMembers = [
   },
 ];
 
-
 // Team Animation End
 
 // FAQ Animation Start
@@ -232,11 +231,7 @@ const blogData = [
   },
 ];
 
-
 const Home = () => {
-
-
-
   const [current, setCurrent] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -288,7 +283,7 @@ const Home = () => {
       }, 700);
     } else {
       setIsTransitioning(true);
-    }// eslint-disable-next-line react-hooks/exhaustive-deps
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current]);
   // Hero Animation End
 
@@ -360,8 +355,6 @@ const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
   // Video Animation End
 
-
-
   const [activeIndex, setActiveIndex] = useState(0);
 
   const testiPrev = () => {
@@ -380,10 +373,11 @@ const Home = () => {
       <div className="w-full h-screen sm:h-fit overflow-hidden relative">
         <div
           ref={carouselRef}
-          className={`flex ${isTransitioning
-            ? "transition-transform duration-700 ease-in-out"
-            : ""
-            }`}
+          className={`flex ${
+            isTransitioning
+              ? "transition-transform duration-700 ease-in-out"
+              : ""
+          }`}
           style={{ transform: `translateX(-${current * 100}%)` }}
         >
           {extendedSlides.map((slide, index) => (
@@ -575,15 +569,23 @@ const Home = () => {
 
               <div className="space-y-4 text-gray-600">
                 <p>
-                  PT. Star Plus is a steel fabrication and installation company established in 2013 in Tangerang, Indonesia. We specialize in civil construction, steel structure, pipe fabrication, assembly, electrical work, and manpower supply. Our experienced and ISO-certified team ensures high-quality results.
+                  PT. Star Plus is a steel fabrication and installation company
+                  established in 2013 in Tangerang, Indonesia. We specialize in
+                  civil construction, steel structure, pipe fabrication,
+                  assembly, electrical work, and manpower supply. Our
+                  experienced and ISO-certified team ensures high-quality
+                  results.
                 </p>
                 <p>
-                  We deliver safe and timely services, supported by complete facilities and strong professional values based on communication, trust, and integrity in working with our partners and clients.
+                  We deliver safe and timely services, supported by complete
+                  facilities and strong professional values based on
+                  communication, trust, and integrity in working with our
+                  partners and clients.
                 </p>
               </div>
 
               <div className="about mt-8">
-                <a href="#" className="btn">
+                <a href="/about" className="btn">
                   Learn More
                 </a>
               </div>
@@ -824,7 +826,7 @@ const Home = () => {
           <div className="faq-title">
             <p className="faq-subtitle">Frequently Asked Question</p>
             <p className="faq-heading">You May Ask</p>
-          </div>
+          </div>  
 
           <div className="faq-grid">
             <div className="faq-divider-vertical"></div>

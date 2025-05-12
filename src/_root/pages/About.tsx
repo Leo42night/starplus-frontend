@@ -1,250 +1,237 @@
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "react-feather";
+
+const directors = [
+  {
+    name: "John Doe",
+    position: "Chief Executive Officer",
+    image: "/img/testimonial-1.jpg",
+    description:
+      "John has led Star Plus since 2015 with a vision to expand regionally and uphold industry standards. With over 20 years of experience in the steel and construction industry, his leadership drives the company’s success.",
+  },
+  {
+    name: "Jane Smith",
+    position: "Chief Operating Officer",
+    image: "/img/testimonial-2.jpg",
+    description:
+      "Jane brings operational excellence and strategic oversight, ensuring seamless execution of all projects and maintaining high-quality standards across the board.",
+  },
+  {
+    name: "Michael Lee",
+    position: "Chief Technical Officer",
+    image: "/img/testimonial-3.jpg",
+    description:
+      "Michael leads our technology and innovation. His technical acumen and leadership keep us at the forefront of the industry’s evolving needs.",
+  },
+];
 
 const About = () => {
+  const [expanded, setExpanded] = useState(false);
+  const toggleReadMore = () => setExpanded(!expanded);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextDirector = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === directors.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevDirector = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? directors.length - 1 : prevIndex - 1
+    );
+  };
+
   return (
     <>
-      {/* <!-- Page Header Start --> */}
-      <div className="page-header">
-        <div className="container">
-          <div className="row">
-            <div className="col-12">
-              <h2>About Us</h2>
+      <section className="relative w-full min-h-screen sm:h-fit overflow-hidden border-4 border-black text-white">
+        {/* Background Image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center z-0"
+          style={{
+            backgroundImage: "url('/assets/about.jpg')",
+            backgroundAttachment: "fixed",
+          }}
+        />
+
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-[#030f27] opacity-80 z-10" />
+
+        {/* Content */}
+        <div className="relative z-20 px-6 py-12 sm:py-20 max-w-4xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-6 !text-[#fdbe33]">
+            About Us
+          </h2>
+          <p className="text-base sm:text-lg leading-relaxed">
+            PT. Star Plus is a steel fabrication and installation company
+            established in 2013 at Tangerang, Indonesia. Our company is engaged
+            and developing in the sector of civil construction, steel structure,
+            fabrication pipes, tank fabrication, assembly and erection work...
+            {!expanded && (
+              <span className="text-blue-300 font-semibold"> (read more)</span>
+            )}
+          </p>
+
+          {expanded && (
+            <div className="text-base sm:text-lg leading-relaxed mt-4 space-y-4">
+              <p>
+                We are also supported by quality human resources and credibility
+                that has been tested and able to make a real contribution in the
+                implementation and execution of various projects.
+              </p>
+              <p>
+                STAR PLUS has excellent reputation for quality steel fabrication
+                and erection, performance and safety. Our crews are highly
+                skilled in steel-related machines, welding, fitting, assembly,
+                pumps, piping, motors, rigging, demolition, and more — all
+                supported by experienced engineers and capable foremen.
+              </p>
+              <p>
+                Our workshop facility is equipped with machines for steel
+                fabrication, shot blasting, painting, assembly, and repair. Our
+                trained and certified workers follow ISO standards and are
+                always ready to handle even the toughest jobs.
+              </p>
+              <p>
+                We do our best to provide competitive bids, work within scope,
+                and deliver projects safely and on time. We value communication,
+                trust, and integrity with our partners.
+              </p>
+              <p>
+                In conclusion, STAR PLUS sincerely promises to always serve you
+                better and be a company that continuously reforms to offer a
+                better working environment and satisfactory benefits to our
+                partners and clients.
+              </p>
             </div>
-            <div className="col-12">
-              <a href="">Home</a>
-              <a href="">About Us</a>
-            </div>
-          </div>
+          )}
+
+          <button
+            onClick={toggleReadMore}
+            className="mt-6 px-4 py-2 border border-white text-sm sm:text-base rounded-lg hover:bg-white hover:text-black transition"
+          >
+            {expanded ? "Show Less" : "Read More"}
+          </button>
         </div>
-      </div>
-      {/* <!-- Page Header End --> */}
-
-
-      {/* <!-- About Start --> */}
-      <div className="about wow fadeInUp" data-wow-delay="0.1s">
-        <div className="container">
-          <div className="row align-items-center">
-            <div className="col-lg-5 col-md-6">
-              <div className="about-img">
-                <img src="img/about.jpg" alt="Image" />
+      </section>
+      <section className="w-full  py-12 px-6 sm:py-20 bg-white text-black">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-8 !text-[#fdbe33]">
+            Vision and Mission
+          </h2>
+          {/* Kontainer untuk Visi dan Misi */}
+          <div className="flex flex-col sm:flex-row justify-between items-center space-y-8 sm:space-y-0 sm:space-x-12 ">
+            {/* Visi */}
+            <div className="w-full sm:w-1/2 bg-[#f9f9f9] rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-120">
+              <div className="bg-[#030f27] w-full h-16 flex items-center justify-center rounded-t-lg">
+                <span className="text-2xl font-semibold !text-[#fdbe33]">
+                  Vision
+                </span>
               </div>
-            </div>
-            <div className="col-lg-7 col-md-6">
-              <div className="section-header text-left">
-                <p>Welcome to Builderz</p>
-                <h2>25 Years Experience</h2>
-              </div>
-              <div className="about-text">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem.
+              <div className="p-12 flex flex-col justify-center">
+                <p className="text-base sm:text-lg leading-relaxed text-justify">
+                  Making a National Private Company Leading in the Construction
+                  Service Industry, Providing Welfare to Employees, Managers,
+                  Shareholders, and Other Stakeholders through, Commitment to
+                  Good Corporate Governance.
                 </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem. Curabitur non nisl nec nisi scelerisque maximus. Aenean consectetur convallis porttitor. Aliquam interdum at lacus non blandit.
+              </div>
+            </div>
+
+            {/* Garis Pemisah */}
+            <div className="hidden sm:block border border-solid border-b-450 border-[#fdbe33]" />
+            {/* Misi */}
+            <div className="w-full sm:w-1/2 bg-[#f9f9f9] rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-120">
+              <div className="bg-[#030f27] w-full h-16 flex items-center justify-center rounded-t-lg">
+                <span className="text-2xl font-semibold !text-[#fdbe33]">
+                  Mission
+                </span>
+              </div>
+              <div className="p-12 flex flex-col justify-center">
+                <p className="text-base sm:text-lg leading-relaxed text-justify">
+                  Always Maintain Commitment To Provide Customer Satisfaction In
+                  Paying Attention To Quality, The Right Price, And The Right
+                  Time Of Work On Each Project That Is Performed And Provide
+                  Field Opportunities To Potential Human Resources In Their
+                  Fields.
                 </p>
-                <a className="btn" href="">Learn More</a>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      {/* <!-- About End --> */}
+      </section>
+      <section
+        className="w-full py-16 px-6 text-black relative bg-fixed bg-center bg-cover"
+        style={{ backgroundImage: "url('/assets/dir.jpg')" }}
+      >
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-[#030f27] opacity-80 z-10" />
 
+        <div className="max-w-3xl mx-auto text-center z-20 relative">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-10 !text-[#fdbe33]">
+            Our Director
+          </h2>
 
-      {/* <!-- Fact Start --> */}
-      <div className="fact">
-        <div className="container-fluid">
-          <div className="row counters">
-            <div className="col-md-6 fact-left wow slideInLeft">
-              <div className="row">
-                <div className="col-6">
-                  <div className="fact-icon">
-                    <i className="flaticon-worker"></i>
-                  </div>
-                  <div className="fact-text">
-                    <h2 data-toggle="counter-up">109</h2>
-                    <p>Expert Workers</p>
-                  </div>
-                </div>
-                <div className="col-6">
-                  <div className="fact-icon">
-                    <i className="flaticon-building"></i>
-                  </div>
-                  <div className="fact-text">
-                    <h2 data-toggle="counter-up">485</h2>
-                    <p>Happy Clients</p>
-                  </div>
-                </div>
+          {/* Wrapper untuk Card dan tombol */}
+          <div className="relative flex items-center justify-center">
+            {/* Tombol kiri */}
+            <button
+              onClick={prevDirector}
+              className="absolute left-0 md:-left-10 z-30 text-[#fdbe33] hover:text-white transition"
+              aria-label="Previous Director"
+            >
+              <ChevronLeft size={36} />
+            </button>
+
+            {/* Card */}
+            <div className="relative bg-transparent rounded-xl transition-shadow duration-300 overflow-hidden w-full max-w-md h-120 shadow-[0_6px_0_rgba(0,0,0,0.1)] hover:shadow-[0_10px_0_rgba(0,0,0,0.2)] mx-12">
+              <div className="h-1/7 bg-transparent" />
+
+              {/* Gambar dengan Animasi */}
+              <motion.div
+                className="absolute left-1/2 z-20 transform -translate-x-1/2 w-24 h-24"
+                key={currentIndex} // Memicu animasi saat currentIndex berubah
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.5 }}
+              >
+                <img
+                  src={directors[currentIndex].image}
+                  alt={directors[currentIndex].name}
+                  className="rounded-full border-4 border-[#fdbe33] shadow-md w-full h-full object-cover"
+                />
+              </motion.div>
+
+              {/* Konten */}
+              <div className="h-5/7 rounded-xl bg-[#030f27] text-white p-10 bottom-0 absolute border-3 border-[#fdbe33]">
+                <h3 className="text-2xl font-semibold my-2 !text-[#fdbe33]">
+                  {directors[currentIndex].name}
+                </h3>
+                <p className="text-sm text-gray-200 my-4">
+                  {directors[currentIndex].position}
+                </p>
+                <p className="text-base leading-relaxed text-justify">
+                  {directors[currentIndex].description}
+                </p>
               </div>
             </div>
-            <div className="col-md-6 fact-right wow slideInRight">
-              <div className="row">
-                <div className="col-6">
-                  <div className="fact-icon">
-                    <i className="flaticon-address"></i>
-                  </div>
-                  <div className="fact-text">
-                    <h2 data-toggle="counter-up">789</h2>
-                    <p>Completed Projects</p>
-                  </div>
-                </div>
-                <div className="col-6">
-                  <div className="fact-icon">
-                    <i className="flaticon-crane"></i>
-                  </div>
-                  <div className="fact-text">
-                    <h2 data-toggle="counter-up">890</h2>
-                    <p>Running Projects</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+
+            {/* Tombol kanan */}
+            <button
+              onClick={nextDirector}
+              className="absolute right-0 md:-right-10 z-30 text-[#fdbe33] hover:text-white transition"
+              aria-label="Next Director"
+            >
+              <ChevronRight size={36} />
+            </button>
           </div>
         </div>
-      </div>
-      {/* <!-- Fact End --> */}
-
-
-      {/* <!-- FAQs Start --> */}
-      <div className="faqs">
-        <div className="container">
-          <div className="section-header text-center">
-            <p>Frequently Asked Question</p>
-            <h2>You May Ask</h2>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
-              <div id="accordion-1">
-                <div className="card wow fadeInLeft" data-wow-delay="0.1s">
-                  <div className="card-header">
-                    <a className="card-link collapsed" data-toggle="collapse" href="#collapseOne">
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div id="collapseOne" className="collapse" data-parent="#accordion-1">
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
-                    </div>
-                  </div>
-                </div>
-                <div className="card wow fadeInLeft" data-wow-delay="0.2s">
-                  <div className="card-header">
-                    <a className="card-link collapsed" data-toggle="collapse" href="#collapseTwo">
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div id="collapseTwo" className="collapse" data-parent="#accordion-1">
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
-                    </div>
-                  </div>
-                </div>
-                <div className="card wow fadeInLeft" data-wow-delay="0.3s">
-                  <div className="card-header">
-                    <a className="card-link collapsed" data-toggle="collapse" href="#collapseThree">
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div id="collapseThree" className="collapse" data-parent="#accordion-1">
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
-                    </div>
-                  </div>
-                </div>
-                <div className="card wow fadeInLeft" data-wow-delay="0.4s">
-                  <div className="card-header">
-                    <a className="card-link collapsed" data-toggle="collapse" href="#collapseFour">
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div id="collapseFour" className="collapse" data-parent="#accordion-1">
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
-                    </div>
-                  </div>
-                </div>
-                <div className="card wow fadeInLeft" data-wow-delay="0.5s">
-                  <div className="card-header">
-                    <a className="card-link collapsed" data-toggle="collapse" href="#collapseFive">
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div id="collapseFive" className="collapse" data-parent="#accordion-1">
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div id="accordion-2">
-                <div className="card wow fadeInRight" data-wow-delay="0.1s">
-                  <div className="card-header">
-                    <a className="card-link collapsed" data-toggle="collapse" href="#collapseSix">
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div id="collapseSix" className="collapse" data-parent="#accordion-2">
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
-                    </div>
-                  </div>
-                </div>
-                <div className="card wow fadeInRight" data-wow-delay="0.2s">
-                  <div className="card-header">
-                    <a className="card-link collapsed" data-toggle="collapse" href="#collapseSeven">
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div id="collapseSeven" className="collapse" data-parent="#accordion-2">
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
-                    </div>
-                  </div>
-                </div>
-                <div className="card wow fadeInRight" data-wow-delay="0.3s">
-                  <div className="card-header">
-                    <a className="card-link collapsed" data-toggle="collapse" href="#collapseEight">
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div id="collapseEight" className="collapse" data-parent="#accordion-2">
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
-                    </div>
-                  </div>
-                </div>
-                <div className="card wow fadeInRight" data-wow-delay="0.4s">
-                  <div className="card-header">
-                    <a className="card-link collapsed" data-toggle="collapse" href="#collapseNine">
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div id="collapseNine" className="collapse" data-parent="#accordion-2">
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
-                    </div>
-                  </div>
-                </div>
-                <div className="card wow fadeInRight" data-wow-delay="0.5s">
-                  <div className="card-header">
-                    <a className="card-link collapsed" data-toggle="collapse" href="#collapseTen">
-                      Lorem ipsum dolor sit amet?
-                    </a>
-                  </div>
-                  <div id="collapseTen" className="collapse" data-parent="#accordion-2">
-                    <div className="card-body">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* <!-- FAQs End --> */}
+      </section>
     </>
-  )
-}
+  );
+};
 
-export default About
+export default About;
