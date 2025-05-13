@@ -288,7 +288,7 @@ const Home = () => {
       }, 700);
     } else {
       setIsTransitioning(true);
-    }// eslint-disable-next-line react-hooks/exhaustive-deps
+    }
   }, [current]);
   // Hero Animation End
 
