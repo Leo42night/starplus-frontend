@@ -16,6 +16,9 @@ import {
 
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 
+import faqItems from "../../data/faq";
+import teamMembers from "../../data/teams";
+
 const texts = [
   {
     title: "Construction & Installation",
@@ -38,110 +41,9 @@ const images = [
   "assets/carousel-3.jpg",
 ];
 
-// Team Animation Start
-const teamMembers = [
-  {
-    name: "Adam Phillips",
-    title: "CEO & Founder",
-    image: "img/team-1.jpg",
-    social: {
-      twitter: "https://twitter.com/adam",
-      facebook: "https://facebook.com/adam",
-      linkedin: "https://linkedin.com/in/adam",
-      instagram: "https://instagram.com/adam",
-    },
-  },
-  {
-    name: "Dylan Adams",
-    title: "Civil Engineer",
-    image: "img/team-2.jpg",
-    social: {
-      twitter: "https://twitter.com/dylan",
-      facebook: "https://facebook.com/dylan",
-      linkedin: "https://linkedin.com/in/dylan",
-      instagram: "https://instagram.com/dylan",
-    },
-  },
-  {
-    name: "Jhon Doe",
-    title: "Interior Designer",
-    image: "img/team-3.jpg",
-    social: {
-      twitter: "https://twitter.com/jhon",
-      facebook: "https://facebook.com/jhon",
-      linkedin: "https://linkedin.com/in/jhon",
-      instagram: "https://instagram.com/jhon",
-    },
-  },
-  {
-    name: "Josh Dunn",
-    title: "Painter",
-    image: "img/team-4.jpg",
-    social: {
-      twitter: "https://twitter.com/josh",
-      facebook: "https://facebook.com/josh",
-      linkedin: "https://linkedin.com/in/josh",
-      instagram: "https://instagram.com/josh",
-    },
-  },
-];
-
 // Team Animation End
 
-// FAQ Animation Start
-const faqItems = [
-  {
-    question: "Apa saja layanan yang ditawarkan oleh perusahaan Anda?",
-    answer:
-      "Kami menyediakan layanan konstruksi mekanikal seperti instalasi pipa industri, sistem HVAC, fire protection, dan perawatan fasilitas mekanikal.",
-  },
-  {
-    question: "Bagaimana cara menghubungi tim proyek Anda?",
-    answer:
-      "Anda dapat menghubungi kami melalui halaman kontak di website atau langsung melalui email dan nomor telepon yang tersedia.",
-  },
-  {
-    question: "Apakah perusahaan menyediakan konsultasi proyek?",
-    answer:
-      "Ya, kami menyediakan layanan konsultasi teknis dan survei awal sebelum proyek dimulai.",
-  },
-  {
-    question: "Berapa lama durasi pengerjaan proyek biasanya?",
-    answer:
-      "Durasi tergantung pada skala dan kompleksitas proyek, namun rata-rata proyek kami selesai dalam 2-8 minggu.",
-  },
-  {
-    question: "Apakah ada garansi untuk pekerjaan yang dilakukan?",
-    answer:
-      "Tentu, kami memberikan garansi kualitas pengerjaan dan perbaikan untuk setiap proyek yang kami tangani.",
-  },
-  {
-    question: "Apakah perusahaan menangani proyek skala besar?",
-    answer:
-      "Ya, kami berpengalaman dalam menangani proyek industri berskala besar di berbagai sektor seperti manufaktur, energi, dan properti komersial.",
-  },
-  {
-    question: "Apakah perusahaan memiliki sertifikasi resmi?",
-    answer:
-      "Kami telah memiliki sertifikasi yang dibutuhkan seperti ISO dan sertifikat keselamatan kerja (K3).",
-  },
-  {
-    question: "Bagaimana proses kerja sama dimulai?",
-    answer:
-      "Proses kerja sama dimulai dengan konsultasi awal, peninjauan lokasi, pengajuan penawaran, lalu penandatanganan kontrak.",
-  },
-  {
-    question:
-      "Apakah perusahaan menyediakan perawatan rutin setelah instalasi?",
-    answer:
-      "Ya, kami menyediakan layanan maintenance rutin maupun darurat untuk memastikan sistem tetap berfungsi optimal.",
-  },
-  {
-    question: "Apakah Anda melayani proyek di luar kota atau pulau?",
-    answer:
-      "Kami siap menangani proyek di berbagai wilayah Indonesia sesuai dengan kebutuhan klien.",
-  },
-];
+
 
 // FAQ Animation End
 
@@ -293,7 +195,7 @@ const Home = () => {
       }, 700);
     } else {
       setIsTransitioning(true);
-    } // eslint-disable-next-line react-hooks/exhaustive-deps
+    }
   }, [current]);
   // Hero Animation End
 
@@ -383,11 +285,10 @@ const Home = () => {
       <div className="w-full h-screen sm:h-fit overflow-hidden relative">
         <div
           ref={carouselRef}
-          className={`flex ${
-            isTransitioning
+          className={`flex ${isTransitioning
               ? "transition-transform duration-700 ease-in-out"
               : ""
-          }`}
+            }`}
           style={{ transform: `translateX(-${current * 100}%)` }}
         >
           {extendedSlides.map((slide, index) => (
@@ -771,7 +672,7 @@ const Home = () => {
           </h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {teamMembers.map((member, index) => (
+          {teamMembers.slice(0,4).map((member, index) => (
             <motion.div
               key={index}
               initial={{ y: 50, opacity: 0 }}
@@ -827,7 +728,6 @@ const Home = () => {
           ))}
         </div>
       </div>
-
       {/* <!-- Team End --> */}
 
       {/* <!-- FAQs Start --> */}
