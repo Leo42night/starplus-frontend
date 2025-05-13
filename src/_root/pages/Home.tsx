@@ -86,55 +86,63 @@ const teamMembers = [
   },
 ];
 
-
 // Team Animation End
 
 // FAQ Animation Start
 const faqItems = [
   {
-    question: "Apa itu layanan kami?",
+    question: "Apa saja layanan yang ditawarkan oleh perusahaan Anda?",
     answer:
-      "Layanan kami adalah solusi digital untuk bisnis Anda, mulai dari pembuatan website hingga pengembangan sistem.",
+      "Kami menyediakan layanan konstruksi mekanikal seperti instalasi pipa industri, sistem HVAC, fire protection, dan perawatan fasilitas mekanikal.",
   },
   {
-    question: "Bagaimana cara menghubungi tim?",
+    question: "Bagaimana cara menghubungi tim proyek Anda?",
     answer:
-      "Anda bisa menghubungi kami melalui halaman kontak atau email support kami.",
+      "Anda dapat menghubungi kami melalui halaman kontak di website atau langsung melalui email dan nomor telepon yang tersedia.",
   },
   {
-    question: "Apakah ada biaya langganan?",
+    question: "Apakah perusahaan menyediakan konsultasi proyek?",
     answer:
-      "Tergantung pada paket layanan yang Anda pilih, kami menyediakan opsi gratis dan berbayar.",
+      "Ya, kami menyediakan layanan konsultasi teknis dan survei awal sebelum proyek dimulai.",
   },
   {
-    question: "Berapa lama proses pengerjaan?",
-    answer: "Biasanya antara 1-3 minggu tergantung kompleksitas proyek.",
+    question: "Berapa lama durasi pengerjaan proyek biasanya?",
+    answer:
+      "Durasi tergantung pada skala dan kompleksitas proyek, namun rata-rata proyek kami selesai dalam 2-8 minggu.",
   },
   {
-    question: "Apakah kami mendapatkan garansi?",
-    answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+    question: "Apakah ada garansi untuk pekerjaan yang dilakukan?",
+    answer:
+      "Tentu, kami memberikan garansi kualitas pengerjaan dan perbaikan untuk setiap proyek yang kami tangani.",
   },
   {
-    question: "Apakah kami mendapatkan garansi?",
-    answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+    question: "Apakah perusahaan menangani proyek skala besar?",
+    answer:
+      "Ya, kami berpengalaman dalam menangani proyek industri berskala besar di berbagai sektor seperti manufaktur, energi, dan properti komersial.",
   },
   {
-    question: "Apakah kami mendapatkan garansi?",
-    answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+    question: "Apakah perusahaan memiliki sertifikasi resmi?",
+    answer:
+      "Kami telah memiliki sertifikasi yang dibutuhkan seperti ISO dan sertifikat keselamatan kerja (K3).",
   },
   {
-    question: "Apakah kami mendapatkan garansi?",
-    answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+    question: "Bagaimana proses kerja sama dimulai?",
+    answer:
+      "Proses kerja sama dimulai dengan konsultasi awal, peninjauan lokasi, pengajuan penawaran, lalu penandatanganan kontrak.",
   },
   {
-    question: "Apakah kami mendapatkan garansi?",
-    answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+    question:
+      "Apakah perusahaan menyediakan perawatan rutin setelah instalasi?",
+    answer:
+      "Ya, kami menyediakan layanan maintenance rutin maupun darurat untuk memastikan sistem tetap berfungsi optimal.",
   },
   {
-    question: "Apakah kami mendapatkan garansi?",
-    answer: "Ya, setiap layanan memiliki garansi pengerjaan dan perbaikan.",
+    question: "Apakah Anda melayani proyek di luar kota atau pulau?",
+    answer:
+      "Kami siap menangani proyek di berbagai wilayah Indonesia sesuai dengan kebutuhan klien.",
   },
 ];
+
 // FAQ Animation End
 
 const testimonials = [
@@ -163,41 +171,42 @@ const services = [
     title: "Building Construction",
     image: "img/service-1.jpg",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi.",
+      "Kami menyediakan layanan konstruksi bangunan dengan spesialisasi pada sistem mekanikal dan instalasi industri.",
     delay: 0.1,
   },
   {
     title: "House Renovation",
     image: "img/service-2.jpg",
     description:
-      "Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor.",
+      "Renovasi rumah mencakup perbaikan sistem pipa, ventilasi, dan instalasi mekanikal lainnya sesuai standar keselamatan.",
     delay: 0.2,
   },
   {
     title: "Architecture Design",
     image: "img/service-3.jpg",
     description:
-      "Auctor id gravida condimentum, viverra quis sem. Proin nec fermentum diam.",
+      "Kami bekerja sama dengan arsitek untuk merancang sistem mekanikal yang efisien dan terintegrasi dalam bangunan.",
     delay: 0.3,
   },
   {
     title: "Interior Design",
     image: "img/service-4.jpg",
     description:
-      "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.",
+      "Desain interior kami mendukung pemasangan sistem HVAC, pipa tersembunyi, dan integrasi peralatan teknis.",
     delay: 0.4,
   },
   {
     title: "Fixing & Support",
     image: "img/service-5.jpg",
     description:
-      "Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.",
+      "Layanan perbaikan dan dukungan teknis untuk sistem mekanikal seperti pompa, valve, dan peralatan industri.",
     delay: 0.5,
   },
   {
     title: "Painting",
     image: "img/service-6.jpg",
-    description: "Et quasi architecto beatae vitae dicta sunt explicabo.",
+    description:
+      "Pengecatan akhir dengan bahan khusus yang tahan terhadap panas dan korosi untuk perlindungan sistem mekanikal.",
     delay: 0.6,
   },
 ];
@@ -232,11 +241,7 @@ const blogData = [
   },
 ];
 
-
 const Home = () => {
-
-
-
   const [current, setCurrent] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -288,7 +293,7 @@ const Home = () => {
       }, 700);
     } else {
       setIsTransitioning(true);
-    }
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current]);
   // Hero Animation End
 
@@ -360,8 +365,6 @@ const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
   // Video Animation End
 
-
-
   const [activeIndex, setActiveIndex] = useState(0);
 
   const testiPrev = () => {
@@ -380,10 +383,11 @@ const Home = () => {
       <div className="w-full h-screen sm:h-fit overflow-hidden relative">
         <div
           ref={carouselRef}
-          className={`flex ${isTransitioning
-            ? "transition-transform duration-700 ease-in-out"
-            : ""
-            }`}
+          className={`flex ${
+            isTransitioning
+              ? "transition-transform duration-700 ease-in-out"
+              : ""
+          }`}
           style={{ transform: `translateX(-${current * 100}%)` }}
         >
           {extendedSlides.map((slide, index) => (
@@ -575,15 +579,23 @@ const Home = () => {
 
               <div className="space-y-4 text-gray-600">
                 <p>
-                  PT. Star Plus is a steel fabrication and installation company established in 2013 in Tangerang, Indonesia. We specialize in civil construction, steel structure, pipe fabrication, assembly, electrical work, and manpower supply. Our experienced and ISO-certified team ensures high-quality results.
+                  PT. Star Plus is a steel fabrication and installation company
+                  established in 2013 in Tangerang, Indonesia. We specialize in
+                  civil construction, steel structure, pipe fabrication,
+                  assembly, electrical work, and manpower supply. Our
+                  experienced and ISO-certified team ensures high-quality
+                  results.
                 </p>
                 <p>
-                  We deliver safe and timely services, supported by complete facilities and strong professional values based on communication, trust, and integrity in working with our partners and clients.
+                  We deliver safe and timely services, supported by complete
+                  facilities and strong professional values based on
+                  communication, trust, and integrity in working with our
+                  partners and clients.
                 </p>
               </div>
 
               <div className="about mt-8">
-                <a href="#" className="btn">
+                <a href="/about" className="btn">
                   Learn More
                 </a>
               </div>
