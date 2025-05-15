@@ -1,22 +1,15 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "react-feather";
 
-import { directors, faqData, FAQItem } from "./../../data/about";
+import { directors } from "./../../data/about";
 import FactComponent from "../../components/FactComponent";
+import FaqComponent from "../../components/FaqComponent";
 
 const About = () => {
   const [showMore, setShowMore] = useState(false);
 
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  // FAQ
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-
-  // FAQ
-  const toggle = (index: number) => {
-    setActiveIndex(prev => (prev === index ? null : index));
-  };
 
   const nextDirector = () => {
     setCurrentIndex((prevIndex) =>
@@ -27,47 +20,6 @@ const About = () => {
   const prevDirector = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? directors.length - 1 : prevIndex - 1
-    );
-  };
-
-  // Bagi data ke dua kolom
-  const halfway = Math.ceil(faqData.length / 2);
-  const leftItems = faqData.slice(0, halfway);
-  const rightItems = faqData.slice(halfway);
-
-  const renderItem = (item: FAQItem, index: number) => {
-    const isActive = activeIndex === index;
-
-    return (
-      <div key={index} className="mb-3">
-        <button
-          onClick={() => toggle(index)}
-          className={`w-full text-left border border-gray-300 px-4 py-3 rounded-md transition-all duration-300 ${isActive ? "bg-yellow-400 text-white" : "bg-white text-gray-800"
-            }`}
-        >
-          <div className="flex justify-between items-center">
-            <span>{item.question}</span>
-            <span className="text-xl">{isActive ? "−" : "+"}</span>
-          </div>
-        </button>
-
-        <AnimatePresence>
-          {isActive && (
-            <motion.div
-              key="content"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="overflow-hidden"
-            >
-              <div className="border border-t-0 border-gray-300 px-4 py-3 bg-white text-gray-600">
-                {item.answer}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
     );
   };
 
@@ -194,22 +146,7 @@ const About = () => {
       {/* <!-- Fact End --> */}
 
       {/* <!-- Faq Start --> */}
-      <section className="py-16 bg-gray-100">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-10">
-            <p className="text-blue-500 font-semibold">Frequently Asked Question</p>
-            <h2 className="text-3xl font-bold">You May Ask</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2">
-            <div className="pr-4 md:border-r md:border-yellow-400">
-              {leftItems.map((item, i) => renderItem(item, i))}
-            </div>
-            <div className="pl-4">
-              {rightItems.map((item, i) => renderItem(item, i + halfway))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <FaqComponent />
       {/* <!-- Faq End --> */}
 
       {/* <!-- Vision and Mission Start --> */}

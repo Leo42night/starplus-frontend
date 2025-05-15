@@ -17,6 +17,9 @@ import TeamsComponent from "../../components/TeamsComponent";
 import FaqComponent from "../../components/FaqComponent";
 import AboutComponent from "../../components/AboutComponent";
 import FactComponent from "../../components/FactComponent";
+import ServiceComponent from "../../components/ServiceComponent";
+import BlogGrid from "../../components/BlogGrid";
+import blogs from "../../data/blogs";
 
 const texts = [
   {
@@ -39,11 +42,6 @@ const images = [
   "assets/carousel-2.jpg",
   "assets/carousel-3.jpg",
 ];
-
-// Team Animation End
-
-
-
 // FAQ Animation End
 
 const testimonials = [
@@ -64,81 +62,6 @@ const testimonials = [
     profession: "Kontraktor",
     image: "/img/testimonial-3.jpg",
     text: "Tim yang berpengalaman dan responsif. Semua detail pekerjaan diperhatikan dengan baik, memberikan hasil yang sempurna.",
-  },
-];
-
-const services = [
-  {
-    title: "Building Construction",
-    image: "img/service-1.jpg",
-    description:
-      "Kami menyediakan layanan konstruksi bangunan dengan spesialisasi pada sistem mekanikal dan instalasi industri.",
-    delay: 0.1,
-  },
-  {
-    title: "House Renovation",
-    image: "img/service-2.jpg",
-    description:
-      "Renovasi rumah mencakup perbaikan sistem pipa, ventilasi, dan instalasi mekanikal lainnya sesuai standar keselamatan.",
-    delay: 0.2,
-  },
-  {
-    title: "Architecture Design",
-    image: "img/service-3.jpg",
-    description:
-      "Kami bekerja sama dengan arsitek untuk merancang sistem mekanikal yang efisien dan terintegrasi dalam bangunan.",
-    delay: 0.3,
-  },
-  {
-    title: "Interior Design",
-    image: "img/service-4.jpg",
-    description:
-      "Desain interior kami mendukung pemasangan sistem HVAC, pipa tersembunyi, dan integrasi peralatan teknis.",
-    delay: 0.4,
-  },
-  {
-    title: "Fixing & Support",
-    image: "img/service-5.jpg",
-    description:
-      "Layanan perbaikan dan dukungan teknis untuk sistem mekanikal seperti pompa, valve, dan peralatan industri.",
-    delay: 0.5,
-  },
-  {
-    title: "Painting",
-    image: "img/service-6.jpg",
-    description:
-      "Pengecatan akhir dengan bahan khusus yang tahan terhadap panas dan korosi untuk perlindungan sistem mekanikal.",
-    delay: 0.6,
-  },
-];
-
-const blogData = [
-  {
-    id: 1,
-    imageSrc: "img/blog-1.jpg",
-    title: "Lorem Ipsum",
-    author: "Admin",
-    category: "Construction",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci quae, corrupti laudantium culpa recusandae ab doloremque quis unde. Minus asperiores saepe ab.",
-  },
-  {
-    id: 2,
-    imageSrc: "img/blog-2.jpg",
-    title: "Dolor Sit Amet",
-    author: "Admin",
-    category: "Technology",
-    description:
-      "Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate.",
-  },
-  {
-    id: 3,
-    imageSrc: "img/blog-3.jpg",
-    title: "Curabitur Facilisis",
-    author: "Admin",
-    category: "Design",
-    description:
-      "Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor.",
   },
 ];
 
@@ -379,60 +302,7 @@ const Home = () => {
       {/* <!-- Fact End --> */}
 
       {/* <!-- Service Start --> */}
-      <section className="bg-white py-16">
-        <div className="text-center mb-12">
-          <p className="text-yellow-500 font-semibold text-lg">Our Services</p>
-          <p className="text-5xl font-bold text-gray-900">
-            We Provide Services
-          </p>
-        </div>
-
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
-          {services.map((service, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 60 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: service.delay, duration: 0.6 }}
-              className="group rounded-xl shadow-lg overflow-hidden flex flex-col bg-white"
-            >
-              {/* Gambar dengan overlay */}
-              <div className="relative group h-96 overflow-hidden">
-                <img
-                  src={service.image}
-                  alt={service.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-[#030f27] bg-opacity-80 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center text-white text-sm px-6 text-center">
-                  {service.description}
-                </div>
-              </div>
-
-              {/* Judul dan tombol */}
-              <div
-                className="flex justify-between items-center h-16"
-                style={{ backgroundColor: "#030f27" }}
-              >
-                <h5
-                  className="text-lg leading-snug px-4 py-4"
-                  style={{ color: "#fdbe33" }}
-                >
-                  {service.title}
-                </h5>
-                <span
-                  style={{
-                    backgroundColor: "#fdbe33",
-                  }}
-                  // Ubah warna teks saat parent di-hover
-                  className="flex items-center text-2xl font-bold px-6 transition-colors duration-300 h-full group-hover:text-white text-[#030f27]"
-                >
-                  +
-                </span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+      <ServiceComponent />
       {/* <!-- Service End --> */}
 
       {/* <!-- Video Start --> */}
@@ -558,47 +428,12 @@ const Home = () => {
       {/* <!-- Testimonial End --> */}
 
       {/* <!-- Blog Start --> */}
-      <div className="max-w-6xl mx-auto px-4 h-screen py-12">
+      <div className="blog max-w-6xl mx-auto px-4 h-screen py-12">
         <div className="text-center mb-12">
           <p className="text-[#fdbe33] font-semibold">Latest Blog</p>
           <h2 className="text-3xl font-bold">Latest From Our Blog</h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {blogData.map((blog, index) => (
-            <motion.div
-              key={blog.id}
-              className="bg-gray-200 shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 h-120"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.3, duration: 0.5 }}
-            >
-              <img
-                src={blog.imageSrc}
-                alt={`Blog ${blog.id}`}
-                className="w-full h-48 object-cover"
-              />
-              <div className="w-full h-1/8 flex">
-                <div className="w-5/6 h-full flex items-center justify-center text-center bg-[#030f27] text-2xl text-[#fdbe33]">
-                  {blog.title}
-                </div>
-                <div className="w-1/6 bg-[#fdbe33] h-full flex items-center justify-center text-center text-5xl text-[#030f27] hover:text-white transition-colors duration-300">
-                  +
-                </div>
-              </div>
-              <div className="w-full h-1/8 flex items-center text-center justify-between px-20">
-                <span className="text-sm text-gray-600 hover:text-[#fdbe33] transition-colors duration-300">
-                  by {blog.author}
-                </span>
-                <span className="text-sm text-gray-600 hover:text-[#fdbe33] transition-colors duration-300">
-                  in {blog.category}
-                </span>
-              </div>
-              <div className="w-full h-1/3 items-center text-center justify-center flex px-8">
-                {blog.description}
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        <BlogGrid blogs={blogs} maxItems={3} />
       </div>
       {/* <!-- Blog End --> */}
     </>

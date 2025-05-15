@@ -1,17 +1,10 @@
-import { useState } from 'react'; 
-import blogs from '../../data/blogs'; // Sesuaikan path jika berbeda
-// import posts from '../../data/single-post';
-// import { useSearchParams } from "react-router-dom";
+import { useState } from 'react';
+import blogs from '../../data/blogs';
+import BlogGrid from '../../components/BlogGrid';
 
 const Blog = () => {
   const itemsPerPage = 6;
-  // get query
-  // const [searchParams] = useSearchParams();
-  // const tagParam = searchParams.get("tag");
   const [currentPage, setCurrentPage] = useState(1);
-  // const filteredBlogs = tagParam
-  // ? blogs.filter((blog) => blog.category.toLowerCase() === tagParam.toLowerCase())
-  // : blogs;
   const totalPages = Math.ceil(blogs.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentBlogs = blogs.slice(startIndex, startIndex + itemsPerPage);
@@ -44,47 +37,42 @@ const Blog = () => {
             <p>Latest Blog</p>
             <h2>Latest From Our Blog</h2>
           </div>
-          <div className="row blog-page">
-            {currentBlogs.map((blog, idx) => (
-              <div key={idx} className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
-                <div className="blog-item">
-                  <div className="blog-img">
-                    <img src={blog.image} alt={blog.title} />
-                  </div>
-                  <div className="blog-title">
-                    <h3>{blog.title}</h3>
-                    <a className="btn" href={`/single/${blog.id}`}>+</a>
-                  </div>
-                  <div className="blog-meta">
-                    <p>By <a href="#">Admin</a></p>
-                    <p>In <a href="#">{blog.category}</a></p>
-                  </div>
-                  <div className="blog-text">
-                    <p>{blog.description}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <BlogGrid blogs={currentBlogs} />
 
           {/* Pagination */}
-          <div className="row">
-            <div className="col-12">
-              <ul className="pagination justify-content-center">
-                <li className={`page-item ${currentPage === 1 ? 'disabled d-none' : 'd-block'}`}>
-                  <a className="page-link" href="#" onClick={() => handlePageChange(currentPage - 1)}>Previous</a>
+          <div className="flex justify-center mt-6">
+            <ul className="flex space-x-2">
+              <li className={`cursor-pointer ${currentPage === 1 ? 'opacity-50 pointer-events-none' : ''}`}>
+                <a
+                  className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                >
+                  Previous
+                </a>
+              </li>
+
+              {Array.from({ length: totalPages }, (_, i) => (
+                <li key={i} className={`cursor-pointer ${currentPage === i + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300'} rounded`}>
+                  <a
+                    className="px-4 py-2 transition"
+                    onClick={() => handlePageChange(i + 1)}
+                  >
+                    {i + 1}
+                  </a>
                 </li>
-                {Array.from({ length: totalPages }, (_, i) => (
-                  <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
-                    <a className="page-link" href="#" onClick={() => handlePageChange(i + 1)}>{i + 1}</a>
-                  </li>
-                ))}
-                <li className={`page-item ${currentPage === totalPages ? 'disabled d-none' : 'd-block'}`}>
-                  <a className="page-link" href="#" onClick={() => handlePageChange(currentPage + 1)}>Next</a>
-                </li>
-              </ul>
-            </div>
+              ))}
+
+              <li className={`cursor-pointer ${currentPage === totalPages ? 'opacity-50 pointer-events-none' : ''}`}>
+                <a
+                  className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                >
+                  Next
+                </a>
+              </li>
+            </ul>
           </div>
+          {/* Pagination end */}
         </div>
       </div>
     </>

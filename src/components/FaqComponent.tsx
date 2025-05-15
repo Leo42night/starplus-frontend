@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface FAQItem {
   question: string;
@@ -86,11 +87,23 @@ export default function FaqComponent() {
             <span className="text-xl">{isActive ? "−" : "+"}</span>
           </div>
         </button>
-        {isActive && (
-          <div className="border border-t-0 px-4 py-3 bg-white text-gray-600">
-            {item.answer}
-          </div>
-        )}
+
+        <AnimatePresence>
+          {isActive && (
+            <motion.div
+              key="content"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="overflow-hidden"
+            >
+              <div className="border border-t-0 border-gray-300 rounded-b-md px-4 py-3 bg-white text-gray-600">
+                {item.answer}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     );
   };
@@ -102,8 +115,8 @@ export default function FaqComponent() {
           <p className="text-blue-500 font-semibold">Frequently Asked Question</p>
           <h2 className="text-3xl font-bold">You May Ask</h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="pr-4">
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          <div className="pr-4 md:border-r md:border-yellow-400">
             {leftItems.map((item, i) => renderItem(item, i))}
           </div>
           <div className="pl-4">
