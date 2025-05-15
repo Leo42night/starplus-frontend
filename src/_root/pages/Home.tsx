@@ -10,7 +10,7 @@ import {
   FaBuilding,
   FaPhoneAlt,
   FaPlayCircle,
-  FaQuoteRight
+  FaQuoteRight,
 } from "react-icons/fa";
 
 import TeamsComponent from "../../components/TeamsComponent";
@@ -41,8 +41,6 @@ const images = [
 ];
 
 // Team Animation End
-
-
 
 // FAQ Animation End
 
@@ -148,7 +146,6 @@ const Home = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-
   const extendedSlides = [
     { ...texts[texts.length - 1], src: images[images.length - 1] },
     ...images.map((src, i) => ({ ...texts[i], src })),
@@ -218,16 +215,20 @@ const Home = () => {
     return () => clearInterval(interval);
   }, [isInView]);
 
+  // Services Animation
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
   return (
     <>
       {/* Hero Section */}
       <div className="w-full h-screen sm:h-fit overflow-hidden relative">
         <div
           ref={carouselRef}
-          className={`flex ${isTransitioning
-            ? "transition-transform duration-700 ease-in-out"
-            : ""
-            }`}
+          className={`flex ${
+            isTransitioning
+              ? "transition-transform duration-700 ease-in-out"
+              : ""
+          }`}
           style={{ transform: `translateX(-${current * 100}%)` }}
         >
           {extendedSlides.map((slide, index) => (
@@ -395,16 +396,27 @@ const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: service.delay, duration: 0.6 }}
               className="group rounded-xl shadow-lg overflow-hidden flex flex-col bg-white"
+              onClick={() => setSelectedImage(service.image)}
             >
               {/* Gambar dengan overlay */}
               <div className="relative group h-96 overflow-hidden">
                 <img
                   src={service.image}
                   alt={service.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 cursor-pointer"
                 />
-                <div className="absolute inset-0 bg-[#030f27] bg-opacity-80 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center text-white text-sm px-6 text-center">
-                  {service.description}
+
+                {/* Overlay background only */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{ backgroundColor: "rgba(3, 15, 39, 0.7)" }}
+                />
+
+                {/* Text overlay */}
+                <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
+                  <p className="text-white text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    {service.description}
+                  </p>
                 </div>
               </div>
 
@@ -432,6 +444,30 @@ const Home = () => {
             </motion.div>
           ))}
         </div>
+
+        {selectedImage && (
+          <div
+            className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center"
+            onClick={() => setSelectedImage(null)}
+          >
+            <div className="relative mx-4" onClick={(e) => e.stopPropagation()}>
+              {/* Tombol X di atas gambar */}
+              <button
+                className="absolute top-2 right-2 text-[#fdbe33] text-3xl font-bold z-10 bg-[#030f27]/50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-[#030f27] transition"
+                onClick={() => setSelectedImage(null)}
+              >
+                &times;
+              </button>
+
+              {/* Gambar */}
+              <img
+                src={selectedImage}
+                alt="Selected"
+                className="max-h-[80vh] max-w-full rounded-lg shadow-lg object-contain"
+              />
+            </div>
+          </div>
+        )}
       </section>
       {/* <!-- Service End --> */}
 
@@ -503,7 +539,9 @@ const Home = () => {
             {/* Thumbnail Kiri */}
             <img
               src={
-                testimonials[(activeIndex - 1 + testimonials.length) % testimonials.length].image
+                testimonials[
+                  (activeIndex - 1 + testimonials.length) % testimonials.length
+                ].image
               }
               alt="Previous"
               className="w-16 h-16 rounded-full object-cover opacity-50 transition duration-300"
@@ -550,7 +588,9 @@ const Home = () => {
               <p className="italic text-sm text-gray-300 pt-1">
                 {testimonials[activeIndex].profession}
               </p>
-              <p className="mt-2 text-white">{testimonials[activeIndex].text}</p>
+              <p className="mt-2 text-white">
+                {testimonials[activeIndex].text}
+              </p>
             </motion.div>
           </AnimatePresence>
         </div>
