@@ -21,13 +21,13 @@ const Contact = () => {
 
       {/* <!-- Contact Start --> */}
       <div className="contact wow fadeInUp">
-        <div className="container">
+        <div className="container mx-auto">
           <div className="section-header text-center">
             <p>Get In Touch</p>
             <h2>For Any Query</h2>
           </div>
-          <div className="row">
-            <div className="col-md-6">
+          <div className="flex">
+            <div className="flex-1 bg-[#030f27] px-4 py-8">
               <div className="contact-info">
                 <div className="contact-item">
                   <i className="flaticon-address"></i>
@@ -52,24 +52,24 @@ const Contact = () => {
                 </div>
               </div>
             </div>
-            <div className="col-md-6">
+            <div className="flex-1 bg-[#fdbe33] px-4 py-8">
               <div className="contact-form">
                 <div id="success"></div>
-                <form name="sentMessage" id="contactForm" noValidate>
+                <form name="sentMessage" id="contactForm" noValidate className="flex flex-col gap-4">
                   <div className="control-group">
-                    <input type="text" className="form-control" id="name" placeholder="Your Name" required data-validation-required-message="Please enter your name" />
+                    <input type="text" className="form-control w-full p-2" id="name" placeholder="Your Name" required data-validation-required-message="Please enter your name" />
                     <p className="help-block text-danger"></p>
                   </div>
                   <div className="control-group">
-                    <input type="email" className="form-control" id="email" placeholder="Your Email" required data-validation-required-message="Please enter your email" />
+                    <input type="email" className="form-control w-full  p-2" id="email" placeholder="Your Email" required data-validation-required-message="Please enter your email" />
                     <p className="help-block text-danger"></p>
                   </div>
                   <div className="control-group">
-                    <input type="text" className="form-control" id="subject" placeholder="Subject" required data-validation-required-message="Please enter a subject" />
+                    <input type="text" className="form-control w-full  p-2" id="subject" placeholder="Subject" required data-validation-required-message="Please enter a subject" />
                     <p className="help-block text-danger"></p>
                   </div>
                   <div className="control-group">
-                    <textarea className="form-control" id="message" placeholder="Message" required data-validation-required-message="Please enter your message"></textarea>
+                    <textarea className="form-control w-full  p-2" id="message" placeholder="Message" required data-validation-required-message="Please enter your message"></textarea>
                     <p className="help-block text-danger"></p>
                   </div>
                   <div>

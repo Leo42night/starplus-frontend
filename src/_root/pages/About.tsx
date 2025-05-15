@@ -1,95 +1,22 @@
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "react-feather";
-import {
-  FaHardHat,
-  FaBuilding,
-  FaMapMarkedAlt,
-  FaIndustry,
-} from "react-icons/fa";
 
-const directors = [
-  {
-    name: "John Doe",
-    position: "Chief Executive Officer",
-    image: "/img/testimonial-1.jpg",
-    description:
-      "John has led Star Plus since 2015 with a vision to expand regionally and uphold industry standards. With over 20 years of experience in the steel and construction industry, his leadership drives the company’s success.",
-  },
-  {
-    name: "Jane Smith",
-    position: "Chief Operating Officer",
-    image: "/img/testimonial-2.jpg",
-    description:
-      "Jane brings operational excellence and strategic oversight, ensuring seamless execution of all projects and maintaining high-quality standards across the board.",
-  },
-  {
-    name: "Michael Lee",
-    position: "Chief Technical Officer",
-    image: "/img/testimonial-3.jpg",
-    description:
-      "Michael leads our technology and innovation. His technical acumen and leadership keep us at the forefront of the industry’s evolving needs.",
-  },
-];
-
-const faqItems = [
-  {
-    question: "Apa saja layanan yang ditawarkan oleh perusahaan Anda?",
-    answer:
-      "Kami menyediakan layanan konstruksi mekanikal seperti instalasi pipa industri, sistem HVAC, fire protection, dan perawatan fasilitas mekanikal.",
-  },
-  {
-    question: "Bagaimana cara menghubungi tim proyek Anda?",
-    answer:
-      "Anda dapat menghubungi kami melalui halaman kontak di website atau langsung melalui email dan nomor telepon yang tersedia.",
-  },
-  {
-    question: "Apakah perusahaan menyediakan konsultasi proyek?",
-    answer:
-      "Ya, kami menyediakan layanan konsultasi teknis dan survei awal sebelum proyek dimulai.",
-  },
-  {
-    question: "Berapa lama durasi pengerjaan proyek biasanya?",
-    answer:
-      "Durasi tergantung pada skala dan kompleksitas proyek, namun rata-rata proyek kami selesai dalam 2-8 minggu.",
-  },
-  {
-    question: "Apakah ada garansi untuk pekerjaan yang dilakukan?",
-    answer:
-      "Tentu, kami memberikan garansi kualitas pengerjaan dan perbaikan untuk setiap proyek yang kami tangani.",
-  },
-  {
-    question: "Apakah perusahaan menangani proyek skala besar?",
-    answer:
-      "Ya, kami berpengalaman dalam menangani proyek industri berskala besar di berbagai sektor seperti manufaktur, energi, dan properti komersial.",
-  },
-  {
-    question: "Apakah perusahaan memiliki sertifikasi resmi?",
-    answer:
-      "Kami telah memiliki sertifikasi yang dibutuhkan seperti ISO dan sertifikat keselamatan kerja (K3).",
-  },
-  {
-    question: "Bagaimana proses kerja sama dimulai?",
-    answer:
-      "Proses kerja sama dimulai dengan konsultasi awal, peninjauan lokasi, pengajuan penawaran, lalu penandatanganan kontrak.",
-  },
-  {
-    question:
-      "Apakah perusahaan menyediakan perawatan rutin setelah instalasi?",
-    answer:
-      "Ya, kami menyediakan layanan maintenance rutin maupun darurat untuk memastikan sistem tetap berfungsi optimal.",
-  },
-  {
-    question: "Apakah Anda melayani proyek di luar kota atau pulau?",
-    answer:
-      "Kami siap menangani proyek di berbagai wilayah Indonesia sesuai dengan kebutuhan klien.",
-  },
-];
+import { directors, faqData, FAQItem } from "./../../data/about";
+import FactComponent from "../../components/FactComponent";
 
 const About = () => {
   const [showMore, setShowMore] = useState(false);
 
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  // FAQ
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  // FAQ
+  const toggle = (index: number) => {
+    setActiveIndex(prev => (prev === index ? null : index));
+  };
 
   const nextDirector = () => {
     setCurrentIndex((prevIndex) =>
@@ -103,63 +30,46 @@ const About = () => {
     );
   };
 
-  const [expertWorkers, setExpertWorkers] = useState(0);
-  const [happyClients, setHappyClients] = useState(0);
-  const [completedProjects, setCompletedProjects] = useState(0);
-  const [runningProjects, setRunningProjects] = useState(0);
+  // Bagi data ke dua kolom
+  const halfway = Math.ceil(faqData.length / 2);
+  const leftItems = faqData.slice(0, halfway);
+  const rightItems = faqData.slice(halfway);
 
-  useEffect(() => {
-    // Animasi angka untuk Expert Workers
-    let count = 0;
-    const interval1 = setInterval(() => {
-      if (count < 109) {
-        count++;
-        setExpertWorkers(count);
-      } else {
-        clearInterval(interval1);
-      }
-    }, 10);
+  const renderItem = (item: FAQItem, index: number) => {
+    const isActive = activeIndex === index;
 
-    // Animasi angka untuk Happy Clients
-    count = 0;
-    const interval2 = setInterval(() => {
-      if (count < 485) {
-        count++;
-        setHappyClients(count);
-      } else {
-        clearInterval(interval2);
-      }
-    }, 10);
+    return (
+      <div key={index} className="mb-3">
+        <button
+          onClick={() => toggle(index)}
+          className={`w-full text-left border border-gray-300 px-4 py-3 rounded-md transition-all duration-300 ${isActive ? "bg-yellow-400 text-white" : "bg-white text-gray-800"
+            }`}
+        >
+          <div className="flex justify-between items-center">
+            <span>{item.question}</span>
+            <span className="text-xl">{isActive ? "−" : "+"}</span>
+          </div>
+        </button>
 
-    // Animasi angka untuk Completed Projects
-    count = 0;
-    const interval3 = setInterval(() => {
-      if (count < 789) {
-        count++;
-        setCompletedProjects(count);
-      } else {
-        clearInterval(interval3);
-      }
-    }, 10);
-
-    // Animasi angka untuk Running Projects
-    count = 0;
-    const interval4 = setInterval(() => {
-      if (count < 890) {
-        count++;
-        setRunningProjects(count);
-      } else {
-        clearInterval(interval4);
-      }
-    }, 10);
-
-    return () => {
-      clearInterval(interval1);
-      clearInterval(interval2);
-      clearInterval(interval3);
-      clearInterval(interval4);
-    };
-  }, []);
+        <AnimatePresence>
+          {isActive && (
+            <motion.div
+              key="content"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="overflow-hidden"
+            >
+              <div className="border border-t-0 border-gray-300 px-4 py-3 bg-white text-gray-600">
+                {item.answer}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    );
+  };
 
   return (
     <>
@@ -279,154 +189,70 @@ const About = () => {
       </motion.div>
       {/* About End */}
 
-      <div className="fact-section">
-        <div className="fact-container">
-          {/* Left */}
-          <div className="fact-left">
-            <div className="fact-grid">
-              <div className="fact-item">
-                <div className="fact-icon">
-                  <FaHardHat />
-                </div>
-                <div className="fact-text">
-                  <h2>{expertWorkers}</h2>
-                  <p>Expert Workers</p>
-                </div>
-              </div>
-              <div className="fact-item">
-                <div className="fact-icon">
-                  <FaBuilding />
-                </div>
-                <div className="fact-text">
-                  <h2>{happyClients}</h2>
-                  <p>Happy Clients</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right */}
-          <div className="fact-right">
-            <div className="fact-grid">
-              <div className="fact-item">
-                <div className="fact-icon">
-                  <FaMapMarkedAlt />
-                </div>
-                <div className="fact-text">
-                  <h2>{completedProjects}</h2>
-                  <p>Completed Projects</p>
-                </div>
-              </div>
-              <div className="fact-item">
-                <div className="fact-icon">
-                  <FaIndustry />
-                </div>
-                <div className="fact-text">
-                  <h2>{runningProjects}</h2>
-                  <p>Running Projects</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Fact Start */}
+      <FactComponent />
       {/* <!-- Fact End --> */}
 
-      <div className="faq-container">
-        <div className="faq-title-container">
-          <div className="faq-title">
-            <p className="faq-subtitle">Frequently Asked Question</p>
-            <p className="faq-heading">You May Ask</p>
+      {/* <!-- Faq Start --> */}
+      <section className="py-16 bg-gray-100">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-10">
+            <p className="text-blue-500 font-semibold">Frequently Asked Question</p>
+            <h2 className="text-3xl font-bold">You May Ask</h2>
           </div>
-
-          <div className="faq-grid">
-            <div className="faq-divider-vertical"></div>
-
-            {faqItems.map((item, i) => {
-              const isLeft = i % 2 === 0;
-              const direction = isLeft ? -100 : 100;
-
-              return (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: direction }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{
-                    duration: 0.6,
-                    delay: i * 0.15,
-                    type: "tween",
-                    ease: "easeOut",
-                  }}
-                  className="faq-item"
-                >
-                  <button
-                    className="faq-item-button"
-                    onClick={() => {
-                      const content = document.getElementById(`faq-${i}`);
-                      if (content) {
-                        content.classList.toggle("show");
-                      }
-                    }}
-                  >
-                    <span>{item.question}</span>
-                    <span className="plus">+</span>
-                  </button>
-                  <div id={`faq-${i}`} className="faq-item-content">
-                    {item.answer}
-                  </div>
-                </motion.div>
-              );
-            })}
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className="pr-4 md:border-r md:border-yellow-400">
+              {leftItems.map((item, i) => renderItem(item, i))}
+            </div>
+            <div className="pl-4">
+              {rightItems.map((item, i) => renderItem(item, i + halfway))}
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+      {/* <!-- Faq End --> */}
 
-      <section className="w-full  py-12 px-6 sm:py-20 bg-white text-black">
+      {/* <!-- Vision and Mission Start --> */}
+      <section className="w-full py-12 px-6 sm:py-20 bg-white text-black">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-8 !text-[#fdbe33]">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-12 !text-[#fdbe33]">
             Vision and Mission
           </h2>
-          {/* Kontainer untuk Visi dan Misi */}
-          <div className="flex flex-col sm:flex-row justify-between items-center space-y-8 sm:space-y-0 sm:space-x-12 ">
-            {/* Visi */}
-            <div className="w-full sm:w-1/2 bg-[#f9f9f9] rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-120">
-              <div className="bg-[#030f27] w-full h-16 flex items-center justify-center rounded-t-lg">
-                <span className="text-2xl font-semibold !text-[#fdbe33]">
-                  Vision
+
+          <div className="flex flex-col sm:flex-row justify-center items-stretch gap-8">
+            {/* VISION */}
+            <div className="relative w-full sm:w-1/2 h-64 bg-[#030f27] rounded-lg overflow-hidden group cursor-pointer shadow-md hover:shadow-xl transition-shadow duration-300">
+              <div className="absolute inset-0 flex items-center justify-center z-10">
+                <span className="text-white text-3xl font-bold group-hover:opacity-0 transition-opacity duration-300">
+                  VISION
                 </span>
               </div>
-              <div className="p-12 flex flex-col justify-center">
-                <p className="text-base sm:text-lg leading-relaxed text-justify">
-                  Making a National Private Company Leading in the Construction
-                  Service Industry, Providing Welfare to Employees, Managers,
-                  Shareholders, and Other Stakeholders through, Commitment to
-                  Good Corporate Governance.
+              <div className="absolute inset-0 bg-[#f9f9f9] text-black p-6 flex items-center justify-center transform translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-in-out z-20">
+                <p className="text-sm sm:text-base leading-relaxed text-justify">
+                  Making a National Private Company Leading in the Construction Service Industry, Providing Welfare to Employees, Managers, Shareholders, and Other Stakeholders through, Commitment to Good Corporate Governance.
                 </p>
               </div>
             </div>
 
-            {/* Garis Pemisah */}
-            <div className="hidden sm:block border border-solid border-b-450 border-[#fdbe33]" />
-            {/* Misi */}
-            <div className="w-full sm:w-1/2 bg-[#f9f9f9] rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-120">
-              <div className="bg-[#030f27] w-full h-16 flex items-center justify-center rounded-t-lg">
-                <span className="text-2xl font-semibold !text-[#fdbe33]">
-                  Mission
+            {/* MISSION */}
+            <div className="relative w-full sm:w-1/2 h-64 bg-[#030f27] rounded-lg overflow-hidden group cursor-pointer shadow-md hover:shadow-xl transition-shadow duration-300">
+              <div className="absolute inset-0 flex items-center justify-center z-10">
+                <span className="text-white text-3xl font-bold group-hover:opacity-0 transition-opacity duration-300">
+                  MISSION
                 </span>
               </div>
-              <div className="p-12 flex flex-col justify-center">
-                <p className="text-base sm:text-lg leading-relaxed text-justify">
-                  Always Maintain Commitment To Provide Customer Satisfaction In
-                  Paying Attention To Quality, The Right Price, And The Right
-                  Time Of Work On Each Project That Is Performed And Provide
-                  Field Opportunities To Potential Human Resources In Their
-                  Fields.
+              <div className="absolute inset-0 bg-[#f9f9f9] text-black p-6 flex items-center justify-center transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-in-out z-20">
+                <p className="text-sm sm:text-base leading-relaxed text-justify">
+                  Always Maintain Commitment To Provide Customer Satisfaction In Paying Attention To Quality, The Right Price, And The Right Time Of Work On Each Project That Is Performed And Provide Field Opportunities To Potential Human Resources In Their Fields.
                 </p>
               </div>
             </div>
           </div>
         </div>
       </section>
+      {/* <!-- Vision and Mission End --> */}
+
+      {/* Director Start */}
       <section
         className="w-full py-16 px-6 text-black relative bg-fixed bg-center bg-cover"
         style={{ backgroundImage: "url('/assets/dir.jpg')" }}
@@ -450,14 +276,16 @@ const About = () => {
               <ChevronLeft size={36} />
             </button>
 
-            {/* Card */}
-            <div className="relative bg-transparent rounded-xl transition-shadow duration-300 overflow-hidden w-full max-w-md h-120 shadow-[0_6px_0_rgba(0,0,0,0.1)] hover:shadow-[0_10px_0_rgba(0,0,0,0.2)] mx-12">
+            {/* Card dengan efek hover membesar */}
+            <div
+              className="relative bg-transparent rounded-xl transition-transform duration-500 ease-in-out transform hover:scale-105 overflow-hidden w-full max-w-md h-120 shadow-[0_6px_0_rgba(0,0,0,0.1)] hover:shadow-[0_10px_0_rgba(0,0,0,0.2)] mx-12"
+            >
               <div className="h-1/7 bg-transparent" />
 
-              {/* Gambar dengan Animasi */}
+              {/* Gambar dengan animasi */}
               <motion.div
                 className="absolute left-1/2 z-20 transform -translate-x-1/2 w-24 h-24"
-                key={currentIndex} // Memicu animasi saat currentIndex berubah
+                key={currentIndex}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
@@ -495,6 +323,7 @@ const About = () => {
           </div>
         </div>
       </section>
+      {/* Director End */}
     </>
   );
 };

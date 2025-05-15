@@ -1,6 +1,6 @@
 import "./../../tailwind.css"; // akses pakai path relatif. jika aktif, beberapa kode akan ditimpammm
 import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import {
   MdOutlineKeyboardArrowLeft,
   MdOutlineKeyboardArrowRight,
@@ -9,15 +9,14 @@ import {
   FaHardHat,
   FaBuilding,
   FaPhoneAlt,
-  FaMapMarkedAlt,
-  FaIndustry,
   FaPlayCircle,
+  FaQuoteRight
 } from "react-icons/fa";
 
-import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
-
-import faqItems from "../../data/faq";
-import teamMembers from "../../data/teams";
+import TeamsComponent from "../../components/TeamsComponent";
+import FaqComponent from "../../components/FaqComponent";
+import AboutComponent from "../../components/AboutComponent";
+import FactComponent from "../../components/FactComponent";
 
 const texts = [
   {
@@ -149,6 +148,7 @@ const Home = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
+
   const extendedSlides = [
     { ...texts[texts.length - 1], src: images[images.length - 1] },
     ...images.map((src, i) => ({ ...texts[i], src })),
@@ -199,85 +199,24 @@ const Home = () => {
   }, [current]);
   // Hero Animation End
 
-  // Fact Animation Start
-  const [expertWorkers, setExpertWorkers] = useState(0);
-  const [happyClients, setHappyClients] = useState(0);
-  const [completedProjects, setCompletedProjects] = useState(0);
-  const [runningProjects, setRunningProjects] = useState(0);
-
-  useEffect(() => {
-    // Animasi angka untuk Expert Workers
-    let count = 0;
-    const interval1 = setInterval(() => {
-      if (count < 109) {
-        count++;
-        setExpertWorkers(count);
-      } else {
-        clearInterval(interval1);
-      }
-    }, 10);
-
-    // Animasi angka untuk Happy Clients
-    count = 0;
-    const interval2 = setInterval(() => {
-      if (count < 485) {
-        count++;
-        setHappyClients(count);
-      } else {
-        clearInterval(interval2);
-      }
-    }, 10);
-
-    // Animasi angka untuk Completed Projects
-    count = 0;
-    const interval3 = setInterval(() => {
-      if (count < 789) {
-        count++;
-        setCompletedProjects(count);
-      } else {
-        clearInterval(interval3);
-      }
-    }, 10);
-
-    // Animasi angka untuk Running Projects
-    count = 0;
-    const interval4 = setInterval(() => {
-      if (count < 890) {
-        count++;
-        setRunningProjects(count);
-      } else {
-        clearInterval(interval4);
-      }
-    }, 10);
-
-    return () => {
-      clearInterval(interval1);
-      clearInterval(interval2);
-      clearInterval(interval3);
-      clearInterval(interval4);
-    };
-  }, []);
-  // Fact Animation End
-
-  // Service Animation Start
-
-  // Service Animation End
-
   // Video Animation Start
   const [isOpen, setIsOpen] = useState(false);
   // Video Animation End
 
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { once: false, margin: "-500px" });
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const testiPrev = () => {
-    setActiveIndex(
-      (prev) => (prev - 1 + testimonials.length) % testimonials.length
-    );
-  };
+  // Auto slide setiap 500ms
+  useEffect(() => {
+    if (!isInView) return;
 
-  const testiNext = () => {
-    setActiveIndex((prev) => (prev + 1) % testimonials.length);
-  };
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % testimonials.length);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [isInView]);
 
   return (
     <>
@@ -286,8 +225,8 @@ const Home = () => {
         <div
           ref={carouselRef}
           className={`flex ${isTransitioning
-              ? "transition-transform duration-700 ease-in-out"
-              : ""
+            ? "transition-transform duration-700 ease-in-out"
+            : ""
             }`}
           style={{ transform: `translateX(-${current * 100}%)` }}
         >
@@ -432,132 +371,11 @@ const Home = () => {
       {/* Feature End */}
 
       {/* About Start */}
-      <motion.div
-        className="animate-fade-in-up px-4 py-8 md:py-16"
-        initial={{ opacity: 0, y: 50 }} // Awal animasi (tidak terlihat dan bergeser ke bawah)
-        animate={{ opacity: 1, y: 0 }} // Animasi akhir (terlihat dan posisinya normal)
-        transition={{ duration: 0.6, ease: "easeOut" }} // Durasi animasi dengan easeOut
-      >
-        <div className="container mx-auto">
-          <div className="flex flex-col md:flex-row items-center gap-8">
-            {/* Gambar */}
-            <motion.div
-              className="md:w-5/12 w-full"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.6,
-                ease: "easeOut",
-                delay: 0.6, // Menunggu 0.6 detik setelah animasi pertama selesai
-              }}
-            >
-              <img
-                src="assets/experience.jpg"
-                alt="Image"
-                className="rounded-lg shadow-lg w-full"
-              />
-            </motion.div>
-
-            {/* Text Content */}
-            <motion.div
-              className="md:w-7/12 w-full"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.6,
-                ease: "easeOut",
-                delay: 0.8, // Menunggu 0.8 detik setelah animasi pertama selesai
-              }}
-            >
-              <div className="mb-4">
-                <p className="text-[#fdbe33] text-md uppercase font-semibold tracking-wide">
-                  Welcome to Starplus
-                </p>
-                <p className="text-3xl md:text-5xl font-bold text-gray-800">
-                  12 Years Experience
-                </p>
-              </div>
-
-              <div className="space-y-4 text-gray-600">
-                <p>
-                  PT. Star Plus is a steel fabrication and installation company
-                  established in 2013 in Tangerang, Indonesia. We specialize in
-                  civil construction, steel structure, pipe fabrication,
-                  assembly, electrical work, and manpower supply. Our
-                  experienced and ISO-certified team ensures high-quality
-                  results.
-                </p>
-                <p>
-                  We deliver safe and timely services, supported by complete
-                  facilities and strong professional values based on
-                  communication, trust, and integrity in working with our
-                  partners and clients.
-                </p>
-              </div>
-
-              <div className="about mt-8">
-                <a href="/about" className="btn">
-                  Learn More
-                </a>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </motion.div>
+      <AboutComponent />
       {/* About End */}
 
       {/* <!-- Fact Start --> */}
-      <div className="fact-section">
-        <div className="fact-container">
-          {/* Left */}
-          <div className="fact-left">
-            <div className="fact-grid">
-              <div className="fact-item">
-                <div className="fact-icon">
-                  <FaHardHat />
-                </div>
-                <div className="fact-text">
-                  <h2>{expertWorkers}</h2>
-                  <p>Expert Workers</p>
-                </div>
-              </div>
-              <div className="fact-item">
-                <div className="fact-icon">
-                  <FaBuilding />
-                </div>
-                <div className="fact-text">
-                  <h2>{happyClients}</h2>
-                  <p>Happy Clients</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right */}
-          <div className="fact-right">
-            <div className="fact-grid">
-              <div className="fact-item">
-                <div className="fact-icon">
-                  <FaMapMarkedAlt />
-                </div>
-                <div className="fact-text">
-                  <h2>{completedProjects}</h2>
-                  <p>Completed Projects</p>
-                </div>
-              </div>
-              <div className="fact-item">
-                <div className="fact-icon">
-                  <FaIndustry />
-                </div>
-                <div className="fact-text">
-                  <h2>{runningProjects}</h2>
-                  <p>Running Projects</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <FactComponent />
       {/* <!-- Fact End --> */}
 
       {/* <!-- Service Start --> */}
@@ -664,197 +482,79 @@ const Home = () => {
       {/* <!-- Video End --> */}
 
       {/* <!-- Team Start --> */}
-      <div className="container mx-auto py-12">
-        <div className="text-center mb-12">
-          <p className="text-[#fdbe33] text-lg">Our Team</p>
-          <h2 className="text-4xl font-semibold text-yellow-500">
-            Meet Our Engineer
-          </h2>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {teamMembers.slice(0,4).map((member, index) => (
-            <motion.div
-              key={index}
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{
-                duration: 0.6,
-                delay: index * 0.3,
-                ease: "easeOut",
-              }}
-              className="relative team-item overflow-hidden border border-gray-300 bg-[#121518] group hover:bg-[#FDBE33] transition-all duration-300"
-            >
-              {/* Social Icons - Appear on hover */}
-              <div className="absolute top-0 left-0 flex flex-col bg-[#121518] group-hover:opacity-100 opacity-0 transition-opacity duration-300 z-10">
-                <a href={member.social.twitter} target="_blank">
-                  <div className="w-10 h-10 flex items-center justify-center hover:bg-[#FDBE33] transition">
-                    <i className="fab fa-twitter text-white" />
-                  </div>
-                </a>
-                <a href={member.social.facebook} target="_blank">
-                  <div className="w-10 h-10 flex items-center justify-center hover:bg-[#FDBE33] transition">
-                    <i className="fab fa-facebook-f text-white" />
-                  </div>
-                </a>
-                <a href={member.social.linkedin} target="_blank">
-                  <div className="w-10 h-10 flex items-center justify-center hover:bg-[#FDBE33] transition">
-                    <i className="fab fa-linkedin-in text-white" />
-                  </div>
-                </a>
-                <a href={member.social.instagram} target="_blank">
-                  <div className="w-10 h-10 flex items-center justify-center hover:bg-[#FDBE33] transition">
-                    <i className="fab fa-instagram text-white" />
-                  </div>
-                </a>
-              </div>
-
-              {/* Image */}
-              <div className="team-img">
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-full h-64 object-cover"
-                />
-              </div>
-
-              {/* Text */}
-              <div className="team-text text-center m-4">
-                <p className="text-xl font-bold py-2 text-[#FDBE33] group-hover:text-[#121518] transition-all duration-300">
-                  {member.name}
-                </p>
-                <p className="text-white">{member.title}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
+      <TeamsComponent maxItems={4} />
       {/* <!-- Team End --> */}
 
-      {/* <!-- FAQs Start --> */}
-      <div className="faq-container">
-        <div className="faq-title-container">
-          <div className="faq-title">
-            <p className="faq-subtitle">Frequently Asked Question</p>
-            <p className="faq-heading">You May Ask</p>
-          </div>
-
-          <div className="faq-grid">
-            <div className="faq-divider-vertical"></div>
-
-            {faqItems.map((item, i) => {
-              const isLeft = i % 2 === 0;
-              const direction = isLeft ? -100 : 100;
-
-              return (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: direction }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{
-                    duration: 0.6,
-                    delay: i * 0.15,
-                    type: "tween",
-                    ease: "easeOut",
-                  }}
-                  className="faq-item"
-                >
-                  <button
-                    className="faq-item-button"
-                    onClick={() => {
-                      const content = document.getElementById(`faq-${i}`);
-                      if (content) {
-                        content.classList.toggle("show");
-                      }
-                    }}
-                  >
-                    <span>{item.question}</span>
-                    <span className="plus">+</span>
-                  </button>
-                  <div id={`faq-${i}`} className="faq-item-content">
-                    {item.answer}
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-      {/* <!-- FAQs End --> */}
+      {/* FAQ Start */}
+      <FaqComponent />
+      {/* FAQ End */}
 
       {/* <!-- Testimonial Start --> */}
       <div
+        ref={containerRef}
         className="w-full mx-auto text-center relative bg-fixed bg-center bg-cover h-128"
         style={{
-          backgroundImage: `url('https://plus.unsplash.com/premium_photo-1678134786065-8e264416fa6f?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
+          backgroundImage: `url('https://plus.unsplash.com/premium_photo-1678134786065-8e264416fa6f?q=80&w=1170&auto=format&fit=crop')`,
         }}
       >
-        <div className="w-full h-full bg-[#030f27]/80 flex flex-col items-center justify-center">
+        <div className="w-full h-full bg-[#030f27]/80 flex flex-col items-center justify-center relative overflow-hidden">
           {/* Gambar Profil */}
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center relative">
             {/* Thumbnail Kiri */}
             <img
               src={
-                testimonials[
-                  (activeIndex - 1 + testimonials.length) % testimonials.length
-                ].image
+                testimonials[(activeIndex - 1 + testimonials.length) % testimonials.length].image
               }
-              alt="Previous Testimonial"
+              alt="Previous"
               className="w-16 h-16 rounded-full object-cover opacity-50 transition duration-300"
             />
 
-            {/* Gambar Tengah */}
-            <motion.img
-              key={activeIndex}
-              src={testimonials[activeIndex].image}
-              alt="Active Testimonial"
-              className="w-32 h-32 rounded-full object-cover border-4 border-primary shadow-lg"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4 }}
-            />
+            {/* Gambar Utama + Ikon Kutipan */}
+            <div className="relative mx-6">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={`image-${activeIndex}`}
+                  src={testimonials[activeIndex].image}
+                  alt="Active"
+                  className="w-32 h-32 rounded-full object-cover border-4 border-[#fdbe33] shadow-lg"
+                  initial={{ x: 100, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: -100, opacity: 0 }}
+                  transition={{ duration: 0.6 }}
+                />
+              </AnimatePresence>
+              <FaQuoteRight className="text-[#fdbe33] text-3xl absolute -bottom-4 -right-4" />
+            </div>
 
             {/* Thumbnail Kanan */}
             <img
               src={testimonials[(activeIndex + 1) % testimonials.length].image}
-              alt="Next Testimonial"
+              alt="Next"
               className="w-16 h-16 rounded-full object-cover opacity-50 transition duration-300"
             />
           </div>
 
           {/* Konten Testimoni */}
-          <motion.div
-            key={`text-${activeIndex}`}
-            className="mt-6 px-4 text-white max-w-xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-          >
-            <span className="text-xl font-semibold text-[#fdbe33]">
-              {testimonials[activeIndex].name}
-            </span>
-            <p className="font-style: italic font-[10px] text-gray-300 pt-1">
-              {testimonials[activeIndex].profession}
-            </p>
-            <p className="mt-2 text-white">{testimonials[activeIndex].text}</p>
-          </motion.div>
-
-          {/* Tombol Navigasi */}
-          <button
-            onClick={testiPrev}
-            className="absolute left-8 top-1/2 -translate-y-1/2 bg-transparent text-white hover:bg-primary hover:text-[#fdbe33] transition h-16 w-16 flex items-center justify-center rounded-full"
-          >
-            <HiChevronLeft className="text-5xl" />
-          </button>
-
-          <button
-            onClick={testiNext}
-            className="absolute right-8 top-1/2 -translate-y-1/2 bg-transparent text-white hover:bg-primary hover:text-[#fdbe33] transition h-16 w-16 flex items-center justify-center rounded-full"
-          >
-            <HiChevronRight className="text-5xl" />
-          </button>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`text-${activeIndex}`}
+              className="mt-6 px-4 text-white max-w-xl"
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -40, opacity: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <span className="text-xl font-semibold text-[#fdbe33]">
+                {testimonials[activeIndex].name}
+              </span>
+              <p className="italic text-sm text-gray-300 pt-1">
+                {testimonials[activeIndex].profession}
+              </p>
+              <p className="mt-2 text-white">{testimonials[activeIndex].text}</p>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
-
       {/* <!-- Testimonial End --> */}
 
       {/* <!-- Blog Start --> */}
