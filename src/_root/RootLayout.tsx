@@ -124,6 +124,15 @@ const RootLayout = () => {
                 Blog
               </Link>
               <Link
+                to="/blog/1"
+                className={`hover:text-yellow-400 ${location.pathname === "/blog"
+                  ? "text-yellow-400 font-bold"
+                  : "text-white hover:text-yellow-400"
+                  }`}
+              >
+                Demo Single
+              </Link>
+              <Link
                 to="/contact"
                 className={`hover:text-yellow-400 ${location.pathname === "/contact"
                   ? "text-yellow-400 font-bold"

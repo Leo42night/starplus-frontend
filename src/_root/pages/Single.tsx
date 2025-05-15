@@ -1,7 +1,9 @@
 import { useParams } from "react-router-dom";
-import posts from "../../data/single-post"; // file dummy kamu
+import { posts } from "../../data/posts"; // file dummy kamu
 import blogs from "../../data/blogs";
 import { useEffect, useState } from "react";
+
+import './../../css/single.css'
 
 interface Post {
   id: number;
@@ -34,6 +36,7 @@ interface recentPost {
     image: string;
   };
 }
+
 const Single = () => {
   const { id } = useParams();
   const [post, setPost] = useState<Post | null>(null);
@@ -62,14 +65,14 @@ const Single = () => {
     const foundPost = posts.find((post: Post) => post.id === Number(id));
     if (foundPost) {
       setPost(foundPost);
-      console.log(foundPost.comments);
+      console.log("Comment: ", foundPost.comments);
     }
 
     const latest_posts = blogs
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .slice(0, 5)
       .map((blog) => {
-        const postAuthor = posts.find((p) => p.id === blog.id)?.author;
+        const postAuthor = posts.find((p: { id: number }) => p.id === blog.id)?.author;
         return {
           ...blog,
           author: postAuthor ? { name: postAuthor.name, image: postAuthor.image } : undefined,
@@ -81,7 +84,7 @@ const Single = () => {
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .slice(0, 5)
       .map((blog) => {
-        const postAuthor = posts.find((p) => p.id === blog.id)?.author;
+        const postAuthor = posts.find((p: { id: number }) => p.id === blog.id)?.author;
         return {
           ...blog,
           author: postAuthor ? { name: postAuthor.name, image: postAuthor.image } : undefined,
@@ -93,7 +96,7 @@ const Single = () => {
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .slice(0, 5)
       .map((blog) => {
-        const postAuthor = posts.find((p) => p.id === blog.id)?.author;
+        const postAuthor = posts.find((p: { id: number }) => p.id === blog.id)?.author;
         return {
           ...blog,
           author: postAuthor ? { name: postAuthor.name, image: postAuthor.image } : undefined,
@@ -108,7 +111,7 @@ const Single = () => {
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .slice(0, 5)
       .map((blog) => {
-        const postAuthor = posts.find((p) => p.id === blog.id)?.author;
+        const postAuthor = posts.find((p: { id: number }) => p.id === blog.id)?.author;
         return {
           ...blog,
           author: postAuthor ? { name: postAuthor.name, image: postAuthor.image } : undefined,
@@ -117,7 +120,7 @@ const Single = () => {
     setRecentPosts(recentposts);
 
     // Kumpulkan semua tags unik dari posts
-    const uniqueTags = Array.from(new Set(posts.flatMap((post) => post.tags)));
+    const uniqueTags: string[] = Array.from(new Set(posts.flatMap((post: Post) => post.tags)));
     setAllTags(uniqueTags);
 
     const counts: { [key: string]: number } = {};
@@ -133,38 +136,39 @@ const Single = () => {
     }));
 
     setCategoriesWithCounts(mergedCategories);
-    console.log(mergedCategories);
+    console.log("Merged Category: ", mergedCategories);
   }, [id]);
 
   // Inisialisasi Owl setelah data ter-set dan DOM siap
-  useEffect(() => {
-    if (relatedPosts.length > 0 && (window as Window).$) {
-      setTimeout(() => {
-        const $ = (window as any).$;
-        const $carousel = $(".owl-carousel");
-        if ($carousel.length > 0 && $carousel.owlCarousel) {
-          $carousel.trigger("destroy.owl.carousel"); // optional: destroy previous if any
-          $carousel.owlCarousel({
-            loop: true,
-            margin: 10,
-            nav: true,
-            dots: true,
-            navText: ['<i class="bi bi-chevron-left"></i>', '<i class="bi bi-chevron-right"></i>'],
-            responsive: {
-              0: { items: 1 },
-              768: { items: 2 },
-              992: { items: 3 },
-            },
-          });
-        }
-      }, 100);
-    }
-  }, [relatedPosts]);
+//   useEffect(() => {
+//   if (relatedPosts.length > 0 && window.$) {
+//     setTimeout(() => {
+//       const $ = window.$;
+//       const $carousel = $(".owl-carousel");
+      
+//       if ($carousel.length > 0 && $carousel.owlCarousel) {
+//         $carousel.trigger("destroy.owl.carousel"); // optional: destroy previous if any
+//         $carousel.owlCarousel({
+//           loop: true,
+//           margin: 10,
+//           nav: true,
+//           dots: true,
+//           navText: ['<i class="bi bi-chevron-left"></i>', '<i class="bi bi-chevron-right"></i>'],
+//           responsive: {
+//             0: { items: 1 },
+//             768: { items: 2 },
+//             992: { items: 3 },
+//           },
+//         });
+//       }
+//     }, 100);
+//   }
+// }, [relatedPosts]);
 
   if (!post) {
     return (
       <div className="container mt-5">
-        <h2>Blog not found.</h2>
+        <h2 className="text-center text-4xl">Blog not found.</h2>
       </div>
     );
   }
@@ -188,11 +192,11 @@ const Single = () => {
 
       {/* <!-- Single Post Start--> */}
       <div className="single">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-8">
+        <div className="container mx-auto">
+          <div className="grid lg:grid-cols-12">
+            <div className="lg:col-span-8 p-4">
               <div className="single-content wow fadeInUp">
-                <img src={post.cover} />
+                <img src={`${import.meta.env.VITE_URL}/${post.cover}`} alt={post.title} />
                 <h2>{post.title}</h2>
                 <div className="mb-4 blog-detail" dangerouslySetInnerHTML={{ __html: post.text }} />
               </div>
@@ -206,7 +210,7 @@ const Single = () => {
               </div>
               <div className="single-bio wow fadeInUp">
                 <div className="single-bio-img">
-                  <img src={`${post.author.image}`} />
+                  <img src={`${import.meta.env.VITE_URL}/${post.author.image}`} />
                 </div>
                 <div className="single-bio-text">
                   <h3>{post.author.name}</h3>
@@ -221,7 +225,7 @@ const Single = () => {
                       {relatedPosts.map((post, index) => (
                         <div className="post-item" key={index}>
                           <div className="post-img">
-                            <img src={`${post.cover}`} />
+                            <img src={`${import.meta.env.VITE_URL}/${post.cover}`} />
                           </div>
                           <div className="post-text">
                             <a href="">{post.title}</a>
@@ -241,7 +245,7 @@ const Single = () => {
                     relatedPosts.map((post, index) => (
                       <div className="post-item" key={index}>
                         <div className="post-img">
-                          <img src={`${post.cover}`} />
+                          <img src={`${import.meta.env.VITE_URL}/${post.cover}`} />
                         </div>
                         <div className="post-text">
                           <a href="">{post.title}</a>
@@ -266,7 +270,7 @@ const Single = () => {
                     <li key={index} className="comment-item">
                       <div className="comment-body">
                         <div className="comment-img">
-                          <img src={comment.image} />
+                          <img src={`${import.meta.env.VITE_URL}/${comment.image}`} />
                         </div>
                         <div className="comment-text">
                           <h3>
@@ -310,12 +314,12 @@ const Single = () => {
               </div>
             </div>
 
-            <div className="col-lg-4">
+            <div className="lg:col-span-4 p-4">
               <div className="sidebar">
                 <div className="sidebar-widget wow fadeInUp">
                   <div className="search-widget">
                     <form>
-                      <input className="form-control" type="text" placeholder="Search Keyword" />
+                      <input className="p-2 w-full" type="text" placeholder="Search Keyword" />
                       <button className="btn">
                         <i className="fa fa-search"></i>
                       </button>
@@ -329,7 +333,7 @@ const Single = () => {
                     {recentPosts.map((post, index) => (
                       <div key={index} className="post-item">
                         <div className="post-img">
-                          <img src={post.image} />
+                          <img src={`${import.meta.env.VITE_URL}/${post.image}`} />
                         </div>
                         <div className="post-text">
                           <a href="">{post.title}</a>
@@ -348,19 +352,11 @@ const Single = () => {
                 </div>
 
                 <div className="sidebar-widget wow fadeInUp">
-                  <div className="image-widget">
-                    <a href="#">
-                      <img src="/img/blog-1.jpg" alt="Image" />
-                    </a>
-                  </div>
-                </div>
-
-                <div className="sidebar-widget wow fadeInUp">
                   <div className="tab-post">
-                    <ul className="nav nav-pills nav-justified">
+                    <ul className="flex nav nav-pills">
                       {["featured", "popular", "latest"].map((tab, index) => (
-                        <li className="nav-item" key={index}>
-                          <a className={`nav-link ${activeTab === tab ? "active" : ""}`} onClick={() => setActiveTab(tab)} href="#">
+                        <li className="grow text-center" key={index}>
+                          <a className={`nav-link block py-2 ${activeTab === tab ? "active" : ""}`} onClick={() => setActiveTab(tab)} href="#">
                             {tab.charAt(0).toUpperCase() + tab.slice(1)}
                           </a>
                         </li>
@@ -372,7 +368,7 @@ const Single = () => {
                         {tabData[activeTab]?.map((post) => (
                           <div className="post-item" key={post.id}>
                             <div className="post-img">
-                              <img src={post.image } />
+                              <img src={`${import.meta.env.VITE_URL}/${post.image}`} />
                             </div>
                             <div className="post-text">
                               <a href={`/single/${post.id}`}>{post.title}</a>
@@ -381,7 +377,7 @@ const Single = () => {
                                   By<a href="">{post.author?.name || "Admin"}</a>
                                 </p>
                                 <p>
-                                  In<a href="">{post.category }</a>
+                                  In<a href="">{post.category}</a>
                                 </p>
                               </div>
                             </div>
@@ -395,7 +391,7 @@ const Single = () => {
                 <div className="sidebar-widget wow fadeInUp">
                   <div className="image-widget">
                     <a href="#">
-                      <img src="/img/blog-2.jpg" alt="Image" />
+                      <img src={`${import.meta.env.VITE_URL}/img/blog-2.jpg`} alt="Image" />
                     </a>
                   </div>
                 </div>
@@ -417,7 +413,7 @@ const Single = () => {
                 <div className="sidebar-widget wow fadeInUp">
                   <div className="image-widget">
                     <a href="#">
-                      <img src="img/blog-3.jpg" alt="Image" />
+                      <img src={`${import.meta.env.VITE_URL}img/blog-3.jpg`} alt="Image" />
                     </a>
                   </div>
                 </div>
